@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    title Free DnD
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application',
+      media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application',
+      'data-turbolinks-track': 'reload'
+  body
+    header
+      - flash.each do |key, value|
+        div class="#{key}" = value
+      - if signed_in?
+        = current_user.email
+        = button_to "Sign out", sign_out_path, method: :delete
+      - else
+        = link_to "Sign in", sign_in_path
+    main
+      = yield
+    footer
+      p Wizards of the Coast, Dungeons & Dragons, and their logos
+        are trademarks of Wizards of the Coast LLC in the United States
+        and other countries. © #{Time.current.year} Wizards.
+        All Rights Reserved.
+      p
+        span> FreeDnD is not affiliated with, endorsed, sponsored, or
+          specifically approved by Wizards of the Coast LLC. Free DnD may
+          use the trademarks and other intellectual property of Wizards
+          of the Coast LLC, which is permitted under Wizards'
+        = link_to 'Fan Site Policy',
+          'https://dnd.wizards.com/articles/features/fan-site-kit',
+          target: '_blank'
+        span<> and
+        = link_to 'Fan Content Policy',
+          'https://company.wizards.com/fancontentpolicy',
+          target: '_blank'
+        span . For example, Dungeons & Dragons® is a trademark[s] of
+          Wizards of the Coast. For more information about Wizards of
+          the Coast or any of Wizards' trademarks or other intellectual
+          property, please visit their website at
+        = link_to 'www.wizards.com',
+          'https://www.wizards.com',
+          target: '_blank'
+        span .
