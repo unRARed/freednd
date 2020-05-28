@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'landing_pages#index'
 
+  get 'license' => 'landing_pages#license'
+
   ###################
   ## User Sessions ##
   ###################
