@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_072312) do
+ActiveRecord::Schema.define(version: 2020_05_29_070134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,40 @@ ActiveRecord::Schema.define(version: 2020_05_28_072312) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "equipment", force: :cascade do |t|
+    t.string "name"
+    t.string "variety"
+    t.integer "weight"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.integer "level"
+    t.string "dnd_class"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.string "variety"
+    t.string "script"
+    t.string "dnd_races"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "magic_schools", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "parties", force: :cascade do |t|
     t.bigint "campaign_id"
     t.datetime "created_at", precision: 6, null: false
@@ -73,6 +107,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_072312) do
     t.bigint "character_id"
     t.bigint "party_id"
     t.string "archetype"
+    t.integer "explicit_level"
     t.integer "experience", default: 0, null: false
     t.integer "hit_points", default: 0, null: false
     t.integer "hit_points_max", default: 300, null: false
@@ -98,6 +133,13 @@ ActiveRecord::Schema.define(version: 2020_05_28_072312) do
     t.index ["party_id"], name: "index_progressions_on_party_id"
   end
 
+  create_table "races", force: :cascade do |t|
+    t.string "name"
+    t.integer "speed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "saving_throws", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -114,18 +156,15 @@ ActiveRecord::Schema.define(version: 2020_05_28_072312) do
     t.string "description"
     t.integer "level"
     t.string "level_conditions"
-    t.string "dnd_class"
+    t.string "dnd_classes"
     t.string "school"
     t.string "casting_time"
     t.string "range"
     t.string "components"
     t.string "material"
     t.string "duration"
-    t.string "reference"
     t.boolean "is_ritual"
     t.boolean "requires_concentration"
-    t.string "archetype"
-    t.string "circles"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,16 +1,23 @@
-# The "instance" of a particular Character’s progress within
-# the scope of a particular Party (within a Campaign).
+# The "instance" of a particular Character’s progress
+# within the scope of a particular Party.
 
 class Progression < ApplicationRecord
   belongs_to :character
   belongs_to :party
 
+  # statistics
+  has_many :skills
+  has_many :saving_throws
+
+  # assocated static content...
+  # equipment, languages, spells, etc.
   has_many :progression_items
   has_many :spells, :through => :progression_items
-  has_many :skills, :through => :progression_items
-  has_many :saving_throws, :through => :progression_items
+
+  after_validation :initialize_statistics
 
   def level
+    return explicit_level if explicit_level.present?
     case experience
     when 0...300; 1
     when 300...900;	2
@@ -31,6 +38,7 @@ class Progression < ApplicationRecord
     when 225000...265000;	17
     when 265000...305000;	18
     when 305000...355000;	19
+    else 20
     end
   end
 
@@ -50,5 +58,20 @@ class Progression < ApplicationRecord
     value += proficiency_bonus if skills.
       where(name: 'Perception').first&.is_proficient?
     value
+  end
+
+private
+
+  def initialize_statistics
+    if saving_throws.empty?
+      SavingThrow.names.each do |_key, val|
+        saving_throws.build name: val, value: 0
+      end
+    end
+    if skills.empty?
+      Skill.names.each do |_key, val|
+        skills.build name: val, value: 0
+      end
+    end
   end
 end
