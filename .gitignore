@@ -38,3 +38,6 @@ yarn-debug.log*
 storage
 
 .DS_Store
+
+# Ignore seeds created from external services
+/db/seeds/dnd5eapi_co*
