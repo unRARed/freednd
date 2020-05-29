@@ -219,6 +219,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    seed_dump (3.3.1)
+      activerecord (>= 4)
+      activesupport (>= 4)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -277,7 +280,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
-  clearance
+  clearance (~> 2.1.0)
   factory_bot_rails
   jbuilder (~> 2.7)
   letter_opener
@@ -291,8 +294,9 @@ DEPENDENCIES
   rspec-rails!
   rspec-support!
   sassc-rails
+  seed_dump
   selenium-webdriver
-  slim-rails
+  slim-rails (~> 3.2.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
