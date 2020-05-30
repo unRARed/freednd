@@ -10,6 +10,5 @@ Next Steps
 ---------
 
 - Finish the remaining models (Features, Equipment, what else?)
-- Add [Material Design Lite](https://getmdl.io/) for UI
 - Add [threejs-dice](https://www.npmjs.com/package/threejs-dice)
 - Create data-sync with Open5e

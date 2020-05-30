@@ -1,0 +1,23 @@
+.content
+  = form_for :session, url: session_path do |form|
+    .field
+      = form.label :email, class: 'label'
+      p.control.has-icons-left.has-icons-right
+        = form.text_field :email,
+          placeholder: 'Email',
+          class: 'input is-large'
+        span.icon.is-small.is-left
+          i.fas.fa-envelope
+        span.icon.is-small.is-right
+          i.fas.fa-check
+    .field
+      = form.label :password, class: 'label'
+      p.control.has-icons-left
+        = form.password_field :password,
+          placeholder: 'Password',
+          class: 'input is-large'
+        span.icon.is-small.is-left
+          i.fas.fa-lock
+    .field
+      p.control
+        = form.submit class: 'button is-success'

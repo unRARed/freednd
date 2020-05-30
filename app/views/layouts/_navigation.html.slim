@@ -1,0 +1,23 @@
+.navbar.is-fixed-top(
+  role="navigation"
+  aria-label="main navigation"
+)
+  .navbar-brand
+    = link_to 'Free DnD', root_path, class: 'navbar-item'
+    a(
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+    )
+      - 3.times do
+        span aria-hidden="true"
+  .navbar-menu
+    .navbar-start
+    .navbar-end
+      .navbar-item
+        - if signed_in?
+          = current_user.email
+          = button_to "Sign out", sign_out_path, method: :delete
+        - else
+          = link_to "Sign in", sign_in_path

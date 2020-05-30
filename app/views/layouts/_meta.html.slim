@@ -1,0 +1,13 @@
+title Free DnD
+meta name="viewport" content="width=device-width, initial-scale=1"
+= csrf_meta_tags
+= csp_meta_tag
+= stylesheet_link_tag 'application',
+  media: 'all', 'data-turbolinks-track': 'reload'
+= javascript_pack_tag 'application',
+  'data-turbolinks-track': 'reload'
+ruby:
+  fonts_url = 'https://fonts.googleapis.com/css2?' +
+    'family=IM+Fell+DW+Pica&' +
+    'family=Lobster+Two:wght@700&display=swap'
+link href="#{fonts_url}" rel="stylesheet"

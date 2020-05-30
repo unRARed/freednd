@@ -1,0 +1,15 @@
+#clearance.sign-in
+  .columns
+    .column.is-one-third.is-offset-one-third
+      .card
+        .card-header
+          .card-header-title= t(".title")
+        .card-content
+          = render partial: '/sessions/form'
+        footer.card-footer
+          .card-footer-item
+            = link_to t(".sign_up"), sign_up_path,
+              class: 'card-footer-item'
+          .card-footer-item
+            = link_to t(".forgot_password"), new_password_path,
+              class: 'card-footer-item'
