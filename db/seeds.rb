@@ -6,29 +6,54 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# Utility function for fetching data from DnD 5e API Resources
+def query_api(api, endpoint)
+  api_map = {
+    open5e: 'https://api.open5e.com', #/spells/?format=json&page=7
+    dnd5eapi: 'https://www.dnd5eapi.co'
+  }
+  url = URI(api_map[api] + endpoint)
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+  api_request = Net::HTTP::Get.new(url)
+  api_response = http.request(api_request)
+  JSON.parse(api_response&.body)
+end
+
+
+#################
+## API Parsing ##
+#################
 seed_files = []
-if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_spells.rb")
-  seed_files << "#{Rails.root}/db/seeds/dnd5eapi_co_spells.rb"
+if File.exist?("#{Rails.root}/db/seeds/open5e_com_spells.rb")
+  seed_files << "#{Rails.root}/db/seeds/open5e_com_spells.rb"
 else
-  data = query_dnd5eapi('/api/spells')
-  spells_data = []
-  data['results'].each do |hash|
-    meta = query_dnd5eapi(hash['url'])
-    puts "Creating Spell: #{meta['name']}"
-    Spell.create! meta.
-      slice(*Spell.new.attributes.keys).
-      merge(
-        'slug' => meta['index'],
-        'school' => meta['school']['name'],
-        'description' => meta['desc'].map(&:inspect).join(', '),
-        'dnd_classes' => meta['classes'].map{|c| c['name']}.join(', '),
-        'level_conditions' => meta['higher_level']&.
-          map(&:inspect)&.join(', '),
-        'requires_concentration' => meta['concentration'],
-        'components' => meta['components']&.map(&:inspect)&.join(', '),
-        'is_ritual' => meta['ritual']
-      )
-    sleep 0.2
+  while true
+    ('1'...'9999').to_a.each do |page|
+      data = query_api(:open5e, "/spells/?format=json&page=#{page}")
+      break unless data['results']
+
+      data['results'].each do |meta|
+        puts "Creating Spell: #{meta['name']}"
+        Spell.create! meta.
+          slice(*Spell.new.attributes.keys).
+          merge(
+            'slug' => meta['slug'],
+            'school' => meta['school']['name'],
+            'description' => meta['desc'],
+            'dnd_classes' => meta['dnd_class'],
+            'archetypes' => meta['archetype'],
+            'level' => meta['level_int'],
+            'level_conditions' => meta['higher_level'],
+            'requires_concentration' => (meta['concentration'] == 'yes'),
+            'components' => meta['components'],
+            'is_ritual' => (meta['ritual'] == 'yes')
+          )
+        sleep 0.2
+      end
+    end
+    break
   end
 end
 
@@ -50,6 +75,7 @@ else
     sleep 0.2
   end
 end
+
 
 if seed_files.any?
   seed_files.each do |path_to_seed_file|
@@ -92,14 +118,3 @@ users.map do |user|
   chars.map{|char| char.progressions.create party: party }
 end
 puts "Created #{chars.count} Characters in Party"
-
-# Utility function for getting data from https://www.dnd5eapi.co/
-def query_dnd5eapi(endpoint)
-  url = URI('https://www.dnd5eapi.co' + endpoint)
-  http = Net::HTTP.new(url.host, url.port)
-  http.use_ssl = true
-  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-  api_request = Net::HTTP::Get.new(url)
-  api_response = http.request(api_request)
-  JSON.parse(api_response&.body)
-end

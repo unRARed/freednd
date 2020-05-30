@@ -41,3 +41,4 @@ storage
 
 # Ignore seeds created from external services
 /db/seeds/dnd5eapi_co*
+/db/seeds/open5e_com*

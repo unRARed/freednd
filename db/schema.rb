@@ -157,14 +157,16 @@ ActiveRecord::Schema.define(version: 2020_05_29_070134) do
     t.integer "level"
     t.string "level_conditions"
     t.string "dnd_classes"
+    t.string "archetypes"
     t.string "school"
     t.string "casting_time"
     t.string "range"
     t.string "components"
     t.string "material"
     t.string "duration"
-    t.boolean "is_ritual"
+    t.string "circles"
     t.boolean "requires_concentration"
+    t.boolean "is_ritual"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
