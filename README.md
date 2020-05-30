@@ -1,6 +1,8 @@
 FreeDnD
 =======
 
+[![Build Status](https://travis-ci.com/unRARed/freednd.svg?branch=master)](https://travis-ci.com/unRARed/freednd)
+
 So we can DnD better. Inspired by
 [cmmovius/dndr](https://github.com/cmmovius/dndr).
 
