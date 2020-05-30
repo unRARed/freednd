@@ -1,5 +1,5 @@
 .content
-  = form_for :session, url: session_path do |form|
+  = form_for record do |form|
     .field
       = form.label :email, class: 'label'
       p.control.has-icons-left.has-icons-right
@@ -9,6 +9,8 @@
           required: true
         span.icon.is-small.is-left
           i.fas.fa-envelope
+        span.icon.is-small.is-right
+          i.fas.fa-check
     .field
       = form.label :password, class: 'label'
       p.control.has-icons-left

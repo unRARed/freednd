@@ -17,6 +17,18 @@ h1, h2, h3, h4
 
 .navbar
   background-color: #fafafa
+  position: relative
+  &:after
+    content: ''
+    position: absolute
+    bottom: 0
+    left: 0
+    height: 3px
+    min-width: 100%
+    box-shadow: 0 3px 3px rgba(182, 182, 182, 0.75)
+
+main
+  margin-top: 52px // for the fixed header
 
 .footer
   font-size: 0.7em
@@ -25,3 +37,6 @@ h1, h2, h3, h4
 
 .is-alert
   @extend .is-danger
+
+.tag
+  font-family: 'Open Sans', sans-serif

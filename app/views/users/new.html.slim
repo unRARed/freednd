@@ -1,9 +1,13 @@
-#clearance.sign-up
-  h2 = t(".title")
-  = form_for @user do |form|
-    = render partial: '/users/form', object: form
-
-    .submit-field = form.submit
-
-    .other-links
-      = link_to t(".sign_in"), sign_in_path
+#clearance.sign-in
+  .columns
+    .column.is-one-third.is-offset-one-third
+      .card
+        .card-header
+          .card-header-title Create a free Account
+        .card-content
+          = render partial: '/users/form',
+            locals: { record: @user }
+        footer.card-footer
+          .card-footer-item
+            = link_to t(".sign_in"), sign_in_path,
+              class: 'card-footer-item'
