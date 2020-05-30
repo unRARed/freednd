@@ -7,7 +7,9 @@ html
     main
       .section
         - flash.each do |key, value|
-          div class="#{key}" = value
+          div class="notification is-light is-#{key}"
+            button.delete
+            = value
       .section
         = yield
     = render partial: 'layouts/footer'

@@ -1,48 +1,49 @@
 footer.footer
   .content.has-text-centered
-    p
-      span> Game content and materials have been sourced from
-      = link_to 'DnD5eAPI.co',
-        'https://www.dnd5eapi.co/',
-        target: '_blank'
-      span<> and the
-      = link_to 'Open5e API',
-        'https://api.open5e.com/',
-        target: '_blank'
-      span<> .
-      br All content, including original
-        FreeDnD content made available here, is subject to the
-      = link_to('Game License v 1.0 Copyright 2000' +\
-        ', Wizards of the Coast, Inc.',
-        '/license',
-        target: '_blank')
-    p
-      small
-        span Wizards of the Coast, Dungeons & Dragons, and
-        their logos are trademarks of Wizards of the Coast LLC
-        in the United States and other countries.
-        br © #{Time.current.year} Wizards.
-          All Rights Reserved.
-    p
-      small
-        span> FreeDnD is not affiliated with, endorsed,
-          sponsored, or specifically approved by Wizards
-          of the Coast LLC. Free DnD may use the trademarks
-          and other intellectual property of Wizards
-          of the Coast LLC, which is permitted under Wizards'
-        = link_to 'Fan Site Policy',
-          'https://dnd.wizards.com/articles/features/fan-site-kit',
-          target: '_blank'
-        span<> and
-        = link_to 'Fan Content Policy',
-          'https://company.wizards.com/fancontentpolicy',
-          target: '_blank'
-        span> . For example, Dungeons & Dragons® is a
-          trademark[s] of Wizards of the Coast. For more
-          information about Wizards of the Coast or any of
-          Wizards' trademarks or other intellectual property,
-          please visit their website at
-        = link_to 'www.wizards.com',
-          'https://www.wizards.com',
-          target: '_blank'
-        span .
+    .columns
+      .column.is-half.is-offset-one-quarter
+        p
+          span> Game content and materials have been sourced from
+          = link_to 'DnD5eAPI.co',
+            'https://www.dnd5eapi.co/',
+            target: '_blank'
+          span<> and the
+          = link_to 'Open5e API',
+            'https://api.open5e.com/',
+            target: '_blank'
+          span<> .
+          br All content, including original
+            FreeDnD content made available here, is subject to the
+          = link_to('Game License v 1.0 Copyright 2000' +\
+            ', Wizards of the Coast, Inc.',
+            '/license',
+            target: '_blank')
+        p
+          small
+            span> FreeDnD is not affiliated with, endorsed,
+              sponsored, or specifically approved by Wizards
+              of the Coast LLC. Free DnD may use the trademarks
+              and other intellectual property of Wizards
+              of the Coast LLC, which is permitted under Wizards'
+            = link_to 'Fan Site Policy',
+              'https://dnd.wizards.com/articles/features/fan-site-kit',
+              target: '_blank'
+            span<> and
+            = link_to 'Fan Content Policy',
+              'https://company.wizards.com/fancontentpolicy',
+              target: '_blank'
+            span> . For example, Dungeons & Dragons® is a
+              trademark[s] of Wizards of the Coast. For more
+              information about Wizards of the Coast or any of
+              Wizards' trademarks or other intellectual property,
+              please visit their website at
+            = link_to 'www.wizards.com',
+              'https://www.wizards.com',
+              target: '_blank'
+            span .
+        p
+          small
+            span Wizards of the Coast, Dungeons & Dragons, and
+              their logos are trademarks of Wizards of the Coast LLC
+              in the United States and other countries. ©
+              #{Time.current.year} Wizards. All Rights Reserved.

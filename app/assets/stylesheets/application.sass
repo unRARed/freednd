@@ -1,5 +1,6 @@
 //@import 'material-design-lite/dist/material.pink-light_blue.min.css'
 @import 'bulma/bulma'
+@import 'tachyons/src/_spacing.css'
 
 $fa-font-path: '@fortawesome/fontawesome-free/webfonts'
 @import '@fortawesome/fontawesome-free/scss/brands'
@@ -19,3 +20,8 @@ h1, h2, h3, h4
 
 .footer
   font-size: 0.7em
+  padding-top: 2rem
+  padding-bottom: 2rem
+
+.is-alert
+  @extend .is-danger
