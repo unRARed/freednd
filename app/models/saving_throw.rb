@@ -1,10 +1,10 @@
 class SavingThrow < Statistic
   enum name: {
-    'strength' => 'Strength',
-    'dexterity' => 'Dexterity',
-    'constitution' => 'Constitution',
-    'intelligence' => 'Intelligence',
-    'wisdom' => 'Wisdom',
-    'charisma' => 'Charisma'
+    'Strength' => 'Strength',
+    'Dexterity' => 'Dexterity',
+    'Constitution' => 'Constitution',
+    'Intelligence' => 'Intelligence',
+    'Wisdom' => 'Wisdom',
+    'Charisma' => 'Charisma'
   }
 end

@@ -56,7 +56,7 @@ class Progression < ApplicationRecord
     value = 10
     value += wisdom_mod&.to_i || 0
     value += proficiency_bonus if skills.
-      where(name: 'Perception').first&.is_proficient?
+      find{|s| s.name == 'Perception'}&.is_proficient?
     value
   end
 
