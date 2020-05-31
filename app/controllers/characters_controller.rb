@@ -69,6 +69,7 @@ class CharactersController < ApplicationController
       params.require(:character).
         permit(
           :name,
+          :avatar,
           :dnd_class,
           :race,
           :background,

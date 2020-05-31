@@ -5,6 +5,15 @@ class Character < ApplicationRecord
 
   has_one_attached :avatar
 
+  ABILITIES = [
+    :strength,
+    :dexterity,
+    :constitution,
+    :intelligence,
+    :wisdom,
+    :charisma
+  ]
+
   validates :alignment,
     :dnd_class,
     :race,
@@ -118,4 +127,40 @@ class Character < ApplicationRecord
     'Vizier': 'Vizier',
     'Waterdhavian Noble': 'Waterdhavian Noble'
   }
+
+  ABILITIES.each do |ability|
+    define_method(:"#{ability}_mod") do
+      get_value_from_progression(ability)
+    end
+  end
+
+  (ABILITIES + [
+    :explicit_level,
+    :experience,
+    :hit_points,
+    :hit_points_max,
+    :armor_class,
+    :initiative,
+    :speed,
+    :inspiration
+  ]).each do |ability|
+    define_method(ability) do
+      get_value_from_progression(ability)
+    end
+  end
+
+  def portrait
+    avatar.variant(
+      auto_orient: true,
+      combine_options: {
+        resize: '480x720^', gravity: 'center', extent: '480x720'
+      }
+    ).processed
+  end
+
+private
+
+  def get_value_from_progression(key)
+    '0'
+  end
 end

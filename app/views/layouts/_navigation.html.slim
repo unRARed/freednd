@@ -14,6 +14,8 @@
         span aria-hidden="true"
   .navbar-menu
     .navbar-start
+      - if signed_in?
+        .navbar-item = link_to "Characters", characters_path
     .navbar-end
       .navbar-item
         - if signed_in?
