@@ -51,6 +51,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'factory_bot_rails'
+  gem 'pundit-matchers', '~> 1.6.0'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

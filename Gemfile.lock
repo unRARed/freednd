@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: 9f55fafe62ea367a4801ebed2ca19cf6dfdceb39
+  revision: 119282ec3dde5295b337322fc53301c32d0bf7ec
   branch: master
   specs:
     rspec-core (3.10.0.pre)
@@ -175,6 +175,8 @@ GEM
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.6.0)
+      rspec-rails (>= 3.0.0)
     rack (2.2.2)
     rack-proxy (0.6.5)
       rack
@@ -290,6 +292,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   pundit
+  pundit-matchers (~> 1.6.0)
   rails (~> 6.0.3)
   rspec-core!
   rspec-expectations!
@@ -312,4 +315,4 @@ RUBY VERSION
    ruby 2.6.4p104
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
