@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'clearance', '~> 2.1.0'
 gem 'slim-rails', '~> 3.2.0'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'pundit'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

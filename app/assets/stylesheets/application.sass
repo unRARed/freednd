@@ -8,6 +8,8 @@ $fa-font-path: '@fortawesome/fontawesome-free/webfonts'
 @import '@fortawesome/fontawesome-free/scss/regular'
 @import '@fortawesome/fontawesome-free/scss/solid'
 
+@import 'character-card'
+
 body
   font-family: 'IM Fell DW Pica', serif
   font-size: 1.4em
@@ -37,6 +39,13 @@ main
 
 .is-alert
   @extend .is-danger
+.is-notice
+  @extend .is-info
 
 .tag
   font-family: 'Open Sans', sans-serif
+
+.select
+  width: 100%
+  select
+    width: 100%

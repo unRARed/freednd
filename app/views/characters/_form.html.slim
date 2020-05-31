@@ -1,0 +1,59 @@
+.content
+  = form_for record do |form|
+    .field
+      = form.label :name, class: 'label'
+      .control.has-icons-left
+        = form.text_field :name,
+          class: 'input',
+          required: true
+        span.icon.is-small.is-left
+          i.fas.fa-dice-d20
+    .columns
+      .column
+        .field
+          = form.label :dnd_class, 'Class', class: 'label'
+          .control.has-icons-left
+            .select
+              = form.select :dnd_class,
+                options_for_select(Character.dnd_classes),
+                { prompt: ' - Choose Class - ' },
+                required: true
+            span.icon.is-small.is-left
+              i.fas.fa-hat-wizard
+      .column
+        .field
+          = form.label :race, class: 'label'
+          .control.has-icons-left
+            .select
+              = form.select :race,
+                options_for_select(Character.races),
+                { prompt: ' - Choose Race - ' },
+                required: true
+            span.icon.is-small.is-left
+              i.fas.fa-dragon
+    .columns
+      .column
+        .field
+          = form.label :background, 'Background', class: 'label'
+          .control.has-icons-left
+            .select
+              = form.select :background,
+                options_for_select(Character.backgrounds),
+                { prompt: ' - Choose Background - ' },
+                required: true
+            span.icon.is-small.is-left
+              i.fas.fa-scroll
+      .column
+        .field
+          = form.label :alignment, 'Alignment', class: 'label'
+          .control.has-icons-left
+            .select
+              = form.select :alignment,
+                options_for_select(Character.alignments),
+                { prompt: ' - Choose Alignment - ' },
+                required: true
+            span.icon.is-small.is-left
+              i.fas.fa-yin-yang
+    .field.pt2
+      .control
+        = form.submit class: 'button is-success is-medium'

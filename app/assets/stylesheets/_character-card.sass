@@ -1,0 +1,98 @@
+.char
+  line-height: 1
+  overflow: hidden
+  margin-bottom: 24px
+  display: inline-block
+  position: relative
+  width: 480px
+  height: 720px
+  box-shadow: 1px 3px 7px #333
+  .char__mural
+    position: absolute
+    min-width: 100%
+    min-height: 100%
+    background-image: url("#{asset_path('character-card.svg')}")
+    background-size: cover
+    z-index: 2
+  .char__name
+    position: absolute
+    top: 2.4%
+    left: 9.2%
+    width: 85%
+    z-index: 2
+    color: white
+    font-size: 32px
+    text-align: center
+  .char__avatar
+    position: relative
+    width: 100%
+  [class^="char__val--"]
+    position: absolute
+    color: white
+    font-size: 26px
+    text-align: center
+    font-family: 'Lobster Two', cursive
+    z-index: 2
+  [class$="-mod"]
+    color: black
+    font-size: 20px
+  .char__val--str
+    top: 27%
+    left: 20%
+  .char__val--str-mod
+    top: 31.4%
+    left: 21.5%
+  .char__val--dex
+    top: 39%
+    left: 15%
+  .char__val--dex-mod
+    top: 43.7%
+    left: 17%
+  .char__val--con
+    top: 51.5%
+    left: 12%
+  .char__val--con-mod
+    top: 56.1%
+    left: 14.3%
+  .char__val--int
+    top: 64%
+    left: 10%
+  .char__val--int-mod
+    top: 68.7%
+    left: 12.5%
+  .char__val--wis
+    top: 76.4%
+    left: 9%
+  .char__val--wis-mod
+    top: 81.1%
+    left: 11.6%
+  .char__val--chr
+    top: 88.9%
+    left: 9%
+  .char__val--chr-mod
+    top: 93.7%
+    left: 11%
+  .char__val--hp
+    top: 8%
+    left: 4%
+  .char__val--ac
+    top: 8%
+    left: 76.8%
+  .char__val--xp
+    bottom: 1.2%
+    right: 0
+    background-color: black
+    padding: 2px 12px
+    z-index: 1
+    border-radius: 8px 0 0 0
+
+@media (max-width: 540px)
+  .char
+    width: 320px
+    height: 480px
+    .char__name
+      font-size: 21px
+  [class^="char__val--"]
+    font-size: 18px !important
+  [class$="-mod"]
+    font-size: 14px !important

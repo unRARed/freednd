@@ -1,0 +1,36 @@
+.char
+  .char__mural
+  .char__name
+    .char__name__text = character.name.truncate(25)
+  - if character.avatar.attached?
+    img.char__avatar src="#{url_for(character.portrait)}"
+  - else
+    img.char__avatar src="#{asset_path('avatar-missing.jpg')}"
+  - if character.progressions.any?
+    .char__val--str = character.ability&.strength&.to_i
+    .char__val--str-mod = format_modifier(character&.ability&.strength_mod)
+    .char__val--dex = character.ability&.dexterity&.to_i
+    .char__val--dex-mod = format_modifier(character&.ability&.dexterity_mod)
+    .char__val--con = character.ability&.constitution&.to_i
+    .char__val--con-mod = format_modifier(character&.ability&.constitution_mod)
+    .char__val--int = character.ability&.intelligence&.to_i
+    .char__val--int-mod = format_modifier(character&.ability&.intelligence_mod)
+    .char__val--wis = character.ability&.wisdom&.to_i
+    .char__val--wis-mod = format_modifier(character&.ability&.wisdom_mod)
+    .char__val--chr = character.ability&.charisma&.to_i
+    .char__val--chr-mod = format_modifier(character&.ability&.charisma_mod)
+    .char__val--hp
+      small HP
+      br
+      span<> = character.hp_current
+      span
+        | /
+      span< = character.hp_max
+    .char__val--xp
+      small XP:
+      span< = character.xp
+    .char__val--ac
+      small Armor Class
+      br
+      span< = character.armor_class || '0'
+

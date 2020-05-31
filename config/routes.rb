@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :characters
   root 'landing_pages#index'
 
   get 'license' => 'landing_pages#license'

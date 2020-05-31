@@ -3,6 +3,48 @@ class Character < ApplicationRecord
 
   has_many :progressions
 
+  has_one_attached :avatar
+
+  validates :alignment,
+    :dnd_class,
+    :race,
+    :background,
+    :name,
+    presence: true
+
+  validates :name,
+    uniqueness: {
+      :scope => :user_id,
+      :message => 'was already used for another character you have.'
+    }
+
+  enum alignment: {
+    'Lawful Good': 'Lawful Good',
+    'Neutral Good': 'Neutral Good',
+    'Chaotic Good': 'Chaotic Good',
+    'Lawful Neutral': 'Lawful Neutral',
+    'Neutral': 'Neutral',
+    'Chaotic Neutral': 'Chaotic Neutral',
+    'Lawful Evil': 'Lawful Evil',
+    'Neutral Evil': 'Neutral Evil',
+    'Chaotic Evil': 'Chaotic Evil'
+  }
+
+  enum dnd_class: {
+    'Barbarian': 'Barbarian',
+    'Bard': 'Bard',
+    'Cleric': 'Cleric',
+    'Druid': 'Druid',
+    'Fighter': 'Fighter',
+    'Wizard': 'Wizard',
+    'Monk': 'Monk',
+    'Paladin': 'Paladin',
+    'Ranger': 'Ranger',
+    'Sorcerer': 'Sorcerer',
+    'Rogue': 'Rogue',
+    'Warlock': 'Warlock'
+  }
+
   enum race: {
     'Dragonborn': 'Dragonborn',
     'Dwarf': 'Dwarf',
