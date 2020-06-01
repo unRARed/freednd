@@ -53,6 +53,7 @@ group :test do
   gem 'webdrivers'
   gem 'factory_bot_rails'
   gem 'pundit-matchers', '~> 1.6.0'
+  gem 'coveralls', require: false
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
