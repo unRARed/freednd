@@ -1,6 +1,6 @@
 h1.title.is-1.has-text-centered My Characters
 - @characters.each_slice(5) do |character_slice|
-  .columns
+  .columns.is-centered
     - character_slice.each do |character|
       .column.is-one-fifth
         = link_to character_path(character)
