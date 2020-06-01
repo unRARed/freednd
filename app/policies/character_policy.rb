@@ -27,9 +27,13 @@ class CharacterPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_content_field?
+    edit?
+  end
+
   class Scope < Scope
     def resolve
-      scope.all
+      scope.where(user: @user)
     end
   end
 end

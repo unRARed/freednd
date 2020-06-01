@@ -14,6 +14,16 @@ class Character < ApplicationRecord
     :charisma
   ]
 
+  RP_FIELDS = [
+    :appearance,
+    :backstory,
+    :personality,
+    :ideals,
+    :bonds,
+    :flaws,
+    :other_traits
+  ]
+
   validates :alignment,
     :dnd_class,
     :race,

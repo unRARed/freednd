@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require('trumbowyg/dist/trumbowyg.min')
 
 function importAll (r) { r.keys().forEach(r) }
 importAll(require.context('../modules/', true, /\.js$/))

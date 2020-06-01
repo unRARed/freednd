@@ -1,0 +1,15 @@
+.card
+  .card-header
+    .card-header-title #{@field&.titlecase} for #{@character.name}
+  .card-content
+    .content
+      = form_for @character do |form|
+        .field
+          .control.has-icons-left
+            = form.text_area @field,
+              class: 'textarea wysiwyg',
+              rows: 10,
+              required: true
+        .field.pt2
+          .control
+            = form.submit class: 'button is-success is-medium'

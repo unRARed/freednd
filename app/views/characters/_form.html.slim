@@ -4,9 +4,9 @@
       = form.label :name, class: 'label'
       .control.has-icons-left
         = form.text_field :name,
-          class: 'input',
+          class: 'input is-medium',
           required: true
-        span.icon.is-small.is-left
+        span.icon.is-medium.is-left
           i.fas.fa-dice-d20
     .file.has-name.is-primary.is-fullwidth.is-medium
       = form.label :avatar, class: 'file-label'
@@ -16,6 +16,8 @@
             i.fas.fa-upload
           span.file-label Choose Avatar
         span.file-name
+          - if @character.avatar.attached?
+            = @character.avatar.attachment.filename
     small.has-text-grey-lighter
       | (Portrait Perspective)
     hr
@@ -26,7 +28,10 @@
           .control.has-icons-left
             .select
               = form.select :dnd_class,
-                options_for_select(Character.dnd_classes),
+                options_for_select(\
+                  Character.dnd_classes,
+                  selected: @character.dnd_class\
+                ),
                 { prompt: ' - Choose Class - ' },
                 required: true
             span.icon.is-small.is-left
@@ -37,7 +42,10 @@
           .control.has-icons-left
             .select
               = form.select :race,
-                options_for_select(Character.races),
+                options_for_select(\
+                  Character.races,
+                  selected: @character.race\
+                ),
                 { prompt: ' - Choose Race - ' },
                 required: true
             span.icon.is-small.is-left
@@ -49,7 +57,10 @@
           .control.has-icons-left
             .select
               = form.select :background,
-                options_for_select(Character.backgrounds),
+                options_for_select(\
+                  Character.backgrounds,
+                  selected: @character.background\
+                ),
                 { prompt: ' - Choose Background - ' },
                 required: true
             span.icon.is-small.is-left
@@ -60,7 +71,10 @@
           .control.has-icons-left
             .select
               = form.select :alignment,
-                options_for_select(Character.alignments),
+                options_for_select(\
+                  Character.alignments,
+                  selected: @character.alignment\
+                ),
                 { prompt: ' - Choose Alignment - ' },
                 required: true
             span.icon.is-small.is-left

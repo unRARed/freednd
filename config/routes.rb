@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  resources :characters
   root 'landing_pages#index'
-
   get 'license' => 'landing_pages#license'
+
+  resources :characters
+  get 'characters/:id/rp/:field' => 'characters#edit_content_field',
+    as: 'edit_character_content_field'
 
   ###################
   ## User Sessions ##

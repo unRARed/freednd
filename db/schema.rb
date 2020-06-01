@@ -51,15 +51,9 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.string "race", null: false
     t.string "background", null: false
     t.string "alignment", null: false
-    t.decimal "height", precision: 6, scale: 2
-    t.decimal "weight", precision: 8, scale: 2
-    t.integer "age"
     t.string "appearance"
     t.string "backstory"
     t.string "personality"
-    t.string "allies"
-    t.string "organizations"
-    t.text "languages"
     t.text "ideals"
     t.text "bonds"
     t.text "flaws"

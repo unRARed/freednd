@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    = render partial: 'layouts/meta'
+  body
+    = render partial: 'layouts/navigation'
+    main
+      = render partial: 'layouts/flash'
+      .section
+        .columns
+          .column.is-one-quarter
+            = link_to character_path(@character)
+              = render partial: 'characters/card',
+                locals: { character: @character }
+          .column.is-half
+            = yield
+          .column.is-one-quarter
+            .aside
+              = yield :menu
+    = render partial: 'layouts/footer'

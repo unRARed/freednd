@@ -1,0 +1,150 @@
+button[class^="trumbowyg-"] {
+  @extend .fa !optional;
+  @extend .fas !optional;
+  &:before {
+    font-family: 'Font Awesome 5 Free';
+  }
+}
+
+.trumbowyg-viewHTML-button:after {
+	content: "\f121";
+}
+
+.trumbowyg-undo-button:after {
+	content: "\f0e2";
+}
+
+.trumbowyg-redo-button:after {
+	content: "\f01e";
+}
+
+.trumbowyg-formatting-button:before {
+	content: "\f1dd";
+}
+
+.trumbowyg-strong-button:after {
+	content: "\f032";
+}
+
+.trumbowyg-em-button:after {
+	content: "\f033";
+}
+
+.trumbowyg-del-button:after {
+	content: "\f0cc";
+}
+
+.trumbowyg-superscript-button:after {
+	content: "\f12b";
+}
+
+.trumbowyg-subscript-button:after {
+	content: "\f12c";
+}
+
+.trumbowyg-link-button:before {
+	content: "\f0c1";
+}
+
+.trumbowyg-insertImage-button:after {
+	content: "\f03e";
+}
+
+.trumbowyg-justifyLeft-button:after {
+	content: "\f036";
+}
+
+.trumbowyg-justifyCenter-button:after {
+	content: "\f037";
+}
+
+.trumbowyg-justifyRight-button:after {
+	content: "\f038";
+}
+
+.trumbowyg-justifyFull-button:after {
+	content: "\f039";
+}
+
+.trumbowyg-unorderedList-button:after {
+	content: "\f03a";
+}
+
+.trumbowyg-orderedList-button:after {
+	content: "\f0cb";
+}
+
+.trumbowyg-horizontalRule-button:after {
+	content: "\f068";
+}
+
+.trumbowyg-removeformat-button:after {
+	content: "\f12d";
+}
+
+.trumbowyg-fullscreen-button:after {
+	content: "\f0b2";
+}
+
+.trumbowyg-bold-button:after {
+	content: "\f032";
+}
+
+.trumbowyg-italic-button:after {
+	content: "\f033";
+}
+
+.trumbowyg-underline-button:after {
+	content: "\f0cd";
+}
+
+.trumbowyg-strikethrough-button:after {
+	content: "\f0cc";
+}
+
+.trumbowyg-foreColor-button:before {
+	content: "\f031";
+}
+
+.trumbowyg-backColor-button:before {
+	content: "\f031";
+	color: #ecf0f1;
+	background-color: #555555;
+	padding: 1px;
+	line-height: 200%;
+}
+
+
+/*===== DROPDOWN BUTTONS =====*/
+
+.trumbowyg-p-dropdown-button:before {
+	content: "\f1dd";
+	margin-right: 10px;
+}
+
+.trumbowyg-blockquote-dropdown-button:before {
+	content: "\f10d";
+	margin-right: 10px;
+}
+
+.trumbowyg-h1-dropdown-button:before,
+.trumbowyg-h2-dropdown-button:before,
+.trumbowyg-h3-dropdown-button:before,
+.trumbowyg-h4-dropdown-button:before {
+	content: "\f1dc";
+	margin-right: 10px;
+}
+
+.trumbowyg-createLink-dropdown-button:before {
+	content: "\f0c1";
+	margin-right: 10px;
+}
+
+.trumbowyg-unlink-dropdown-button:before {
+	content: "\f127";
+	margin-right: 10px;
+}
+
+.trumbowyg-button-group {
+  @extend .fas;
+}

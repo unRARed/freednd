@@ -5,11 +5,7 @@ html
   body
     = render partial: 'layouts/navigation'
     main
-      .section
-        - flash.each do |key, value|
-          div class="notification is-light is-#{key}"
-            button.delete
-            = value
+      = render partial: 'layouts/flash'
       .section
         = yield
     = render partial: 'layouts/footer'

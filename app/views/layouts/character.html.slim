@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    = render partial: 'layouts/meta'
+  body
+    = render partial: 'layouts/navigation'
+    main
+      = render partial: 'layouts/flash'
+      .section
+        .columns
+          .column.is-one-fifth
+            = link_to character_path(@character)
+              = render partial: 'characters/card',
+                locals: { character: @character }
+            = link_to 'Edit Character',
+              edit_character_path(@character),
+              class: 'button is-info is-medium'
+            .dropdown.is-full-width.pt3
+              .dropdown-trigger
+                button(
+                  class="button"
+                  aria-haspopup="true"
+                  aria-controls="dropdown-menu"
+                )
+                  span Edit RPG Meta
+                  span.icon.is-small
+                  i.fas.fa-angle-down aria-hidden="true"
+              .dropdown-menu#dropdown-menu role="menu"
+                .dropdown-content
+                  - Character::RP_FIELDS.each do |field|
+                      = link_to "Edit #{field.to_s.titleize}",
+                        edit_character_content_field_path(\
+                          @character, field),
+                        class: 'dropdown-item'
+          .column.is-four-fifths
+            = yield
+    = render partial: 'layouts/footer'

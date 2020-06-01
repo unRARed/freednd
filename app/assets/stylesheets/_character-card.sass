@@ -4,9 +4,8 @@
   margin-bottom: 24px
   display: inline-block
   position: relative
-  width: 480px
-  height: 720px
-  box-shadow: 1px 3px 7px #333
+  width: 100%
+  box-shadow: 1px 3px 7px #999
   &:before
     content: ''
     position: absolute
@@ -41,38 +40,38 @@
     top: 27%
     left: 20%
   .char__val--str-mod
-    top: 31.4%
+    top: 31.6%
     left: 21.5%
   .char__val--dex
     top: 39%
     left: 15%
   .char__val--dex-mod
-    top: 43.7%
+    top: 43.9%
     left: 17%
   .char__val--con
     top: 51.5%
     left: 12%
   .char__val--con-mod
-    top: 56.1%
+    top: 56.4%
     left: 14.3%
   .char__val--int
     top: 64%
     left: 10%
   .char__val--int-mod
-    top: 68.7%
-    left: 12.5%
+    top: 68.9%
+    left: 12.4%
   .char__val--wis
     top: 76.4%
     left: 9%
   .char__val--wis-mod
-    top: 81.1%
+    top: 81.4%
     left: 11.6%
   .char__val--chr
     top: 88.9%
     left: 9%
   .char__val--chr-mod
     top: 93.7%
-    left: 11%
+    left: 11.5%
   .char__val--hp
     top: 8%
     left: 4%
@@ -86,11 +85,20 @@
     padding: 2px 12px
     z-index: 1
     border-radius: 8px 0 0 0
+  &.char--progression
+    &:before
+      background-image: url("#{asset_path('progression-card.svg')}")
 
-@media (max-width: 540px)
+.column
+  .char__name
+    font-size: 21px
+  [class^="char__val--"]
+    font-size: 18px !important
+  [class$="-mod"]
+    font-size: 14px !important
+
+@media (max-width: 768px)
   .char
-    width: 320px
-    height: 480px
     .char__name
       font-size: 21px
   [class^="char__val--"]

@@ -1,16 +1,11 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: [:show, :edit, :update, :destroy]
+  before_action :set_character,
+    only: [:show, :edit, :update, :destroy, :edit_content_field]
+  layout 'character', except: [:index, :new]
 
   # GET /characters
-  # GET /characters.json
   def index
-    @characters = Character.all
-    policy_scope(@characters)
-  end
-
-  # GET /characters/1
-  # GET /characters/1.json
-  def show
+    @characters = policy_scope(Character.all)
   end
 
   # GET /characters/new
@@ -19,14 +14,15 @@ class CharactersController < ApplicationController
     authorize(@character)
   end
 
-  # GET /characters/1/edit
-  def edit
+  def edit_content_field
+    return redirect_to(
+      character_path(@character)
+    ) unless Character::RP_FIELDS.include?(params[:field]&.to_sym)
+    @field = params[:field]
   end
 
-  # POST /characters
-  # POST /characters.json
   def create
-    @character = Character.new(base_params)
+    @character = Character.new(character_params)
     authorize(@character)
     @character.user = current_user
     return render :new unless @character.save
@@ -34,22 +30,12 @@ class CharactersController < ApplicationController
       notice: 'Character was successfully created.'
   end
 
-  # PATCH/PUT /characters/1
-  # PATCH/PUT /characters/1.json
   def update
-    respond_to do |format|
-      if @character.update(character_params)
-        format.html { redirect_to @character, notice: 'Character was successfully updated.' }
-        format.json { render :show, status: :ok, location: @character }
-      else
-        format.html { render :edit }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
-      end
-    end
+    return render :show unless @character.update(character_params)
+    redirect_to @character,
+      notice: 'Character was successfully updated.'
   end
 
-  # DELETE /characters/1
-  # DELETE /characters/1.json
   def destroy
     @character.destroy
     respond_to do |format|
@@ -58,14 +44,14 @@ class CharactersController < ApplicationController
     end
   end
 
-  private
+private
     # Use callbacks to share common setup or constraints between actions.
     def set_character
       @character = Character.find(params[:id])
       authorize(@character)
     end
 
-    def base_params
+    def character_params
       params.require(:character).
         permit(
           :name,
@@ -73,11 +59,14 @@ class CharactersController < ApplicationController
           :dnd_class,
           :race,
           :background,
-          :alignment
+          :alignment,
+          :appearance,
+          :backstory,
+          :personality,
+          :ideals,
+          :bonds,
+          :flaws,
+          :other_traits
         )
-    end
-
-    def appearance_params
-
     end
 end

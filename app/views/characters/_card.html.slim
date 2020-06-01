@@ -1,23 +1,23 @@
-.char
+div class="char#{' char--progression' if character.progressions.any?}"
   .char__name
     .char__name__text = character.name.truncate(25)
   - if character.avatar.attached?
     img.char__avatar src="#{url_for(character.portrait)}"
   - else
     img.char__avatar src="#{asset_path('avatar-missing.jpg')}"
-  .char__val--str = character.strength&.to_i
-  .char__val--str-mod = format_modifier(character.strength_mod)
-  .char__val--dex = character.dexterity&.to_i
-  .char__val--dex-mod = format_modifier(character.dexterity_mod)
-  .char__val--con = character.constitution&.to_i
-  .char__val--con-mod = format_modifier(character.constitution_mod)
-  .char__val--int = character.intelligence&.to_i
-  .char__val--int-mod = format_modifier(character.intelligence_mod)
-  .char__val--wis = character.wisdom&.to_i
-  .char__val--wis-mod = format_modifier(character.wisdom_mod)
-  .char__val--chr = character.charisma&.to_i
-  .char__val--chr-mod = format_modifier(character.charisma_mod)
   - if character.progressions.any?
+    .char__val--str = character.strength&.to_i
+    .char__val--str-mod = format_modifier(character.strength_mod)
+    .char__val--dex = character.dexterity&.to_i
+    .char__val--dex-mod = format_modifier(character.dexterity_mod)
+    .char__val--con = character.constitution&.to_i
+    .char__val--con-mod = format_modifier(character.constitution_mod)
+    .char__val--int = character.intelligence&.to_i
+    .char__val--int-mod = format_modifier(character.intelligence_mod)
+    .char__val--wis = character.wisdom&.to_i
+    .char__val--wis-mod = format_modifier(character.wisdom_mod)
+    .char__val--chr = character.charisma&.to_i
+    .char__val--chr-mod = format_modifier(character.charisma_mod)
     .char__val--hp
       small HP
       br
