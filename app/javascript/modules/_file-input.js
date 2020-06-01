@@ -1,4 +1,4 @@
-$(function () {
+$(document).on('turbolinks:load', function() {
   const fileInput = document.querySelector('.file input[type=file]');
   if (!fileInput) { return; }
   fileInput.onchange = () => {
