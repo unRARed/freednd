@@ -1,0 +1,44 @@
+h1.title.is-1.has-text-centered My Account
+.columns
+  .column.is-one-quarter
+    .box
+      .menu
+        p.menu-label My Characters
+        ul.menu-list
+          - if current_user.characters.any?
+            - current_user.characters.each do |character|
+              li
+                = link_to character.name, character_path(character)
+      .pt3.has-text-centered
+        = link_to 'Create new Character', new_character_path,
+          class: 'button is-primary'
+  .column.is-three-quarters
+    .box
+      - if current_user.campaigns.any?
+        .menu
+          p.menu-label Campaigns
+          ul.menu-list
+            - current_user.campaigns.each do |campaign|
+              li
+                = link_to campaign_path(campaign)
+                  p
+                    strong = campaign.name
+                    br = campaign.description
+      .pt3.has-text-centered
+        = link_to 'DM a new Campaign', new_campaign_path,
+          class: 'button is-primary'
+    - if current_user.character_campaigns.any?
+      .box
+        .menu
+          p.menu-label Character Campaigns
+          - if current_user.character_campaigns.any?
+            ul.menu-list
+              - current_user.character_campaigns.each do |campaign|
+                li
+                  = link_to campaign_path(campaign)
+                    p
+                      strong = campaign.name
+                      br = campaign.description
+        .pt3.has-text-centered
+          = link_to 'Join a Campaign', campaigns_path,
+            class: 'button is-primary'

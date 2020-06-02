@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.bigint "user_id"
     t.string "name"
     t.string "description"
+    t.boolean "is_locked"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_campaigns_on_user_id"

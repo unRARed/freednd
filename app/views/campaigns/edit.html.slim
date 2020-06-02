@@ -1,0 +1,7 @@
+.columns
+  .column.is-three-fifths.is-offset-one-fifth
+    .card
+      .card-header
+        .card-header-title Edit Campaign
+      .card-content
+        = render partial: 'form', locals: { record: @campaign }

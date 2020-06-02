@@ -14,8 +14,8 @@
         span aria-hidden="true"
   .navbar-menu
     .navbar-start
-      - if signed_in?
-        .navbar-item = link_to "My Characters", characters_path
+      - if signed_in? && !current_page?(account_path)
+        .navbar-item = link_to "My Account", account_path
     .navbar-end
       .navbar-item
         - if signed_in?

@@ -1,11 +1,3 @@
-= content_for :menu do
-  p.menu-label Role Playing Elements
-  ul.menu-list
-    li
-      - Character::RP_FIELDS.each do |field|
-          = link_to "Edit #{field.to_s.titleize}",
-            edit_character_content_field_path(\
-              @character, field)
 - Character::RP_FIELDS.each_with_index do |field, index|
   - if @character[field].present?
     div class="card#{' mt4' if index > 0}"

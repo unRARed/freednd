@@ -1,0 +1,13 @@
+h1.title.is-1.has-text-centered = @campaign.name
+.columns
+  .column.is-one-quarter
+    .box
+      = @campaign.description
+  .column.is-three-quarters
+    - @campaign.characters.each_slice(3) do |character_slice|
+      .columns.is-centered
+        - character_slice.each do |character|
+          .column.is-one-third
+            = link_to character_path(character)
+              = render partial: 'characters/card',
+                locals: { character: character }

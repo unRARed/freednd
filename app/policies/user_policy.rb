@@ -3,6 +3,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def account?
+    user.present?
+  end
+
   class Scope < Scope
     def resolve
       scope.all

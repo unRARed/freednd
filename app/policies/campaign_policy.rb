@@ -1,10 +1,10 @@
-class CharacterPolicy < ApplicationPolicy
+class CampaignPolicy < ApplicationPolicy
   def index?
-    false
+    create?
   end
 
   def show?
-    edit? || @record.party_members.include?(user)
+    edit? || @record.users.include?(user)
   end
 
   def create?
@@ -15,6 +15,7 @@ class CharacterPolicy < ApplicationPolicy
     create?
   end
 
+  # only DM can edit/update
   def update?
     edit?
   end
@@ -27,8 +28,8 @@ class CharacterPolicy < ApplicationPolicy
     edit?
   end
 
-  def edit_content_field?
-    edit?
+  def join?
+    create?
   end
 
   class Scope < Scope

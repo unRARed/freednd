@@ -2,6 +2,14 @@ class Character < ApplicationRecord
   belongs_to :user
 
   has_many :progressions
+  has_many :parties,
+    :through => :progressions
+  has_many :campaigns,
+    :through => :parties
+  has_many :party_members,
+    -> { distinct },
+    :through => :parties,
+    :source => :users
 
   has_one_attached :avatar
 

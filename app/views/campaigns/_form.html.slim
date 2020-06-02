@@ -1,0 +1,23 @@
+.content
+  = form_for record do |form|
+    .field
+      = form.label :name, class: 'label'
+      .control.has-icons-left
+        = form.text_field :name,
+          class: 'input is-medium',
+          required: true
+        span.icon.is-medium.is-left
+          i.fas.fa-dice-d20
+    .field
+      .control.has-icons-left
+        = form.text_area :description,
+          class: 'textarea',
+          rows: 10,
+          required: true
+    .field
+      = form.label :is_locked, class: 'checkbox'
+        = form.check_box :is_locked
+        span.mh3.is-size-6 Lock this campaign from other users joining?
+    .field.pt2
+      .control
+        = form.submit class: 'button is-success is-medium'

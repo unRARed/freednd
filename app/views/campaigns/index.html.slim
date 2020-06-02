@@ -1,0 +1,22 @@
+h1.title.is-1.has-text-centered Open Campaigns
+- @campaigns.each_slice(3) do |campaign_slice|
+  .columns.is-centered
+    - campaign_slice.each do |campaign|
+      .column
+        .box
+          strong = campaign.name
+          br = campaign.description
+          - unless campaign.users.include? current_user
+            = form_with(\
+              url: join_campaign_path(campaign), method: 'POST'\
+            ) do |form|
+              .has-text-centered.mt3
+                .field.has-addons
+                  .control.is-expanded
+                    .select.is-fullwidth
+                      = form.select :character_id,
+                        options_for_select(current_user.available_characters.map{|c| [c.name, c.id]}),
+                        { prompt: ' - Choose Character - ' },
+                        required: true
+                  .control
+                  = form.submit 'Join Campaign', class: 'button is-success'

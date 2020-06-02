@@ -1,0 +1,7 @@
+.columns
+  .column.is-half.is-offset-one-quarter
+    .card
+      .card-header
+        .card-header-title Tell us more about this Campaign
+      .card-content
+        = render partial: 'form', locals: { record: @campaign }
