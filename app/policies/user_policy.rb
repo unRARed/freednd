@@ -1,4 +1,8 @@
 class UserPolicy < ApplicationPolicy
+  def sign_up?
+    create?
+  end
+
   def create?
     true
   end
