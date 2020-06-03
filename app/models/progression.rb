@@ -5,6 +5,19 @@ class Progression < ApplicationRecord
   belongs_to :character
   belongs_to :party
 
+  has_one :campaign,
+    -> { distinct },
+    :through => :party
+
+  has_one :user,
+    -> { distinct },
+    :through => :character
+
+  has_one :dungeon_master,
+    -> { distinct },
+    :through => :campaign,
+    :source => :user
+
   # statistics
   has_many :skills
   has_many :saving_throws
@@ -13,6 +26,12 @@ class Progression < ApplicationRecord
   # equipment, languages, spells, etc.
   has_many :progression_items
   has_many :spells, :through => :progression_items
+
+  validates :character,
+    :uniqueness => {
+      :scope => :party,
+      :message => 'may only exist once in the Party.'
+    }
 
   after_validation :initialize_statistics
 

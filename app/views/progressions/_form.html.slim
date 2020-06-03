@@ -1,0 +1,68 @@
+.content
+  = form_for record do |form|
+    .columns
+      - Character::ABILITIES.each do |ability|
+        .column
+          .field
+            = form.label ability, class: 'label'
+            .control.has-icons-left
+              .select.is-large
+                = form.select ability,
+                  options_for_select(\
+                    (-10..20).to_a,
+                    selected: (@progression.send(ability) || 0)\
+                  )
+              span.icon.is-small.is-left
+                i.fas.fa-dice-d20
+          .field
+            = form.label "#{ability}_mod",
+              "#{ability.to_s.titlecase} Modifier",
+              class: 'label'
+            .control.has-icons-left
+              .select.is-medium
+                = form.select "#{ability}_mod",
+                  options_for_select(\
+                    (-10..20).to_a,
+                    selected: (@progression.send("#{ability}_mod") || 0)\
+                  )
+              span.icon.is-small.is-left
+                i.fas.fa-dice-d20
+    hr
+    .columns
+      .column
+        .field
+          = form.label :armor_class, 'Armor Class', class: 'label'
+          .control.has-icons-left
+            .select.is-medium
+              = form.select :armor_class,
+                options_for_select(\
+                  (-10..20).to_a,
+                  selected: (@progression.armor_class || 0)\
+                )
+            span.icon.is-small.is-left
+              i.fas.fa-dice-d20
+      .column
+        .field
+          = form.label :initiative, class: 'label'
+          .control.has-icons-left
+            .select.is-medium
+              = form.select :initiative,
+                options_for_select(\
+                  (-10..20).to_a,
+                  selected: (@progression.initiative || 0)\
+                )
+            span.icon.is-small.is-left
+              i.fas.fa-dice-d20
+      .column
+        .field
+          = form.label :speed, class: 'label'
+          .control.has-icons-left
+            = form.text_field :speed,
+              class: 'input is-medium',
+              placeholder: 'Type Character’s speed.'
+            span.icon.is-medium.is-left
+              i.fas.fa-dice-d20
+    .field.pt2
+      .control
+        = form.submit value: 'Save Progression',
+          class: 'button is-success is-medium'

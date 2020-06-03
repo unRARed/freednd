@@ -7,10 +7,17 @@ Rails.application.routes.draw do
     as: 'edit_character_content_field'
 
   resources :campaigns
+  resources :progressions, only: [:update]
+  get 'campaigns/:campaign_id/progressions/:id/abilities' =>
+    'progressions#edit_abilities',
+    as: 'edit_campaign_progression_abilities'
+  get 'campaigns/:campaign_id/status' =>
+    'progressions#edit_status',
+    as: 'edit_campaign_progression_status'
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
 
-  ################### 
+  ###################
   ## User Sessions ##
   ###################
   resources :passwords,

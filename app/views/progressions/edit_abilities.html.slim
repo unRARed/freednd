@@ -1,0 +1,5 @@
+.card
+  .card-header
+    .card-header-title Abilities for #{@progression.character.name}
+  .card-content
+    = render partial: 'form', locals: { record: @progression }

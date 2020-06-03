@@ -146,12 +146,6 @@ class Character < ApplicationRecord
     'Waterdhavian Noble': 'Waterdhavian Noble'
   }
 
-  ABILITIES.each do |ability|
-    define_method(:"#{ability}_mod") do
-      get_value_from_progression(ability)
-    end
-  end
-
   (ABILITIES + [
     :explicit_level,
     :experience,
@@ -167,6 +161,13 @@ class Character < ApplicationRecord
     end
   end
 
+  ABILITIES.each do |ability|
+    define_method(:"#{ability}_mod") do
+      get_value_from_progression("#{ability}_mod")
+    end
+  end
+
+
   def portrait
     avatar.variant(
       auto_orient: true,
@@ -179,6 +180,7 @@ class Character < ApplicationRecord
 private
 
   def get_value_from_progression(key)
-    '0'
+    return '0' unless progressions.any?
+    progressions.last[key] || '0'
   end
 end

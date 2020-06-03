@@ -6,18 +6,11 @@ div class="char#{' char--progression' if character.progressions.any?}"
   - else
     img.char__avatar src="#{asset_path('avatar-missing.jpg')}"
   - if character.progressions.any?
-    .char__val--str = character.strength&.to_i
-    .char__val--str-mod = format_modifier(character.strength_mod)
-    .char__val--dex = character.dexterity&.to_i
-    .char__val--dex-mod = format_modifier(character.dexterity_mod)
-    .char__val--con = character.constitution&.to_i
-    .char__val--con-mod = format_modifier(character.constitution_mod)
-    .char__val--int = character.intelligence&.to_i
-    .char__val--int-mod = format_modifier(character.intelligence_mod)
-    .char__val--wis = character.wisdom&.to_i
-    .char__val--wis-mod = format_modifier(character.wisdom_mod)
-    .char__val--chr = character.charisma&.to_i
-    .char__val--chr-mod = format_modifier(character.charisma_mod)
+    - Character::ABILITIES.each do |ability|
+      div class="char__val--#{ability[0..2]}"
+        = format_modifier(character.send(ability))
+      div class="char__val--#{ability[0..2]}-mod"
+        = format_modifier(character.send("#{ability}_mod"))
     .char__val--hp
       small HP
       br

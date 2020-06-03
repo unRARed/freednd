@@ -1,0 +1,9 @@
+- if @character.campaigns.any?
+  div class="card"
+    .card-header
+      .card-header-title Campaign Progression
+    - @character.progressions.each do |progression|
+      .card-content
+        .box Abilities
+        .box Abilities
+        = link_to progression.campaign.name, '#'
