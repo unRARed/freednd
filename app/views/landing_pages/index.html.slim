@@ -1,2 +1,12 @@
-h1 LandingPages#index
-p Find me in app/views/landing_pages/index.html.slim
+.has-text-centered
+  i.fas.fa-dice-d20 style="font-size: 3em;"
+  h1.is-size-1 FreeDnD
+  p.mb4 When you want to play DnD... for free!
+  = link_to 'Sign up today', sign_up_path,
+    class: 'button is-success is-large'
+  p.has-text-grey.mt2
+    small
+      span> Or
+      = link_to 'sign in here', sign_in_path
+      span<> if you’ve “been there, done that”.
+      i.far.fa-smile
