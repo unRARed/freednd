@@ -1,0 +1,71 @@
+css:
+  #explicit-level-field {
+    display: #{ @progression.explicit_level.present? ? 'block' : 'none'}; }
+  #explicit-level-trigger { display: #{ @progression.explicit_level.present? ? 'none' : 'block'}; }
+.card
+  .card-header
+    .card-header-title Status for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        .columns.is-centered
+          .column.is-two-thirds
+            .message.is-large.is-success
+              .message-body
+                .field
+                  = form.label :experience, class: 'label'
+                    span Experience
+                    - unless @progression.explicit_level.present?
+                      span.has-text-grey<
+                        | (calculated level)
+                  .control.has-icons-left
+                    = form.text_field :experience,
+                      class: 'input is-medium'
+                    span.icon.is-small.is-left
+                      i.fa.fa-level-up
+                p#explicit-level-trigger
+                  span.is-size-6> Dungeon Master tracks by level?
+                  span.button.is-small
+                    span Set level explicitly
+                #explicit-level-field.field
+                  = form.label :explicit_level, class: 'label'
+                  .control.has-icons-left
+                    = form.text_field :explicit_level,
+                      class: 'input is-medium'
+                    span.icon.is-medium.is-left
+                      i.fa.fa-level-up
+        hr
+        .columns.is-centered
+          .column.is-one-third
+            .message.is-primary.is-large
+              .message-body
+                .field.has-addons
+                  .control
+                    = form.label :hit_points,
+                      'Current HP', class: 'label'
+                    = form.text_field :hit_points,
+                      class: 'input is-large'
+                  .control
+                    = form.label :hit_points_max,
+                      'HP Max', class: 'label'
+                    = form.text_field :hit_points_max,
+                      class: 'input is-large'
+          .column.is-one-third
+            .message.is-large
+              .message-body
+                .field
+                  = form.label :inspiration, class: 'label'
+                  .control.has-icons-left
+                    = form.text_field :inspiration,
+                      class: 'input is-large'
+                    span.icon.is-small.is-left
+                      i.fas.fa-thumbs-up
+        .control
+          = form.submit class: 'button is-success is-medium'
+
+- unless @progression.explicit_level.present?
+  javascript:
+    $('#explicit-level-trigger').find('.button').click(function () {
+      $('#explicit-level-field').show();
+      $('#explicit-level-trigger').remove();
+    });

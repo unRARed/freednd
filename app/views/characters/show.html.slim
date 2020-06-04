@@ -3,14 +3,21 @@
     .card-header
       .card-header-title Campaign Progression
     .card-content
-      .menu
-        ul.menu-list
-          li TODO: Show all the progression fields here...
+      .message
+        .message-body
           - @character.progressions.each do |progression|
-            li
-              = link_to progression.campaign.name,
+            h5 = progression.campaign.name
+            .buttons.has-addons.mt3
+              = link_to 'Status',
+                edit_campaign_progression_status_path(\
+                  progression.campaign, progression\
+                ),
+                class: 'button'
+              = link_to 'Abilities',
                 edit_campaign_progression_abilities_path(\
-                  progression.campaign, progression)
+                  progression.campaign, progression\
+                ),
+                class: 'button'
 - Character::RP_FIELDS.each_with_index do |field, index|
   - if @character[field].present?
     div class="card#{' mt4' if index > 0}"

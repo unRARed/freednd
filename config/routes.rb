@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/abilities' =>
     'progressions#edit_abilities',
     as: 'edit_campaign_progression_abilities'
-  get 'campaigns/:campaign_id/status' =>
+  get 'campaigns/:campaign_id/progressions/:id/status' =>
     'progressions#edit_status',
     as: 'edit_campaign_progression_status'
   post 'campaigns/:id/join' => 'campaigns#join',
