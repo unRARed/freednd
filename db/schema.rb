@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
-  create_table "equipment", force: :cascade do |t|
+  create_table "dnd_equipment", force: :cascade do |t|
     t.string "name"
     t.string "variety"
     t.integer "weight"
@@ -74,11 +74,32 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "features", force: :cascade do |t|
+  create_table "dnd_features", force: :cascade do |t|
     t.string "name"
     t.integer "level"
     t.string "dnd_class"
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "dnd_spells", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "description"
+    t.integer "level"
+    t.string "level_conditions"
+    t.string "dnd_classes"
+    t.string "archetypes"
+    t.string "school"
+    t.string "casting_time"
+    t.string "range"
+    t.string "components"
+    t.string "material"
+    t.string "duration"
+    t.string "circles"
+    t.boolean "requires_concentration"
+    t.boolean "is_ritual"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -108,15 +129,19 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
 
   create_table "progression_items", force: :cascade do |t|
     t.bigint "progression_id"
-    t.bigint "spell_id"
     t.bigint "skill_id"
     t.bigint "saving_throw_id"
+    t.bigint "dnd_spell_id"
+    t.bigint "dnd_feature_id"
+    t.bigint "dnd_equipment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["dnd_equipment_id"], name: "index_progression_items_on_dnd_equipment_id"
+    t.index ["dnd_feature_id"], name: "index_progression_items_on_dnd_feature_id"
+    t.index ["dnd_spell_id"], name: "index_progression_items_on_dnd_spell_id"
     t.index ["progression_id"], name: "index_progression_items_on_progression_id"
     t.index ["saving_throw_id"], name: "index_progression_items_on_saving_throw_id"
     t.index ["skill_id"], name: "index_progression_items_on_skill_id"
-    t.index ["spell_id"], name: "index_progression_items_on_spell_id"
   end
 
   create_table "progressions", force: :cascade do |t|
@@ -166,27 +191,6 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "spells", force: :cascade do |t|
-    t.string "name"
-    t.string "slug"
-    t.string "description"
-    t.integer "level"
-    t.string "level_conditions"
-    t.string "dnd_classes"
-    t.string "archetypes"
-    t.string "school"
-    t.string "casting_time"
-    t.string "range"
-    t.string "components"
-    t.string "material"
-    t.string "duration"
-    t.string "circles"
-    t.boolean "requires_concentration"
-    t.boolean "is_ritual"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "statistics", force: :cascade do |t|
     t.string "type"
     t.string "name"
@@ -214,8 +218,10 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
   add_foreign_key "campaigns", "users"
   add_foreign_key "characters", "users"
   add_foreign_key "parties", "campaigns"
+  add_foreign_key "progression_items", "dnd_equipment", column: "dnd_equipment_id"
+  add_foreign_key "progression_items", "dnd_features"
+  add_foreign_key "progression_items", "dnd_spells"
   add_foreign_key "progression_items", "progressions"
-  add_foreign_key "progression_items", "spells"
   add_foreign_key "progression_items", "statistics", column: "saving_throw_id"
   add_foreign_key "progression_items", "statistics", column: "skill_id"
   add_foreign_key "progressions", "characters"

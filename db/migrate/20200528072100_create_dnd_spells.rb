@@ -1,6 +1,6 @@
-class CreateSpells < ActiveRecord::Migration[6.0]
+class CreateDnDSpells < ActiveRecord::Migration[6.0]
   def change
-    create_table :spells do |t|
+    create_table :dnd_spells do |t|
       t.string :name
       t.string :slug
       t.string :description

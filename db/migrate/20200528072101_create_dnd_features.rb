@@ -1,6 +1,6 @@
-class CreateFeatures < ActiveRecord::Migration[6.0]
+class CreateDnDFeatures < ActiveRecord::Migration[6.0]
   def change
-    create_table :features do |t|
+    create_table :dnd_features do |t|
       t.string :name
       t.integer :level
       t.string :dnd_class

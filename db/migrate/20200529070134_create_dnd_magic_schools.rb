@@ -1,4 +1,4 @@
-class CreateMagicSchools < ActiveRecord::Migration[6.0]
+class CreateDnDMagicSchools < ActiveRecord::Migration[6.0]
   def change
     create_table :magic_schools do |t|
       t.string :name

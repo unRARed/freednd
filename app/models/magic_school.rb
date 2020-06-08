@@ -1,2 +1,0 @@
-class MagicSchool < ApplicationRecord
-end

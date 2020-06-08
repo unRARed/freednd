@@ -35,9 +35,9 @@ else
       break unless data['results']
 
       data['results'].each do |meta|
-        puts "Creating Spell: #{meta['name']}"
-        Spell.create! meta.
-          slice(*Spell.new.attributes.keys).
+        puts "Creating DnD::Spell: #{meta['name']}"
+        DnD::Spell.create! meta.
+          slice(*DnD::Spell.new.attributes.keys).
           merge(
             'slug' => meta['slug'],
             'school' => meta['school']['name'],
@@ -64,8 +64,8 @@ else
   spells_data = []
   data['results'].each do |hash|
     meta = query_dnd5eapi(hash['url'])
-    puts "Creating Feature: #{meta['name']}"
-    Feature.create!({
+    puts "Creating DnD::Feature: #{meta['name']}"
+    DnD::Feature.create!({
       'name' => meta['name'],
       'level' => meta['level'],
       'dnd_class' => meta['class']['name'],
