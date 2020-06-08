@@ -1,4 +1,7 @@
+require "sti_preload"
+
 class Statistic < ApplicationRecord
+  include StiPreload
   belongs_to :progression
 
   validates :name, :value,

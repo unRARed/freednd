@@ -26,6 +26,39 @@ end
 ## API Parsing ##
 #################
 seed_files = []
+
+if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb")
+  seed_files << "#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb"
+else
+  [
+    ['Condition', 'conditions'],
+    ['School', 'magic-schools'],
+    ['EquipmentCategory', 'equipment-categories'],
+    ['DamageType', 'damage-types'],
+    ['WeaponProperty', 'weapon-properties'],
+    ['Ability', 'ability-scores'],
+    ['Skill', 'skills']
+  ].each do |arr|
+    data = query_api(:dnd5eapi, "/api/#{arr[1]}")
+    data['results'].each do |hash|
+      meta = query_api(:dnd5eapi, hash['url'])
+      puts "Creating DnD::#{arr[0]}: #{meta['name']}"
+      "DnD::#{arr[0]}".constantize.create!({
+        'name' => meta['name'],
+        'slug' => meta['index'],
+        'description' => meta['desc'].class == Array ?
+          meta['desc'].map(&:inspect).join(', ') :
+          meta['desc'],
+        'parent_entity_id' => meta['ability_score'] ?
+          DnD::Ability.find_by(name: meta['ability_score']['name']).id :
+          nil
+      })
+      # prevent hammering
+      sleep 0.2
+    end
+  end
+end
+
 if File.exist?("#{Rails.root}/db/seeds/open5e_com_spells.rb")
   seed_files << "#{Rails.root}/db/seeds/open5e_com_spells.rb"
 else
@@ -76,13 +109,13 @@ else
   end
 end
 
-
 if seed_files.any?
   seed_files.each do |path_to_seed_file|
     puts "Seeding #{path_to_seed_file}"
     load(path_to_seed_file)
   end
 end
+
 
 users = []
 (1..3).to_a.map do |n|

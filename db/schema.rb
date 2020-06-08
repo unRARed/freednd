@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_065729) do
+ActiveRecord::Schema.define(version: 2020_06_08_061745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "dnd_entities", force: :cascade do |t|
+    t.string "type"
+    t.string "name"
+    t.string "slug"
+    t.string "description"
+    t.integer "parent_entity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "dnd_equipment", force: :cascade do |t|
     t.string "name"
     t.string "variety"
@@ -109,13 +119,6 @@ ActiveRecord::Schema.define(version: 2020_05_31_065729) do
     t.string "variety"
     t.string "script"
     t.string "dnd_races"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "magic_schools", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
