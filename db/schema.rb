@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_061745) do
+ActiveRecord::Schema.define(version: 2020_06_09_050836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,19 +76,44 @@ ActiveRecord::Schema.define(version: 2020_06_08_061745) do
   end
 
   create_table "dnd_equipment", force: :cascade do |t|
+    t.string "type"
     t.string "name"
-    t.string "variety"
+    t.string "slug"
     t.integer "weight"
+    t.string "cost_unit"
+    t.integer "cost_quantity"
     t.string "description"
+    t.integer "dnd_equipment_category_id"
+    t.string "armor_category"
+    t.integer "armor"
+    t.boolean "armor_awards_dex_bonus"
+    t.boolean "armor_has_stealth_disadvantage"
+    t.integer "armor_strength_minimum"
+    t.integer "armor_bonus_maximum"
+    t.string "weapon_category"
+    t.string "weapon_damage_die"
+    t.string "weapon_damage_bonus"
+    t.integer "weapon_range_normal"
+    t.integer "weapon_range_long"
+    t.integer "dnd_weapon_damage_type_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "dnd_features", force: :cascade do |t|
     t.string "name"
+    t.string "slug"
     t.integer "level"
-    t.string "dnd_class"
+    t.string "dnd_class_name"
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "dnd_proficiencies", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "category"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -21,6 +21,10 @@ def query_api(api, endpoint)
   JSON.parse(api_response&.body)
 end
 
+def seed_file(path)
+  puts "Seeding #{path}"
+  load(path)
+end
 
 #################
 ## API Parsing ##
@@ -28,7 +32,7 @@ end
 seed_files = []
 
 if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb")
-  seed_files << "#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb"
+  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb"
 else
   [
     ['Condition', 'conditions'],
@@ -59,8 +63,26 @@ else
   end
 end
 
+
+if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_proficiencies.rb")
+  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_proficiencies.rb"
+else
+  data = query_api(:dnd5eapi, '/api/proficiencies')
+  data['results'].each do |hash|
+    meta = query_api(:dnd5eapi, hash['url'])
+    puts "Creating DnD::Proficiency: #{meta['name']}"
+    DnD::Proficiency.create!({
+      'name' => meta['name'],
+      'slug' => meta['index'],
+      'category' => meta['type']
+    })
+    # prevent hammering
+    sleep 0.2
+  end
+end
+
 if File.exist?("#{Rails.root}/db/seeds/open5e_com_spells.rb")
-  seed_files << "#{Rails.root}/db/seeds/open5e_com_spells.rb"
+  seed_file "#{Rails.root}/db/seeds/open5e_com_spells.rb"
 else
   while true
     ('1'...'9999').to_a.each do |page|
@@ -91,32 +113,93 @@ else
 end
 
 if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_features.rb")
-  seed_files << "#{Rails.root}/db/seeds/dnd5eapi_co_features.rb"
+  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_features.rb"
 else
-  data = query_dnd5eapi('/api/features')
-  spells_data = []
+  data = query_api(:dnd5eapi, '/api/features')
   data['results'].each do |hash|
-    meta = query_dnd5eapi(hash['url'])
+    meta = query_api(:dnd5eapi, hash['url'])
     puts "Creating DnD::Feature: #{meta['name']}"
     DnD::Feature.create!({
       'name' => meta['name'],
+      'slug' => meta['index'],
       'level' => meta['level'],
-      'dnd_class' => meta['class']['name'],
-      'description' => meta['desc'].map(&:inspect).join(', ')
+      'description' => meta['desc'].class == Array ?
+        meta['desc'].map(&:inspect).join(', ') :
+        meta['desc'],
+      'dnd_class_name' => meta['class']['url'].split('/').last
     })
     # prevent hammering
     sleep 0.2
   end
 end
 
-if seed_files.any?
-  seed_files.each do |path_to_seed_file|
-    puts "Seeding #{path_to_seed_file}"
-    load(path_to_seed_file)
+if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_equipment.rb")
+  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_equipment.rb"
+else
+  data = query_api(:dnd5eapi, '/api/equipment')
+  data['results'].each do |hash|
+    meta = query_api(:dnd5eapi, hash['url'])
+    puts "Creating DnD::Equipment: #{meta['name']}"
+    if meta['armor_category']
+      DnD::Armor.create!({
+        'name' => meta['name'],
+        'slug' => meta['index'],
+        'weight' => meta['weight'],
+        'cost_unit' => meta['cost']['unit'],
+        'cost_quantity' => meta['cost']['quantity'],
+        'description' => meta['desc'].class == Array ?
+          meta['desc'].map(&:inspect).join(', ') :
+          meta['desc'],
+        'dnd_equipment_category_id' => DnD::EquipmentCategory.
+          find_by(name: meta['equipment_category']).id,
+        'armor_category' => meta['armor_category'],
+        'armor' => meta['armor_class']['base'],
+        'armor_awards_dex_bonus' => meta['armor_class']['dex_bonus'],
+        'armor_has_stealth_disadvantage' =>
+          meta['armor_class']['stealth_advantage'],
+        'armor_strength_minimum' => meta['str_minimum'],
+        'armor_bonus_maximum' => meta['armor_class']['max_bonus']
+      })
+    elsif meta['weapon_category']
+      DnD::Weapon.create!({
+        'name' => meta['name'],
+        'slug' => meta['index'],
+        'weight' => meta['weight'],
+        'cost_unit' => meta['cost']['unit'],
+        'cost_quantity' => meta['cost']['quantity'],
+        'description' => meta['desc'].class == Array ?
+          meta['desc'].map(&:inspect).join(', ') :
+          meta['desc'],
+        'dnd_equipment_category_id' => DnD::EquipmentCategory.
+          find_by(name: meta['equipment_category']).id,
+        'weapon_category' => meta['weapon_category'],
+        'weapon_damage_die' => meta['damage']['damage_dice'],
+        'weapon_damage_bonus' => meta['damage']['damage_bonus'],
+        'weapon_range_normal' => meta['range']['normal'],
+        'weapon_range_long' => meta['range']['long'],
+        'dnd_weapon_damage_type_id' => DnD::DamageType.find_by(
+          slug: meta['damage']['damage_type']['url'].split('/').last
+        ).id
+      })
+    else
+      DnD::Equipment.create!({
+        'name' => meta['name'],
+        'slug' => meta['index'],
+        'weight' => meta['weight'],
+        'cost_unit' => meta['cost']['unit'],
+        'cost_quantity' => meta['cost']['quantity'],
+        'description' => meta['desc'].class == Array ?
+          meta['desc'].map(&:inspect).join(', ') :
+          meta['desc'],
+        'dnd_equipment_category_id' => DnD::EquipmentCategory.
+          find_by(name: meta['equipment_category']).id
+      })
+    end
+    # prevent hammering
+    sleep 0.2
   end
 end
-
-
+byebug
 users = []
 (1..3).to_a.map do |n|
   users << User.create!(email: "user#{n}@freednd.com", password: 'pw')
