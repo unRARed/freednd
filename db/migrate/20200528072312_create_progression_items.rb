@@ -1,5 +1,7 @@
 class CreateProgressionItems < ActiveRecord::Migration[6.0]
   def change
+    # Generic "join model" of a Characters Progression
+    # to Spells, Features, Equipment, etc.
     create_table :progression_items do |t|
       t.belongs_to :progression, index: true, foreign_key: true
       t.belongs_to :skill,

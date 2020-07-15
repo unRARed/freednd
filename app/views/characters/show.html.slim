@@ -18,6 +18,16 @@
                   progression.campaign, progression\
                 ),
                 class: 'button'
+              = link_to 'Skills',
+                edit_campaign_progression_skills_path(\
+                  progression.campaign, progression\
+                ),
+                class: 'button'
+              = link_to 'Saving Throws',
+                edit_campaign_progression_saving_throws_path(\
+                  progression.campaign, progression\
+                ),
+                class: 'button'
 - Character::RP_FIELDS.each_with_index do |field, index|
   - if @character[field].present?
     div class="card#{' mt4' if index > 0}"

@@ -12,6 +12,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_skills?
+    edit?
+  end
+
   def edit?
     user.present? && @record.user == user
   end

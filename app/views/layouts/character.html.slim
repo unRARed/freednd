@@ -1,3 +1,4 @@
+- character = @character || @progression&.character
 doctype html
 html
   head
@@ -9,12 +10,12 @@ html
       .section
         .columns
           .column.is-one-fifth
-            = link_to character_path(@character)
+            = link_to character_path(character)
               = render partial: 'characters/card',
-                locals: { character: @character }
-            - if policy(@character).edit?
+                locals: { character: character }
+            - if policy(character).edit?
               = link_to 'Edit Character',
-                edit_character_path(@character),
+                edit_character_path(character),
                 class: 'button is-info is-medium'
               .dropdown.is-full-width.pt3
                 .dropdown-trigger
@@ -31,7 +32,7 @@ html
                     - Character::RP_FIELDS.each do |field|
                         = link_to "Edit #{field.to_s.titleize}",
                           edit_character_content_field_path(\
-                            @character, field),
+                            character, field),
                           class: 'dropdown-item'
           .column.is-four-fifths
             = yield

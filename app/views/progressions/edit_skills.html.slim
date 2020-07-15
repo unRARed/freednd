@@ -1,0 +1,26 @@
+.card
+  .card-header
+    .card-header-title Skills for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        - @progression.skills.each_slice(3) do |slice|
+          .columns
+            = form.fields_for :skills, slice do |ff|
+              .column
+                .field
+                  = ff.label ff.object.name, class: 'label'
+                  .control.has-icons-left
+                    = ff.number_field :value,
+                      class: 'input is-medium',
+                      required: true
+                    span.icon.is-medium.is-left
+                      i.fas.fa-dice-d20
+                .field
+                  = ff.label :is_proficient, class: 'checkbox'
+                    = ff.check_box :is_proficient
+                    span.mh3.is-size-6 Proficient?
+        .field.pt2
+          .control
+            = form.submit value: 'Save Progression',
+              class: 'button is-success is-medium'

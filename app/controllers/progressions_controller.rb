@@ -1,14 +1,11 @@
 class ProgressionsController < ApplicationController
-  before_action :set_progression,
-    only: [:update, :edit_abilities, :edit_status]
+  before_action :set_progression
   layout 'character'
 
   def edit_abilities
-    @character = @progression.character
   end
 
   def edit_status
-    @character = @progression.character
   end
 
   def update
@@ -52,7 +49,8 @@ private
         :wisdom,
         :wisdom_mod,
         :charisma,
-        :charisma_mod
+        :charisma_mod,
+        skills_attributes: [ :id, :value, :is_proficient ]
       )
   end
 end
