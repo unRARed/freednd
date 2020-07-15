@@ -36,6 +36,7 @@ class Progression < ApplicationRecord
   after_validation :initialize_statistics
 
   accepts_nested_attributes_for :skills, :allow_destroy => true
+  accepts_nested_attributes_for :saving_throws, :allow_destroy => true
 
   def level
     return explicit_level if explicit_level.present?

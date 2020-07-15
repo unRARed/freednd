@@ -16,6 +16,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_saving_throws?
+    edit?
+  end
+
   def edit?
     user.present? && @record.user == user
   end

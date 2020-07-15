@@ -1,12 +1,12 @@
 .card
   .card-header
-    .card-header-title Skills for #{@progression.character.name}
+    .card-header-title Saving Throws for #{@progression.character.name}
   .card-content
     .content
       = form_for @progression do |form|
-        - @progression.skills.each_slice(3) do |slice|
+        - @progression.saving_throws.each_slice(3) do |slice|
           .columns
-            = form.fields_for :skills, slice do |ff|
+            = form.fields_for :saving_throws, slice do |ff|
               .column
                 .field
                   = ff.label ff.object.name, class: 'label'
@@ -22,5 +22,5 @@
                     span.mh3.is-size-6 Proficient?
         .field.pt2
           .control
-            = form.submit value: 'Update Skills',
+            = form.submit value: 'Update Saving Throws',
               class: 'button is-success is-medium'
