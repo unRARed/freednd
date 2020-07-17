@@ -180,9 +180,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
     t.integer "experience", default: 0, null: false
     t.integer "hit_points", default: 0, null: false
     t.integer "hit_points_max", default: 300, null: false
-    t.integer "armor_class"
-    t.integer "initiative"
-    t.integer "speed"
     t.integer "inspiration"
     t.integer "strength"
     t.integer "strength_mod"
@@ -205,16 +202,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
   create_table "races", force: :cascade do |t|
     t.string "name"
     t.integer "speed"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "saving_throws", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "skills", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

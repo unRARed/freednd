@@ -8,9 +8,6 @@ class CreateProgressions < ActiveRecord::Migration[6.0]
       t.integer :experience, null: false, default: 0
       t.integer :hit_points, null: false, default: 0
       t.integer :hit_points_max, null: false, default: 300
-      t.integer :armor_class
-      t.integer :initiative
-      t.integer :speed
       t.integer :inspiration
 
       # abilities

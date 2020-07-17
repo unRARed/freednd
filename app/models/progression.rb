@@ -38,6 +38,33 @@ class Progression < ApplicationRecord
   accepts_nested_attributes_for :skills, :allow_destroy => true
   accepts_nested_attributes_for :saving_throws, :allow_destroy => true
 
+  def armor_class
+    10 + self.dexterity_mod.to_i
+    # TODO - factor in equipment
+  end
+
+  def initiative_mod
+    self.dexterity_mod
+    # TODO - factor in class, race and features
+  end
+
+  def speed
+    character.base_speed
+    # TODO - factor in class, race and features
+  end
+
+  def proficiency_bonus
+    case level
+    when 0...4; 2
+    when 5...8; 3
+    when 9...12; 4
+    when 13...16; 5
+    else
+      6
+    end
+    # TODO - base this on the dnd_class tables
+  end
+
   def level
     return explicit_level if explicit_level.present?
     case experience

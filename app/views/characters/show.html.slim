@@ -21,16 +21,18 @@
                     ),
                     class: 'button is-small is-info'
                     i.fas.fa-edit
+                .tag.is-info.is-light Calculated
+                .box
+                  ul
+                    li Proficiency Bonus: #{progression.proficiency_bonus}
+                    li Armor Class: #{progression.armor_class}
+                    li Initiative Mod: #{progression.initiative_mod}
+                    li Speed: #{progression.speed}
                 .tag.is-info.is-light Abilities
                 .box
                   ul
                     - Character::ABILITIES.each do |ability|
                       li #{ability.capitalize}: #{progression.send(ability)} (#{progression.send("#{ability}_mod")})
-                  hr
-                  ul
-                    li Armor Class: #{progression.armor_class}
-                    li Initiative: #{progression.initiative}
-                    li Speed: #{progression.speed}
                   = link_to edit_campaign_progression_abilities_path(\
                       progression.campaign, progression\
                     ),
@@ -40,7 +42,10 @@
                 .box
                   ul
                     - progression.saving_throws.each do |saving_throw|
-                      li #{saving_throw.name}: #{saving_throw.value}
+                      li
+                        span(class="#{'tag is-success is-light' \
+                          if saving_throw.is_proficient?}"
+                        ) #{saving_throw.name}: #{saving_throw.value}
                   = link_to edit_campaign_progression_saving_throws_path(\
                       progression.campaign, progression\
                     ),
@@ -51,7 +56,10 @@
                 .box
                   ul
                     - progression.skills.each do |skill|
-                      li #{skill.name}: #{skill.value}
+                      li
+                        span(class="#{'tag is-success is-light' \
+                          if skill.is_proficient?}"
+                      ) #{skill.name}: #{skill.value}
                   = link_to edit_campaign_progression_skills_path(\
                       progression.campaign, progression\
                     ),

@@ -167,6 +167,10 @@ class Character < ApplicationRecord
     end
   end
 
+  def base_speed
+    return 25 if ['Dwarf', 'Halfling', 'Gnome'].include? self.race
+    30
+  end
 
   def portrait
     avatar.variant(
