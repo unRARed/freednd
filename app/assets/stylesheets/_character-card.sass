@@ -21,7 +21,7 @@
     width: 85%
     z-index: 2
     color: white
-    font-size: 32px
+    font-size: 21px
     text-align: center
   .char__avatar
     position: relative
@@ -29,59 +29,61 @@
   [class^="char__val--"]
     position: absolute
     color: white
-    font-size: 26px
+    font-size: 18px
     text-align: center
     font-family: 'Lobster Two', cursive
     z-index: 2
   [class$="-mod"]
     color: black
-    font-size: 20px
+    font-size: 14px
   .char__val--str
-    top: 27%
-    left: 20%
-  .char__val--str-mod
-    top: 31.6%
-    left: 21.5%
-  .char__val--dex
-    top: 39%
-    left: 15%
-  .char__val--dex-mod
-    top: 43.9%
-    left: 17%
-  .char__val--con
-    top: 51.5%
+    top: 26.5%
     left: 12%
+  .char__val--str-mod
+    top: 30.8%
+    left: 20%
+  .char__val--dex
+    top: 38.5%
+    left: 7%
+  .char__val--dex-mod
+    top: 43.6%
+    left: 16%
+  .char__val--con
+    top: 51%
+    left: 5%
   .char__val--con-mod
-    top: 56.4%
-    left: 14.3%
+    top: 55.6%
+    left: 13%
   .char__val--int
-    top: 64%
-    left: 10%
+    top: 63.5%
+    left: 3%
   .char__val--int-mod
-    top: 68.9%
-    left: 12.4%
+    top: 68.2%
+    left: 11%
   .char__val--wis
-    top: 76.4%
-    left: 9%
+    top: 76%
+    left: 2%
   .char__val--wis-mod
-    top: 81.4%
-    left: 11.6%
+    top: 80.6%
+    left: 10%
   .char__val--cha
-    top: 88.9%
-    left: 9%
+    top: 88.5%
+    left: 2%
   .char__val--cha-mod
-    top: 93.7%
-    left: 11.5%
-  .char__val--hp
+    top: 93%
+    left: 10%
+  .char__val--level
     top: 8%
     left: 4%
+    line-height: 1.4
   .char__val--ac
     top: 8%
     left: 76.8%
-  .char__val--xp
+  .char__val--meta
+    line-height: 1.4
     bottom: 1.2%
     right: 0
-    background-color: black
+    background-color: darkgreen
     padding: 2px 12px
     z-index: 1
     border-radius: 8px 0 0 0
@@ -89,19 +91,69 @@
     &:before
       background-image: url("#{asset_path('progression-card.svg')}")
 
-.column
-  .char__name
-    font-size: 21px
-  [class^="char__val--"]
-    font-size: 18px !important
-  [class$="-mod"]
-    font-size: 14px !important
+// reposition when in a grid column
+// (smaller size affects percentages)
 
-@media (max-width: 768px)
+
+// mid-width, container size reduced
+// needer smaller text
+@media (max-width: 1216px)
   .char
     .char__name
-      font-size: 21px
-  [class^="char__val--"]
-    font-size: 18px !important
-  [class$="-mod"]
-    font-size: 14px !important
+      font-size: 12px
+    [class^="char__val--"]
+      font-size: 11px !important
+    [class$="-mod"]
+      font-size: 9px !important
+  .column
+    .char
+      .char__val--str
+        top: 27.5%
+        left: 15%
+      .char__val--str-mod
+        top: 31.6%
+        left: 21%
+      .char__val--dex
+        top: 39.5%
+        left: 11%
+      .char__val--dex-mod
+        top: 43.9%
+        left: 17%
+      .char__val--con
+        top: 52%
+        left: 8%
+      .char__val--con-mod
+        top: 56.2%
+        left: 14%
+      .char__val--int
+        top: 64.5%
+        left: 6%
+      .char__val--int-mod
+        top: 68.8%
+        left: 12%
+      .char__val--wis
+        top: 77%
+        left: 5%
+      .char__val--wis-mod
+        top: 81.2%
+        left: 11%
+      .char__val--cha
+        top: 89.5%
+        left: 5%
+      .char__val--cha-mod
+        top: 93.7%
+        left: 11%
+      .char__val--level
+        top: 8%
+        left: 4%
+
+// desktop within a grid column (still small)
+@media (max-width: 768px)
+  .column
+    .char
+      .char__name
+        font-size: 36px
+      [class^="char__val--"]
+        font-size: 26px !important
+      [class$="-mod"]
+        font-size: 18px !important
