@@ -5,9 +5,9 @@ html
     = render partial: 'layouts/meta'
   body
     = render partial: 'layouts/navigation'
-    main
+    main.layout-main
       = render partial: 'layouts/flash'
-      .section
+      .container
         .columns
           .column.is-one-fifth
             = link_to character_path(character)

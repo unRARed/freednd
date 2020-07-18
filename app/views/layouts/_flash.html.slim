@@ -1,6 +1,5 @@
 - if flash.any?
-  .section
-    - flash.each do |key, value|
-      div class="notification is-light is-#{key}"
-        button.delete
-        = value
+  - flash.each do |key, value|
+    div class="notification is-light is-#{key}"
+      button.delete
+      = value

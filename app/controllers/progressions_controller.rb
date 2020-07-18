@@ -1,5 +1,6 @@
 class ProgressionsController < ApplicationController
-  before_action :set_progression
+  before_action :set_progression,
+    except: [:destroy_progression_item]
   layout 'character'
 
   def edit_abilities
@@ -8,11 +9,33 @@ class ProgressionsController < ApplicationController
   def edit_status
   end
 
+  def edit_spells
+    @progression.progression_items.build
+  end
+
   def update
     return render 'characters/show' unless @progression.
       update(progression_params)
     redirect_to @progression.character,
       notice: 'Progression was successfully updated.'
+  end
+
+  def destroy_progression_item
+    @progression = Progression.find(params[:progression_id])
+    authorize(@progression)
+    progression_item = ProgressionItem.find(params[:id])
+    record_type =
+      if progression_item.dnd_spell
+        'Spell'
+      elsif progression_item.dnd_feature
+        'Feature'
+      else
+        'Progression Item'
+      end
+    redirect_back(
+      fallback_location: progression_path(@progression),
+      notice: "#{record_type} was successfully removed."
+    )
   end
 
 private
@@ -51,7 +74,8 @@ private
         :charisma,
         :charisma_mod,
         skills_attributes: [ :id, :value, :is_proficient ],
-        saving_throws_attributes: [ :id, :value, :is_proficient ]
+        saving_throws_attributes: [ :id, :value, :is_proficient ],
+        progression_items_attributes: [ :id, :dnd_spell_id ]
       )
   end
 end

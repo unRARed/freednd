@@ -4,8 +4,7 @@ html
     = render partial: 'layouts/meta'
   body
     = render partial: 'layouts/navigation'
-    main
+    main.layout-main
       = render partial: 'layouts/flash'
-      .section
-        = yield
+      = yield
     = render partial: 'layouts/footer'

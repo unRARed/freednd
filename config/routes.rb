@@ -20,8 +20,16 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/saving_throws' =>
     'progressions#edit_saving_throws',
     as: 'edit_campaign_progression_saving_throws'
+  get 'campaigns/:campaign_id/progressions/:id/spells' =>
+    'progressions#edit_spells',
+    as: 'edit_campaign_progression_spells'
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
+
+  delete 'campaigns/:campaign_id/' +
+    'progressions/:progression_id/' +
+    'progression_items/:id' => 'progressions#destroy_progression_item',
+    as: 'destroy_progression_item'
 
   ###################
   ## User Sessions ##

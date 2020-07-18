@@ -25,7 +25,9 @@ class Progression < ApplicationRecord
   # assocated static content...
   # equipment, languages, spells, etc.
   has_many :progression_items
-  has_many :spells, :through => :progression_items
+  has_many :dnd_spells,
+    -> { order(:level => :desc) },
+    :through => :progression_items
 
   validates :character,
     :uniqueness => {
@@ -37,6 +39,7 @@ class Progression < ApplicationRecord
 
   accepts_nested_attributes_for :skills, :allow_destroy => true
   accepts_nested_attributes_for :saving_throws, :allow_destroy => true
+  accepts_nested_attributes_for :progression_items, :allow_destroy => true
 
   def armor_class
     10 + self.dexterity_mod.to_i

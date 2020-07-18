@@ -8,6 +8,11 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('trumbowyg/dist/trumbowyg.min')
+//require(
+//  '@creativebulma/bulma-collapsible/dist/js/bulma-collapsible.min.js'
+//)
+import bulmaCollapsible from '@creativebulma/bulma-collapsible/src/js/index.js'
+window.bulmaCollapsible = bulmaCollapsible
 
 function importAll (r) { r.keys().forEach(r) }
 importAll(require.context('../modules/', true, /\.js$/))

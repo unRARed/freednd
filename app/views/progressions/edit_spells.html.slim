@@ -1,0 +1,25 @@
+.card
+  .card-header
+    .card-header-title Spells for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        = form.fields_for :progression_items do |ff|
+          .box
+            .field.has-addons
+              .control.is-expanded
+                .select.is-fullwidth
+                  = ff.select :dnd_spell_id,
+                    options_for_select(DnD::Spell.all.\
+                      map{|c| ["#{c.name} (#{c.dnd_classes})", c.id]},\
+                      ff.object.dnd_spell_id),
+                    { prompt: ' - Add a New Spell - ' }
+            - if ff.object.persisted?
+              = link_to "Remove #{ff.object.dnd_spell.name}",
+                destroy_progression_item_path(\
+                  @progression.campaign, @progression, ff.object),
+                method: 'delete'
+        .field.pt2
+          .control
+            = form.submit value: 'Save Spells List',
+              class: 'button is-success is-medium'

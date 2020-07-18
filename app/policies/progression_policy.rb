@@ -20,6 +20,14 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_spells?
+    edit?
+  end
+
+  def destroy_progression_item?
+    edit?
+  end
+
   def edit?
     user.present? && @record.user == user
   end

@@ -28,30 +28,9 @@
                     li Armor Class: #{progression.armor_class}
                     li Initiative Mod: #{progression.initiative_mod}
                     li Speed: #{progression.speed}
-                .tag.is-info.is-light Abilities
-                .box
+                  hr
                   ul
-                    - Character::ABILITIES.each do |ability|
-                      li #{ability.capitalize}: #{progression.send(ability)} (#{progression.send("#{ability}_mod")})
-                  = link_to edit_campaign_progression_abilities_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
-                .tag.is-info.is-light Saving Throws
-                .box
-                  ul
-                    - progression.saving_throws.each do |saving_throw|
-                      li
-                        span(class="#{'tag is-success is-light' \
-                          if saving_throw.is_proficient?}"
-                        ) #{saving_throw.name}: #{saving_throw.value}
-                  = link_to edit_campaign_progression_saving_throws_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
-              .column
+                    li Passive Wisdom: #{progression.passive_wisdom}
                 .tag.is-info.is-light Skills
                 .box
                   ul
@@ -65,6 +44,54 @@
                     ),
                     class: 'button is-small is-info'
                     i.fas.fa-edit
+              .column
+                .tag.is-info.is-light Saving Throws
+                .box
+                  ul
+                    - progression.saving_throws.each do |saving_throw|
+                      li
+                        span(class="#{'tag is-success is-light' \
+                          if saving_throw.is_proficient?}"
+                        ) #{saving_throw.name}: #{saving_throw.value}
+                  = link_to edit_campaign_progression_saving_throws_path(\
+                      progression.campaign, progression\
+                    ),
+                    class: 'button is-small is-info'
+                    i.fas.fa-edit
+                .tag.is-info.is-light Spells
+                .box
+                  ul
+                    - progression.dnd_spells.each_with_index do |spell, index|
+                      .card.mb2
+                        header.card-header
+                          .card-header-title
+                            span #{spell.name} (level #{spell.level})
+                          a(
+                            data-action='collapse'
+                            href="#dnd_spell#{spell.id}"
+                            class='card-header-icon is-hidden-fullscreen'
+                            aria-label='more options'
+                          )
+                            span.icon
+                              i.fas.fa-angle-down aria-hidden='true'
+                        .is-collapsible id="dnd_spell#{spell.id}"
+                          .card-content
+                            span
+                              small Level: #{spell.level}
+                              span<>
+                                | |
+                              small Range: #{spell.range}
+                              span<>
+                                | |
+                              small Duration: #{spell.duration}
+                            hr
+                            p = sanitize spell.description
+
+                  = link_to edit_campaign_progression_spells_path(\
+                      progression.campaign, progression\
+                    ),
+                    class: 'button is-small is-info'
+                    i.fas.fa-edit
 - Character::RP_FIELDS.each_slice(2) do |slice|
   .columns
     - slice.each do |field|
@@ -74,3 +101,13 @@
             .card-header
               .card-header-title = field.to_s.titlecase
             .card-content = sanitize(@character[field])
+javascript:
+  $(document).on('turbolinks:load', function() {
+    const collapsibleElements = bulmaCollapsible.
+      attach('.is-collapsible');
+    if (collapsibleElements.length) {
+      collapsibleElements.forEach(collapsibleElement => {
+        new bulmaCollapsible(collapsibleElement);
+      })
+    }
+  })
