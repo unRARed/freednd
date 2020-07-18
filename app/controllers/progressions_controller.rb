@@ -10,7 +10,11 @@ class ProgressionsController < ApplicationController
   end
 
   def edit_spells
-    @progression.progression_items.build
+    @progression.spells.build
+  end
+
+  def edit_features
+    @progression.features.build
   end
 
   def update
@@ -75,7 +79,8 @@ private
         :charisma_mod,
         skills_attributes: [ :id, :value, :is_proficient ],
         saving_throws_attributes: [ :id, :value, :is_proficient ],
-        progression_items_attributes: [ :id, :dnd_spell_id ]
+        spells_attributes: [ :id, :dnd_spell_id ],
+        features_attributes: [ :id, :dnd_feature_id ]
       )
   end
 end

@@ -1,0 +1,25 @@
+.card
+  .card-header
+    .card-header-title Features for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        = form.fields_for :features do |ff|
+          .box
+            .field.has-addons
+              .control.is-expanded
+                .select.is-fullwidth
+                  = ff.select :dnd_feature_id,
+                    options_for_select(DnD::Feature.all.\
+                      map{|c| ["#{c.name} (#{c.dnd_class_name})", c.id]},\
+                      ff.object.dnd_feature_id),
+                    { prompt: ' - Add a New Feature - ' }
+            - if ff.object.persisted?
+              = link_to "Remove #{ff.object.dnd_feature.name}",
+                destroy_progression_item_path(\
+                  @progression.campaign, @progression, ff.object),
+                method: 'delete'
+        .field.pt2
+          .control
+            = form.submit value: 'Save Features List',
+              class: 'button is-success is-medium'

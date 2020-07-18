@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/spells' =>
     'progressions#edit_spells',
     as: 'edit_campaign_progression_spells'
+  get 'campaigns/:campaign_id/progressions/:id/features' =>
+    'progressions#edit_features',
+    as: 'edit_campaign_progression_features'
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
 

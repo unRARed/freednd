@@ -31,20 +31,6 @@
                   hr
                   ul
                     li Passive Wisdom: #{progression.passive_wisdom}
-                .tag.is-info.is-light Skills
-                .box
-                  ul
-                    - progression.skills.each do |skill|
-                      li
-                        span(class="#{'tag is-success is-light' \
-                          if skill.is_proficient?}"
-                      ) #{skill.name}: #{skill.value}
-                  = link_to edit_campaign_progression_skills_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
-              .column
                 .tag.is-info.is-light Saving Throws
                 .box
                   ul
@@ -58,6 +44,48 @@
                     ),
                     class: 'button is-small is-info'
                     i.fas.fa-edit
+              .column
+                .tag.is-info.is-light Skills
+                .box
+                  ul
+                    - progression.skills.each do |skill|
+                      li
+                        span(class="#{'tag is-success is-light' \
+                          if skill.is_proficient?}"
+                      ) #{skill.name}: #{skill.value}
+                  = link_to edit_campaign_progression_skills_path(\
+                      progression.campaign, progression\
+                    ),
+                    class: 'button is-small is-info'
+                    i.fas.fa-edit
+            .columns
+              .column
+                .tag.is-info.is-light Features
+                .box
+                  ul
+                    - progression.dnd_features.each_with_index do |feature, index|
+                      .card.mb2
+                        header.card-header
+                          .card-header-title
+                            span #{feature.name} (level #{feature.level})
+                          a(
+                            data-action='collapse'
+                            href="#dnd_feature#{feature.id}"
+                            class='card-header-icon is-hidden-fullscreen'
+                            aria-label='more options'
+                          )
+                            span.icon
+                              i.fas.fa-angle-down aria-hidden='true'
+                        .is-collapsible id="dnd_feature#{feature.id}"
+                          .card-content
+                            p = sanitize feature.description
+
+                  = link_to edit_campaign_progression_features_path(\
+                      progression.campaign, progression\
+                    ),
+                    class: 'button is-small is-info'
+                    i.fas.fa-edit
+              .column
                 .tag.is-info.is-light Spells
                 .box
                   ul

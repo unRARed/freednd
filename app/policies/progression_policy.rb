@@ -24,6 +24,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_features?
+    edit?
+  end
+
   def destroy_progression_item?
     edit?
   end
