@@ -1,7 +1,7 @@
 .columns
-  .column.is-three-fifths.is-offset-one-fifth
+  .column
     .card
       .card-header
-        .card-header-title Metadata for #{@character.name}
+        .card-header-title Base Configuration for #{@character.name}
       .card-content
         = render partial: 'form', locals: { record: @character }

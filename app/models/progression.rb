@@ -31,6 +31,9 @@ class Progression < ApplicationRecord
   has_many :spells,
     -> { where.not(dnd_spell_id: nil) },
     class_name: 'ProgressionItem'
+  has_many :equipment,
+    -> { where.not(dnd_equipment_id: nil) },
+    class_name: 'ProgressionItem'
 
   has_many :dnd_spells,
     -> { order(:level => :desc, :name => :asc) },
@@ -38,6 +41,10 @@ class Progression < ApplicationRecord
   has_many :dnd_features,
     -> { order(:level => :desc) },
     :through => :progression_items
+  has_many :dnd_equipment,
+    -> { order(:type => :asc) },
+    :through => :progression_items,
+    class_name: 'DnD::Equipment'
 
   validates :character,
     :uniqueness => {
@@ -52,6 +59,7 @@ class Progression < ApplicationRecord
   accepts_nested_attributes_for :progression_items, :allow_destroy => true
   accepts_nested_attributes_for :spells, :allow_destroy => true
   accepts_nested_attributes_for :features, :allow_destroy => true
+  accepts_nested_attributes_for :equipment, :allow_destroy => true
 
   def armor_class
     10 + self.dexterity_mod.to_i
@@ -59,7 +67,7 @@ class Progression < ApplicationRecord
   end
 
   def initiative_mod
-    self.dexterity_mod
+    self.dexterity_mod.to_i
     # TODO - factor in class, race and features
   end
 

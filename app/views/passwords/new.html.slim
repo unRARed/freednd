@@ -1,0 +1,30 @@
+#clearance.password-reset
+  .columns
+    .column.is-one-third.is-offset-one-third
+      .card
+        .card-header
+          .card-header-title Reset your Password
+        .card-content
+          .content
+            = form_for :password, url: passwords_path do |form|
+              .field
+                = form.label :email, class: 'label'
+                p.control.has-icons-left.has-icons-right
+                  = form.text_field :email,
+                    placeholder: 'Email',
+                    class: 'input is-large',
+                    required: true
+                  span.icon.is-small.is-left
+                    i.fas.fa-envelope
+                  span.icon.is-small.is-right
+                    i.fas.fa-check
+              .field.pt2
+                p.control
+                  = form.submit class: 'button is-success is-medium'
+        footer.card-footer
+          .card-footer-item
+            = link_to t(".sign_in"), sign_up_path,
+              class: 'card-footer-item'
+          .card-footer-item
+            = link_to t(".sign_up"), sign_up_path,
+              class: 'card-footer-item'

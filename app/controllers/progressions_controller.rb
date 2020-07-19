@@ -17,6 +17,10 @@ class ProgressionsController < ApplicationController
     @progression.features.build
   end
 
+  def edit_equipment
+    @progression.equipment.build
+  end
+
   def update
     return render 'characters/show' unless @progression.
       update(progression_params)
@@ -33,6 +37,8 @@ class ProgressionsController < ApplicationController
         'Spell'
       elsif progression_item.dnd_feature
         'Feature'
+      elsif progression_item.dnd_equipment
+        'Equipment'
       else
         'Progression Item'
       end
@@ -80,7 +86,8 @@ private
         skills_attributes: [ :id, :value, :is_proficient ],
         saving_throws_attributes: [ :id, :value, :is_proficient ],
         spells_attributes: [ :id, :dnd_spell_id ],
-        features_attributes: [ :id, :dnd_feature_id ]
+        features_attributes: [ :id, :dnd_feature_id ],
+        equipment_attributes: [ :id, :dnd_equipment_id ]
       )
   end
 end

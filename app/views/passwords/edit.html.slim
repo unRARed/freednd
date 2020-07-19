@@ -1,0 +1,28 @@
+#clearance.password-reset
+  .columns
+    .column.is-one-third.is-offset-one-third
+      .card
+        .card-header
+          .card-header-title Change your Password
+        .card-content
+          .content
+            p Your password has been reset. Choose a new password below.
+            = form_for :password_reset,
+              url: user_password_path(@user, token: @user.confirmation_token), html: { method: :put } do |form|
+              .field
+                = form.label :password, class: 'label'
+                p.control
+                  = form.password_field :password,
+                    placeholder: 'Password',
+                    class: 'input is-large',
+                    required: true
+              .field.pt2
+                p.control
+                  = form.submit class: 'button is-success is-medium'
+        footer.card-footer
+          .card-footer-item
+            = link_to t(".sign_in"), sign_up_path,
+              class: 'card-footer-item'
+          .card-footer-item
+            = link_to t(".sign_up"), sign_up_path,
+              class: 'card-footer-item'

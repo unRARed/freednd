@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/features' =>
     'progressions#edit_features',
     as: 'edit_campaign_progression_features'
+  get 'campaigns/:campaign_id/progressions/:id/equipment' =>
+    'progressions#edit_equipment',
+    as: 'edit_campaign_progression_equipment'
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
 
@@ -37,15 +40,18 @@ Rails.application.routes.draw do
   ###################
   ## User Sessions ##
   ###################
+
+  # New user passwords
   resources :passwords,
-    controller: "clearance/passwords", only: [:create, :new]
+    controller: "passwords", only: [:create, :new]
   resource :session,
     controller: "clearance/sessions", only: [:new, :create]
   get 'session' => redirect('sign_in')
 
   resources :users, only: [:new, :create] do
+    # Password changes
     resource :password,
-      controller: "clearance/passwords", only: [:edit, :update]
+      controller: "passwords", only: [:create, :edit, :update]
   end
   get 'sign_up' => "users#new", as: "sign_up"
   get 'account' => 'users#account'

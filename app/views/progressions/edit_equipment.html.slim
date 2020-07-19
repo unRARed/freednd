@@ -1,0 +1,25 @@
+.card
+  .card-header
+    .card-header-title Equipment for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        = form.fields_for :equipment do |ff|
+          .box
+            .field.has-addons
+              .control.is-expanded
+                .select.is-fullwidth
+                  = ff.select :dnd_equipment_id,
+                    options_for_select(DnD::Equipment.all.\
+                      map{|c| ["#{c.name}", c.id]},\
+                      ff.object.dnd_equipment_id),
+                    { prompt: ' - Add New Equipment - ' }
+            - if ff.object.persisted?
+              = link_to "Remove #{ff.object.dnd_equipment.name}",
+                destroy_progression_item_path(\
+                  @progression.campaign, @progression, ff.object),
+                method: 'delete'
+        .field.pt2
+          .control
+            = form.submit value: 'Save Equipment List',
+              class: 'button is-success is-medium'

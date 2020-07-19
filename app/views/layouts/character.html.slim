@@ -9,28 +9,29 @@ html
       = render partial: 'layouts/flash'
       .container
         .columns
-          .column.is-one-fifth
+          .column.is-one-fifth.is-centered
             = link_to character_path(character)
               = render partial: 'characters/card',
                 locals: { character: character }
             - if policy(character).edit?
-              = link_to 'Edit Character',
-                edit_character_path(character),
-                class: 'button is-info is-medium'
-              .dropdown.is-full-width.pt3
+              .dropdown.is-full-width.is-large
                 .dropdown-trigger
                   button(
                     class="button"
                     aria-haspopup="true"
                     aria-controls="dropdown-menu"
                   )
-                    span Edit RPG Meta
+                    span Change Character
                     span.icon.is-small
                     i.fas.fa-angle-down aria-hidden="true"
                 .dropdown-menu#dropdown-menu role="menu"
                   .dropdown-content
+                    = link_to 'Base Configuration',
+                      edit_character_path(character),
+                      class: 'dropdown-item'
+                    hr.dropdown-divider
                     - Character::RP_FIELDS.each do |field|
-                        = link_to "Edit #{field.to_s.titleize}",
+                        = link_to "#{field.to_s.titleize}",
                           edit_character_content_field_path(\
                             character, field),
                           class: 'dropdown-item'

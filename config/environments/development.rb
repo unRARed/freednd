@@ -8,6 +8,11 @@ Rails.application.configure do
 
   config.eager_load = true
 
+  config.action_mailer.
+    default_url_options = { host: 'http://localhost:3000' }
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
   # Show full error reports.
   config.consider_all_requests_local = true
 

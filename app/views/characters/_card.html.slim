@@ -17,12 +17,15 @@ div class="char#{' char--progression' if character.progressions.any?}"
       small< XP: #{character.experience}
     .char__val--meta
       span HP:
-      span<> = character.hit_points
+      span<> = character.hit_points || 0
       span
         | /
-      span< = character.hit_points_max
+      span< = character.hit_points_max || 0
+      br
+      small Inspiration:
+      small< = format_modifier(\
+        character.progressions&.last&.inspiration || 0)
     .char__val--ac
       small Armor Class
       br
-      span< = character.armor_class || '0'
-
+      span< = character.armor_class || 0

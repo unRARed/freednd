@@ -3,35 +3,83 @@
     .card-header
       .card-header-title Campaign Progression
     .card-content
-      .message
-        .message-body
-          - @character.progressions.each do |progression|
-            h4.pb3 = progression.campaign.name
+      - @character.progressions.each do |progression|
+        .message
+          .message-header = progression.campaign.name
+          .message-body
+            - if policy(@character).edit?
+              .dropdown.is-large.pb3
+                .dropdown-trigger
+                  button(
+                    class="button"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  )
+                    span Change Progression Details
+                    span.icon.is-small
+                    i.fas.fa-angle-down aria-hidden="true"
+                .dropdown-menu#dropdown-menu role="menu"
+                  .dropdown-content
+                    = link_to 'Game State',
+                      edit_campaign_progression_status_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    hr.dropdown-divider
+                    = link_to 'Abilities',
+                      edit_campaign_progression_skills_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    = link_to 'Saving Throws',
+                      edit_campaign_progression_saving_throws_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    = link_to 'Skills',
+                      edit_campaign_progression_skills_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    hr.dropdown-divider
+                    = link_to 'Equipment',
+                      edit_campaign_progression_equipment_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    = link_to 'Features',
+                      edit_campaign_progression_features_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
+                    = link_to 'Spells',
+                      edit_campaign_progression_spells_path(\
+                        progression.campaign, progression\
+                      ),
+                      class: 'dropdown-item'
             .columns
               .column
-                .tag.is-info.is-light Status
+                p
+                  .tag.is-info.is-light.is-large Calculated
                 .box
                   ul
-                    li HP: #{progression.hit_points}/#{progression.hit_points_max}
-                    li Level: #{progression.level}
-                    li Experience: #{progression.experience}
-                    li Inspiration: #{progression.inspiration}
-                  = link_to edit_campaign_progression_status_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
-                .tag.is-info.is-light Calculated
-                .box
-                  ul
-                    li Proficiency Bonus: #{progression.proficiency_bonus}
-                    li Armor Class: #{progression.armor_class}
-                    li Initiative Mod: #{progression.initiative_mod}
+                    li
+                      span> Proficiency Bonus:
+                      = format_modifier(progression.proficiency_bonus)
+                    li
+                      span> Initiative Mod:
+                      = format_modifier(progression.initiative_mod)
                     li Speed: #{progression.speed}
                   hr
                   ul
                     li Passive Wisdom: #{progression.passive_wisdom}
-                .tag.is-info.is-light Saving Throws
+                p
+                  .tag.is-info.is-light.is-large
+                    span Saving Throws
+                    = link_to edit_campaign_progression_saving_throws_path(\
+                        progression.campaign, progression\
+                      )
+                      i.fas.fa-edit.pl2
                 .box
                   ul
                     - progression.saving_throws.each do |saving_throw|
@@ -39,13 +87,14 @@
                         span(class="#{'tag is-success is-light' \
                           if saving_throw.is_proficient?}"
                         ) #{saving_throw.name}: #{saving_throw.value}
-                  = link_to edit_campaign_progression_saving_throws_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
               .column
-                .tag.is-info.is-light Skills
+                p
+                  .tag.is-info.is-light.is-large
+                    span Skills
+                    = link_to edit_campaign_progression_skills_path(\
+                        progression.campaign, progression\
+                      )
+                      i.fas.fa-edit.pl2
                 .box
                   ul
                     - progression.skills.each do |skill|
@@ -53,73 +102,110 @@
                         span(class="#{'tag is-success is-light' \
                           if skill.is_proficient?}"
                       ) #{skill.name}: #{skill.value}
-                  = link_to edit_campaign_progression_skills_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
             .columns
               .column
-                .tag.is-info.is-light Features
-                .box
-                  ul
-                    - progression.dnd_features.each_with_index do |feature, index|
-                      .card.mb2
-                        header.card-header
-                          .card-header-title
-                            span #{feature.name} (level #{feature.level})
-                          a(
-                            data-action='collapse'
-                            href="#dnd_feature#{feature.id}"
-                            class='card-header-icon is-hidden-fullscreen'
-                            aria-label='more options'
-                          )
-                            span.icon
-                              i.fas.fa-angle-down aria-hidden='true'
-                        .is-collapsible id="dnd_feature#{feature.id}"
-                          .card-content
-                            p = sanitize feature.description
-
-                  = link_to edit_campaign_progression_features_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
+                - if progression.dnd_equipment.any?
+                  p
+                    .tag.is-info.is-light.is-large
+                      span Equipment
+                      = link_to edit_campaign_progression_equipment_path(\
+                          progression.campaign, progression\
+                        )
+                        i.fas.fa-edit.pl2
+                  .box
+                    ul
+                      - progression.dnd_equipment.each_with_index do |equipment, index|
+                        .card.mb2
+                          header.card-header
+                            .card-header-title
+                              span #{equipment.name} (#{equipment.dnd_equipment_category&.name})
+                            a(
+                              data-action='collapse'
+                              href="#dnd_equipment#{equipment.id}"
+                              class='card-header-icon is-hidden-fullscreen'
+                              aria-label='more options'
+                            )
+                              span.icon
+                                i.fas.fa-angle-down aria-hidden='true'
+                          .is-collapsible id="dnd_equipment#{equipment.id}"
+                            .card-content
+                              - if equipment.armor_category.present?
+                                p
+                                  span.has-text-weight-semibold>
+                                    ' Armor Category:
+                                  span = equipment.armor_category
+                              - if equipment.weapon_category.present?
+                                p
+                                  span.has-text-weight-semibold>
+                                    ' Weapon Category:
+                                  span = equipment.weapon_category
+                              - if equipment.description.present?
+                                hr
+                                p = sanitize equipment.description
+                - if progression.dnd_features.any?
+                  p
+                    .tag.is-info.is-light.is-large
+                      span Features
+                      = link_to edit_campaign_progression_features_path(\
+                          progression.campaign, progression\
+                        )
+                        i.fas.fa-edit.pl2
+                  .box
+                    ul
+                      - progression.dnd_features.each_with_index do |feature, index|
+                        .card.mb2
+                          header.card-header
+                            .card-header-title
+                              span #{feature.name}
+                            a(
+                              data-action='collapse'
+                              href="#dnd_feature#{feature.id}"
+                              class='card-header-icon is-hidden-fullscreen'
+                              aria-label='more options'
+                            )
+                              span.icon
+                                i.fas.fa-angle-down aria-hidden='true'
+                          .is-collapsible id="dnd_feature#{feature.id}"
+                            .card-content
+                              p = sanitize feature.description
               .column
-                .tag.is-info.is-light Spells
-                .box
-                  ul
-                    - progression.dnd_spells.each_with_index do |spell, index|
-                      .card.mb2
-                        header.card-header
-                          .card-header-title
-                            span #{spell.name} (level #{spell.level})
-                          a(
-                            data-action='collapse'
-                            href="#dnd_spell#{spell.id}"
-                            class='card-header-icon is-hidden-fullscreen'
-                            aria-label='more options'
+                - if progression.dnd_spells.any?
+                  p
+                    .tag.is-info.is-light.is-large
+                      span> Spells
+                      span<
+                        = link_to edit_campaign_progression_spells_path(\
+                            progression.campaign, progression\
                           )
-                            span.icon
-                              i.fas.fa-angle-down aria-hidden='true'
-                        .is-collapsible id="dnd_spell#{spell.id}"
-                          .card-content
-                            span
-                              small Level: #{spell.level}
-                              span<>
-                                | |
-                              small Range: #{spell.range}
-                              span<>
-                                | |
-                              small Duration: #{spell.duration}
-                            hr
-                            p = sanitize spell.description
+                          i.fas.fa-edit.pl2
+                  .box
+                    ul
+                      - progression.dnd_spells.each_with_index do |spell, index|
+                        .card.mb2
+                          header.card-header
+                            .card-header-title
+                              span #{spell.name} (level #{spell.level})
+                            a(
+                              data-action='collapse'
+                              href="#dnd_spell#{spell.id}"
+                              class='card-header-icon is-hidden-fullscreen'
+                              aria-label='more options'
+                            )
+                              span.icon
+                                i.fas.fa-angle-down aria-hidden='true'
+                          .is-collapsible id="dnd_spell#{spell.id}"
+                            .card-content
+                              span
+                                small Level: #{spell.level}
+                                span<>
+                                  | |
+                                small Range: #{spell.range}
+                                span<>
+                                  | |
+                                small Duration: #{spell.duration}
+                              hr
+                              p = sanitize spell.description
 
-                  = link_to edit_campaign_progression_spells_path(\
-                      progression.campaign, progression\
-                    ),
-                    class: 'button is-small is-info'
-                    i.fas.fa-edit
 - Character::RP_FIELDS.each_slice(2) do |slice|
   .columns
     - slice.each do |field|
