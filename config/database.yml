@@ -75,11 +75,6 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
 production:
   <<: *default
-  database: freednd_production
-  username: freednd
-  password: <%= ENV['FREEDND_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
