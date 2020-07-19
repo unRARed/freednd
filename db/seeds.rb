@@ -145,92 +145,102 @@ else
         'name' => meta['name'],
         'slug' => meta['index'],
         'weight' => meta['weight'],
-        'cost_unit' => meta['cost']['unit'],
-        'cost_quantity' => meta['cost']['quantity'],
+        'cost_unit' => meta.dig('cost', 'unit'),
+        'cost_quantity' => meta.dig('cost', 'quantity'),
         'description' => meta['desc'].class == Array ?
           meta['desc'].map(&:inspect).join(', ') :
           meta['desc'],
         'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta['equipment_category']).id,
+          find_by(name: meta.dig('equipment_category', 'name')).id,
         'armor_category' => meta['armor_category'],
-        'armor' => meta['armor_class']['base'],
-        'armor_awards_dex_bonus' => meta['armor_class']['dex_bonus'],
+        'armor' => meta.dig('armor_class', 'base'),
+        'armor_awards_dex_bonus' => meta.dig('armor_class', 'dex_bonus'),
         'armor_has_stealth_disadvantage' =>
-          meta['armor_class']['stealth_advantage'],
+          meta.dig('armor_class', 'stealth_advantage'),
         'armor_strength_minimum' => meta['str_minimum'],
-        'armor_bonus_maximum' => meta['armor_class']['max_bonus']
+        'armor_bonus_maximum' => meta.dig('armor_class', 'max_bonus')
       })
     elsif meta['weapon_category']
-      DnD::Weapon.create!({
+      weapon = DnD::Weapon.new({
         'name' => meta['name'],
         'slug' => meta['index'],
         'weight' => meta['weight'],
-        'cost_unit' => meta['cost']['unit'],
-        'cost_quantity' => meta['cost']['quantity'],
+        'cost_unit' => meta.dig('cost', 'unit'),
+        'cost_quantity' => meta.dig('cost', 'quantity'),
         'description' => meta['desc'].class == Array ?
           meta['desc'].map(&:inspect).join(', ') :
           meta['desc'],
         'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta['equipment_category']).id,
+          find_by(name: meta.dig('equipment_category', 'name')).id,
         'weapon_category' => meta['weapon_category'],
-        'weapon_damage_die' => meta['damage']['damage_dice'],
-        'weapon_damage_bonus' => meta['damage']['damage_bonus'],
-        'weapon_range_normal' => meta['range']['normal'],
-        'weapon_range_long' => meta['range']['long'],
-        'dnd_weapon_damage_type_id' => DnD::DamageType.find_by(
-          slug: meta['damage']['damage_type']['url'].split('/').last
-        ).id
+        'weapon_damage_die' => meta.dig('damage', 'damage_dice'),
+        'weapon_damage_bonus' => meta.dig('damage', 'damage_bonus'),
+        'weapon_range_normal' => meta.dig('range', 'normal'),
+        'weapon_range_long' => meta.dig('range', 'long')
       })
+      # some "weapons" don't have damage
+      #   example: https://www.dnd5eapi.co/api/equipment/net
+      if meta.dig('damage', 'damage_type', 'url')
+        weapon['dnd_weapon_damage_type_id'] =
+          DnD::DamageType.find_by(
+            slug: meta.dig('damage', 'damage_type', 'url'
+          ).split('/').last
+        ).id
+      end
+      weapon.save!
     else
       DnD::Equipment.create!({
         'name' => meta['name'],
         'slug' => meta['index'],
         'weight' => meta['weight'],
-        'cost_unit' => meta['cost']['unit'],
-        'cost_quantity' => meta['cost']['quantity'],
+        'cost_unit' => meta.dig('cost', 'unit'),
+        'cost_quantity' => meta.dig('cost', 'quantity'),
         'description' => meta['desc'].class == Array ?
           meta['desc'].map(&:inspect).join(', ') :
           meta['desc'],
         'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta['equipment_category']).id
+          find_by(name: meta['equipment_category']['name']).id
       })
     end
     # prevent hammering
     sleep 0.2
   end
 end
-byebug
-users = []
-(1..3).to_a.map do |n|
-  users << User.create!(email: "user#{n}@freednd.com", password: 'pw')
+
+unless Rails.env.production?
+  puts "Creating Dummy Data"
+  users = []
+  (1..3).to_a.map do |n|
+    users << User.create!(email: "user#{n}@freednd.com", password: 'pw')
+  end
+  puts "Created #{users.count} Users"
+
+  campaign = Campaign.create! user: users.first,
+    name: 'Some Awesome Campaign',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing
+      elit. Duis commodo dapibus luctus. In gravida velit lorem,
+      vitae consectetur augue sodales et. Cras fermentum lacus
+      accumsan finibus tempor. Suspendisse blandit fringilla erat,
+      eget aliquam leo imperdiet vitae.'
+  puts 'Created Campaign'
+
+  shared_attributes = {
+    dnd_class: 'Bard',
+    race: 'Human',
+    background: 'Outlander',
+    alignment: 'Lawful Good'
+  }
+
+  party = Party.create! campaign: campaign
+  puts "Created Party"
+
+  chars = []
+  users.map do |user|
+    chars << Character.create!({
+      user: user,
+      name: "Char#{user.id}" }.merge(shared_attributes)
+    )
+    chars.map{|char| char.progressions.create party: party }
+  end
+  puts "Created #{chars.count} Characters in Party"
 end
-puts "Created #{users.count} Users"
-
-campaign = Campaign.create! user: users.first,
-  name: 'Some Awesome Campaign',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing
-    elit. Duis commodo dapibus luctus. In gravida velit lorem,
-    vitae consectetur augue sodales et. Cras fermentum lacus
-    accumsan finibus tempor. Suspendisse blandit fringilla erat,
-    eget aliquam leo imperdiet vitae.'
-puts 'Created Campaign'
-
-shared_attributes = {
-  dnd_class: 'Bard',
-  race: 'Human',
-  background: 'Outlander',
-  alignment: 'Lawful Good'
-}
-
-party = Party.create! campaign: campaign
-puts "Created Party"
-
-chars = []
-users.map do |user|
-  chars << Character.create!({
-    user: user,
-    name: "Char#{user.id}" }.merge(shared_attributes)
-  )
-  chars.map{|char| char.progressions.create party: party }
-end
-puts "Created #{chars.count} Characters in Party"

@@ -157,8 +157,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
 
   create_table "progression_items", force: :cascade do |t|
     t.bigint "progression_id"
-    t.bigint "skill_id"
-    t.bigint "saving_throw_id"
     t.bigint "dnd_spell_id"
     t.bigint "dnd_feature_id"
     t.bigint "dnd_equipment_id"
@@ -168,8 +166,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
     t.index ["dnd_feature_id"], name: "index_progression_items_on_dnd_feature_id"
     t.index ["dnd_spell_id"], name: "index_progression_items_on_dnd_spell_id"
     t.index ["progression_id"], name: "index_progression_items_on_progression_id"
-    t.index ["saving_throw_id"], name: "index_progression_items_on_saving_throw_id"
-    t.index ["skill_id"], name: "index_progression_items_on_skill_id"
   end
 
   create_table "progressions", force: :cascade do |t|
@@ -237,8 +233,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
   add_foreign_key "progression_items", "dnd_features"
   add_foreign_key "progression_items", "dnd_spells"
   add_foreign_key "progression_items", "progressions"
-  add_foreign_key "progression_items", "statistics", column: "saving_throw_id"
-  add_foreign_key "progression_items", "statistics", column: "skill_id"
   add_foreign_key "progressions", "characters"
   add_foreign_key "progressions", "parties"
   add_foreign_key "statistics", "progressions"
