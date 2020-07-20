@@ -27,8 +27,8 @@ h1.title.is-1.has-text-centered My Account
       .pt3.has-text-centered
         = link_to 'DM a new Campaign', new_campaign_path,
           class: 'button is-primary'
-    - if current_user.character_campaigns.any?
-      .box
+    .box
+      - if current_user.character_campaigns.any?
         .menu
           p.menu-label Character Campaigns
           - if current_user.character_campaigns.any?
@@ -39,6 +39,6 @@ h1.title.is-1.has-text-centered My Account
                     p
                       strong = campaign.name
                       br = campaign.description
-        .pt3.has-text-centered
-          = link_to 'Join a Campaign', campaigns_path,
-            class: 'button is-primary'
+      .pt3.has-text-centered
+        = link_to 'Join a Campaign', campaigns_path,
+          class: 'button is-primary'
