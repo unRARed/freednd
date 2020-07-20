@@ -205,6 +205,14 @@
                                 small Duration: #{spell.duration}
                               hr
                               p = sanitize spell.description
+- else # no campaigns
+  .has-text-centered
+    .hero.is-primary.mb3
+      .hero-body
+        h2.is-size-1 Ready to Begin Adventuring?
+    = link_to 'Join a Campaign', campaigns_path,
+      class: 'button is-primary'
+
 
 - Character::RP_FIELDS.each_slice(2) do |slice|
   .columns

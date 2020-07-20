@@ -7,16 +7,32 @@ h1.title.is-1.has-text-centered Open Campaigns
           strong = campaign.name
           br = campaign.description
           - unless campaign.users.include? current_user
-            = form_with(\
-              url: join_campaign_path(campaign), method: 'POST'\
-            ) do |form|
-              .has-text-centered.mt3
-                .field.has-addons
-                  .control.is-expanded
-                    .select.is-fullwidth
-                      = form.select :character_id,
-                        options_for_select(current_user.available_characters.map{|c| [c.name, c.id]}),
-                        { prompt: ' - Choose Character - ' },
-                        required: true
-                  .control
-                  = form.submit 'Join Campaign', class: 'button is-success'
+            - if current_user.available_characters.any?
+              = form_with(\
+                url: join_campaign_path(campaign), method: 'POST'\
+              ) do |form|
+                .has-text-centered.mt3
+                  .field.has-addons
+                    .control.is-expanded
+                      .select.is-fullwidth
+                        - if current_user.available_characters.count > 1
+                          = form.select :character_id,
+                            options_for_select(current_user.\
+                              available_characters.\
+                              map{|c| [c.name, c.id]}),
+                            { prompt: ' - Choose Character - ' },
+                            required: true
+                        - else
+                          = form.select :character_id,
+                            options_for_select(current_user.\
+                              available_characters.\
+                              map{|c| [c.name, c.id]}),
+                            required: true
+                    .control
+                    = form.submit 'Join Campaign', class: 'button is-success'
+            - else
+              p.is-size-6
+                span> You have no available characters to join
+                  this campaign.
+                = link_to 'Create one now', new_character_path
+                span .
