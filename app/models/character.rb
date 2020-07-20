@@ -13,6 +13,7 @@ class Character < ApplicationRecord
 
   has_one_attached :avatar
 
+
   ABILITIES = [
     :strength,
     :dexterity,
@@ -31,6 +32,8 @@ class Character < ApplicationRecord
     :flaws,
     :other_traits
   ]
+
+  RP_FIELDS.each { |field| has_rich_text field }
 
   validates :alignment,
     :dnd_class,

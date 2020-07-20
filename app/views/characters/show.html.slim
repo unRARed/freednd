@@ -210,11 +210,11 @@
   .columns
     - slice.each do |field|
       .column
-        - if @character[field].present?
+        - if @character.send(field).present?
           .card
             .card-header
               .card-header-title = field.to_s.titlecase
-            .card-content = sanitize(@character[field])
+            .card-content = raw @character.send(field)
 javascript:
   $(document).on('turbolinks:load', function() {
     const collapsibleElements = bulmaCollapsible.
