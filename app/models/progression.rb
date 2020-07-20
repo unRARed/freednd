@@ -85,7 +85,30 @@ class Progression < ApplicationRecord
     base = dnd_armor.any? ?
       dnd_armor.sum(:armor) : 10
     base + self.dexterity_mod.to_i
-    # TODO - factor in equipment
+    # TODO - anything else to consider?
+  end
+
+  def spellcasting_modifier
+    case self.character.dnd_class
+    when 'Wizard'
+      :intelligence_mod
+    when *['Cleric', 'Druid', 'Ranger']
+      :wisdom_mod
+    when *['Bard', 'Paladin', 'Sorcerer', 'Warlock']
+      :charisma_mod
+    else
+      nil
+    end
+  end
+
+  def spell_save_dc
+    return nil unless spellcasting_modifier
+    self.send(spellcasting_modifier) + proficiency_bonus + 8
+    # TODO - factor in any special modifiers
+  end
+
+  def spell_attack_mod
+    self.proficiency_bonus + self.send(spellcasting_modifier)
   end
 
   def initiative_mod
@@ -94,12 +117,12 @@ class Progression < ApplicationRecord
   end
 
   def speed
-    character.base_speed
+    self.character.base_speed
     # TODO - factor in class, race and features
   end
 
   def proficiency_bonus
-    case level
+    case self.level
     when 0...4; 2
     when 5...8; 3
     when 9...12; 4
@@ -111,8 +134,8 @@ class Progression < ApplicationRecord
   end
 
   def level
-    return explicit_level if explicit_level.present?
-    case experience
+    return self.explicit_level if self.explicit_level.present?
+    case self.experience
     when 0...300; 1
     when 300...900;	2
     when 900...2700; 3
@@ -137,10 +160,10 @@ class Progression < ApplicationRecord
   end
 
   def proficiency_bonus
-    return 2 if 5 > level
-    return 3 if 9 > level
-    return 4 if 13 > level
-    return 5 if 17 > level
+    return 2 if 5 > self.level
+    return 3 if 9 > self.level
+    return 4 if 13 > self.level
+    return 5 if 17 > self.level
     6
   end
 
@@ -148,8 +171,8 @@ class Progression < ApplicationRecord
   #   (plus proficiency ONLY if proficient in perception)
   def passive_wisdom
     value = 10
-    value += wisdom_mod&.to_i || 0
-    value += proficiency_bonus if skills.
+    value += self.wisdom_mod&.to_i || 0
+    value += self.proficiency_bonus if self.skills.
       find{|s| s.name == 'Perception'}&.is_proficient?
     value
   end
@@ -164,14 +187,14 @@ private
   end
 
   def initialize_statistics
-    if saving_throws.empty?
+    if self.saving_throws.empty?
       SavingThrow.names.each do |_key, val|
-        saving_throws.build name: val, value: 0
+        self.saving_throws.build name: val, value: 0
       end
     end
-    if skills.empty?
+    if self.skills.empty?
       Skill.names.each do |_key, val|
-        skills.build name: val, value: 0
+        self.skills.build name: val, value: 0
       end
     end
   end

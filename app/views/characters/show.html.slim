@@ -70,6 +70,12 @@
                       span> Initiative Mod:
                       = format_modifier(progression.initiative_mod)
                     li Speed: #{progression.speed}
+                    - if progression.spellcasting_modifier
+                      li Spell Save DC: #{progression.spell_save_dc}
+                    - if progression.spellcasting_modifier
+                      li
+                        span> Spell Attack Modifier:
+                        = format_modifier(progression.spell_attack_mod)
                   hr
                   ul
                     li Passive Wisdom: #{progression.passive_wisdom}
