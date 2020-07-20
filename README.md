@@ -7,9 +7,9 @@ FreeDnD
 So we can DnD better. Inspired by
 [cmmovius/dndr](https://github.com/cmmovius/dndr).
 
+[![FreeDnD.com](https://github.com/unRARed/freednd/raw/freednd.com/github/images/sign-up.png)](https://freednd.com)
+
 Next Steps
 ---------
 
-- Finish the remaining models (Features, Equipment, what else?)
-- Add [threejs-dice](https://www.npmjs.com/package/threejs-dice)
-- Create data-sync with Open5e
+See [Github Issues](https://github.com/unRARed/freednd/issues).
