@@ -1,6 +1,6 @@
 class CampaignPolicy < ApplicationPolicy
   def index?
-    create?
+    true
   end
 
   def show?
