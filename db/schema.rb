@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_050836) do
+ActiveRecord::Schema.define(version: 2020_07_20_051820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,13 +62,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
     t.string "race", null: false
     t.string "background", null: false
     t.string "alignment", null: false
-    t.string "appearance"
-    t.string "backstory"
-    t.string "personality"
-    t.text "ideals"
-    t.text "bonds"
-    t.text "flaws"
-    t.text "other_traits"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -178,17 +181,11 @@ ActiveRecord::Schema.define(version: 2020_06_09_050836) do
     t.integer "hit_points_max", default: 300, null: false
     t.integer "inspiration"
     t.integer "strength"
-    t.integer "strength_mod"
     t.integer "dexterity"
-    t.integer "dexterity_mod"
     t.integer "constitution"
-    t.integer "constitution_mod"
     t.integer "intelligence"
-    t.integer "intelligence_mod"
     t.integer "wisdom"
-    t.integer "wisdom_mod"
     t.integer "charisma"
-    t.integer "charisma_mod"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["character_id"], name: "index_progressions_on_character_id"

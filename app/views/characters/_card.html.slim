@@ -8,7 +8,7 @@ div class="char#{' char--progression' if character.progressions.any?}"
   - if character.progressions.any?
     - Character::ABILITIES.each do |ability|
       div class="char__val--#{ability[0..2]}"
-        = format_modifier(character.send(ability))
+        = character.send(ability)
       div class="char__val--#{ability[0..2]}-mod"
         = format_modifier(character.send("#{ability}_mod"))
     .char__val--level

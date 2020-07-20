@@ -45,6 +45,11 @@ class Progression < ApplicationRecord
     -> { order(:type => :asc) },
     :through => :progression_items,
     class_name: 'DnD::Equipment'
+  has_many :dnd_armor,
+    -> { order(:type => :asc) },
+    :through => :progression_items,
+    :class_name => 'DnD::Armor',
+    :source => :dnd_equipment
 
   validates :character,
     :uniqueness => {
@@ -61,8 +66,25 @@ class Progression < ApplicationRecord
   accepts_nested_attributes_for :features, :allow_destroy => true
   accepts_nested_attributes_for :equipment, :allow_destroy => true
 
+  ABILITIES = [
+    :strength,
+    :dexterity,
+    :constitution,
+    :intelligence,
+    :wisdom,
+    :charisma
+  ]
+
+  ABILITIES.each do |ability|
+    define_method(:"#{ability}_mod") do
+      calculate_ability_mod(self.send(ability))
+    end
+  end
+
   def armor_class
-    10 + self.dexterity_mod.to_i
+    base = dnd_armor.any? ?
+      dnd_armor.sum(:armor) : 10
+    base + self.dexterity_mod.to_i
     # TODO - factor in equipment
   end
 
@@ -133,6 +155,13 @@ class Progression < ApplicationRecord
   end
 
 private
+
+  def calculate_ability_mod(value)
+    return 0 unless value || value == 0
+    diff = value - 10
+    return (diff.abs / 2) unless diff.negative?
+    -(diff.abs / 2)
+  end
 
   def initialize_statistics
     if saving_throws.empty?

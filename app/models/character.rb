@@ -13,7 +13,6 @@ class Character < ApplicationRecord
 
   has_one_attached :avatar
 
-
   ABILITIES = [
     :strength,
     :dexterity,
@@ -187,7 +186,7 @@ class Character < ApplicationRecord
 private
 
   def get_value_from_progression(key)
-    return '0' unless progressions.any?
-    progressions.last[key] || '0'
+    return 0 unless progressions.any?
+    progressions.last.send(key) || 0
   end
 end

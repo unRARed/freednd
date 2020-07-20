@@ -4,33 +4,21 @@
   .card-content
     .content
       = form_for @progression do |form|
-        .columns
-          - Character::ABILITIES.each do |ability|
-            .column
-              .field
-                = form.label ability, class: 'label'
-                .control.has-icons-left
-                  .select.is-large
-                    = form.select ability,
-                      options_for_select(\
-                        (-10..20).to_a,
-                        selected: (@progression.send(ability) || 0)\
-                      )
-                  span.icon.is-small.is-left
-                    i.fas.fa-dice-d20
-              .field
-                = form.label "#{ability}_mod",
-                  "#{ability.to_s.titlecase} Modifier",
-                  class: 'label'
-                .control.has-icons-left
-                  .select.is-medium
-                    = form.select "#{ability}_mod",
-                      options_for_select(\
-                        (-10..20).to_a,
-                        selected: (@progression.send("#{ability}_mod") || 0)\
-                      )
-                  span.icon.is-small.is-left
-                    i.fas.fa-dice-d20
+        - Character::ABILITIES.each.each_slice(3) do |slice|
+          .columns
+            - slice.each do |ability|
+              .column
+                .field
+                  = form.label ability, class: 'label'
+                  .control.has-icons-left
+                    .select.is-large
+                      = form.select ability,
+                        options_for_select(\
+                          (-10..20).to_a,
+                          selected: (@progression.send(ability) || 0)\
+                        )
+                    span.icon.is-small.is-left
+                      i.fas.fa-dice-d20
         .field.pt2
           .control
             = form.submit value: 'Save Progression',
