@@ -35,8 +35,17 @@ class Progression < ApplicationRecord
     -> { where.not(dnd_equipment_id: nil) },
     class_name: 'ProgressionItem'
 
-  has_many :dnd_spells,
-    -> { order(:level => :desc, :name => :asc) },
+  has_many :dnd_cantrips, lambda {
+      order(:level => :desc, :name => :asc).
+      where('level = 0')
+    },
+    :through => :progression_items,
+    :class_name => 'DnD::Spell',
+    :source => :dnd_spell
+  has_many :dnd_spells, lambda {
+      order(:level => :desc, :name => :asc).
+      where('level > 0')
+    },
     :through => :progression_items
   has_many :dnd_features,
     -> { order(:level => :desc) },

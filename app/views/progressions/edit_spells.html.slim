@@ -10,8 +10,8 @@
               .control.is-expanded
                 .select.is-fullwidth
                   = ff.select :dnd_spell_id,
-                    options_for_select(DnD::Spell.all.\
-                      map{|c| ["#{c.name} (#{c.dnd_classes})", c.id]},\
+                    options_for_select(DnD::Spell.by_level.\
+                      map{|c| [c.formatted_selection, c.id]},\
                       ff.object.dnd_spell_id),
                     { prompt: ' - Add a New Spell - ' }
             - if ff.object.persisted?
