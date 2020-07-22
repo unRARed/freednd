@@ -1,9 +1,11 @@
 FactoryBot.define do
   factory :character do
-    name { 'user@example.com' }
-    dnd_class { 'password' }
-    race { '' }
-    background { '' }
-    alignment { '' }
+    name { 'Bilbo' }
+    dnd_class { 'Bard' }
+    race { 'Halfling' }
+    background { 'Outlander' }
+    alignment { 'Chaotic Good' }
+
+    user
   end
 end

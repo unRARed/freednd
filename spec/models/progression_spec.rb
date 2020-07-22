@@ -3,7 +3,22 @@ require 'rails_helper'
 RSpec.describe Progression, type: :model do
   subject { described_class.new }
 
+  describe 'associations' do
+    it { is_expected.to belong_to(:character) }
+    it { is_expected.to belong_to(:party) }
+  end
+
+  describe 'validations' do
+    before { FactoryBot.create(:progression) }
+    it do
+      is_expected.to validate_uniqueness_of(:character_id).
+        scoped_to(:party_id).
+        with_message('may only exist once in the Party.')
+    end
+  end
+
   describe 'class methods' do; end
+
   context 'instance methods' do
     describe 'level' do
       it 'is overridden by the explicit_level value' do
@@ -40,7 +55,7 @@ RSpec.describe Progression, type: :model do
       end
 
       it 'adds the wisdom modifier' do
-        subject.wisdom_mod = 1
+        subject.wisdom = 12
         expect(subject.passive_wisdom).to eq 11
       end
 

@@ -60,9 +60,9 @@ class Progression < ApplicationRecord
     :class_name => 'DnD::Armor',
     :source => :dnd_equipment
 
-  validates :character,
+  validates :character_id,
     :uniqueness => {
-      :scope => :party,
+      :scope => :party_id,
       :message => 'may only exist once in the Party.'
     }
 
