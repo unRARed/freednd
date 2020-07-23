@@ -11,7 +11,13 @@ h1.title.is-1.has-text-centered My Account
                 = link_to character.name, character_path(character)
       .pt3.has-text-centered
         = link_to 'Create new Character', new_character_path,
-          class: 'button is-primary'
+          class: "button#{' is-primary' unless current_user.characters.any?}"
+    p.has-text-centered.pt3
+      = link_to 'DM a New Campaign', new_campaign_path,
+        class: 'button'
+    p.has-text-centered.pt3
+      = link_to 'Join a Campaign', campaigns_path,
+        class: 'button is-primary'
   .column.is-three-quarters
     - if @campaigns.any?
       - @campaigns.each_slice(3) do |slice|
@@ -46,26 +52,3 @@ h1.title.is-1.has-text-centered My Account
                           span.icon.is-small
                             i.fas.fa-edit
                           span Edit
-      .pt3.has-text-centered
-        = link_to 'DM a new Campaign', new_campaign_path,
-          class: 'button is-primary'
-    .box
-      - if current_user.character_campaigns.any?
-        .menu
-          p.menu-label Character Campaigns
-          - if current_user.character_campaigns.any?
-            ul.menu-list
-              - current_user.character_campaigns.each do |campaign|
-                li
-                  = link_to campaign_path(campaign)
-                    p
-                      strong = campaign.name
-                      br = campaign.description
-      .buttons.pt3.has-text-centered.is-centered
-        .field.is-grouped
-          .control
-            = link_to 'Join a Campaign', campaigns_path,
-              class: 'button is-primary'
-          .control
-            = link_to 'DM a New Campaign', new_campaign_path,
-              class: 'button is-primary'
