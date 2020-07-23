@@ -5,7 +5,9 @@
     .card-content
       - @character.progressions.each do |progression|
         .message
-          .message-header = progression.campaign.name
+          .message-header
+            = link_to progression.campaign.name,
+              campaign_path(progression.campaign)
           .message-body
             - if policy(@character).edit?
               .dropdown.is-large.pb3
@@ -82,10 +84,11 @@
                 p
                   .tag.is-info.is-light.is-large
                     span Saving Throws
-                    = link_to edit_campaign_progression_saving_throws_path(\
-                        progression.campaign, progression\
-                      )
-                      i.fas.fa-edit.pl2
+                    - if policy(@character).edit?
+                      = link_to edit_campaign_progression_saving_throws_path(\
+                          progression.campaign, progression\
+                        )
+                        i.fas.fa-edit.pl2
                 .box
                   ul
                     - progression.saving_throws.each do |saving_throw|
@@ -97,10 +100,11 @@
                 p
                   .tag.is-info.is-light.is-large
                     span Skills
-                    = link_to edit_campaign_progression_skills_path(\
-                        progression.campaign, progression\
-                      )
-                      i.fas.fa-edit.pl2
+                    - if policy(@character).edit?
+                      = link_to edit_campaign_progression_skills_path(\
+                          progression.campaign, progression\
+                        )
+                        i.fas.fa-edit.pl2
                 .box
                   ul
                     - progression.skills.each do |skill|
@@ -114,10 +118,11 @@
                   p
                     .tag.is-info.is-light.is-large
                       span Equipment
-                      = link_to edit_campaign_progression_equipment_path(\
-                          progression.campaign, progression\
-                        )
-                        i.fas.fa-edit.pl2
+                      - if policy(@character).edit?
+                        = link_to edit_campaign_progression_equipment_path(\
+                            progression.campaign, progression\
+                          )
+                          i.fas.fa-edit.pl2
                   .box
                     ul
                       - progression.dnd_equipment.each_with_index do |equipment, index|
@@ -152,10 +157,11 @@
                   p
                     .tag.is-info.is-light.is-large
                       span Features
-                      = link_to edit_campaign_progression_features_path(\
-                          progression.campaign, progression\
-                        )
-                        i.fas.fa-edit.pl2
+                      - if policy(@character).edit?
+                        = link_to edit_campaign_progression_features_path(\
+                            progression.campaign, progression\
+                          )
+                          i.fas.fa-edit.pl2
                   .box
                     ul
                       - progression.dnd_features.each_with_index do |feature, index|
@@ -179,11 +185,12 @@
                   p
                     .tag.is-info.is-light.is-large
                       span> Spells
-                      span<
-                        = link_to edit_campaign_progression_spells_path(\
-                            progression.campaign, progression\
-                          )
-                          i.fas.fa-edit.pl2
+                      - if policy(@character).edit?
+                        span<
+                          = link_to edit_campaign_progression_spells_path(\
+                              progression.campaign, progression\
+                            )
+                            i.fas.fa-edit.pl2
                   .box
                     - progression.dnd_spells.each_with_index do |spell, index|
                       .card.mb2
@@ -213,11 +220,12 @@
                   p
                     .tag.is-info.is-light.is-large
                       span> Cantrips
-                      span<
-                        = link_to edit_campaign_progression_spells_path(\
-                            progression.campaign, progression\
-                          )
-                          i.fas.fa-edit.pl2
+                      - if policy(@character).edit?
+                        span<
+                          = link_to edit_campaign_progression_spells_path(\
+                              progression.campaign, progression\
+                            )
+                            i.fas.fa-edit.pl2
                     - progression.dnd_cantrips.each_with_index do |spell, index|
                       .card.mb2
                         header.card-header

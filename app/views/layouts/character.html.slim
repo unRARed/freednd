@@ -14,7 +14,7 @@ html
               = render partial: 'characters/card',
                 locals: { character: character }
             - if policy(character).edit?
-              .dropdown.is-full-width.is-large
+              .dropdown.is-full-width.is-large.mt3
                 .dropdown-trigger
                   button(
                     class="button"

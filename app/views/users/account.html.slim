@@ -13,11 +13,11 @@ h1.title.is-1.has-text-centered My Account
         = link_to 'Create new Character', new_character_path,
           class: 'button is-primary'
   .column.is-three-quarters
-    - if current_user.campaigns.any?
-      - current_user.campaigns.each_slice(3) do |slice|
+    - if @campaigns.any?
+      - @campaigns.each_slice(3) do |slice|
         .columns
           - slice.each do |campaign|
-            .column
+            .column.is-one-third
               .card
                 - if campaign.decoration.attached?
                   = link_to campaign_path(campaign)
@@ -35,13 +35,17 @@ h1.title.is-1.has-text-centered My Account
                       = link_to campaign_path(campaign), class: 'button'
                         span.icon.is-small
                           i.ra.ra-tower
-                        span DM Campaign
-                    .control
-                      = link_to edit_campaign_path(campaign),
-                        class: 'button'
-                        span.icon.is-small
-                          i.fas.fa-edit
-                        span Edit
+                        - if policy(campaign).edit?
+                          span DM Campaign
+                        - else
+                          span Visit Campaign
+                    - if policy(campaign).edit?
+                      .control
+                        = link_to edit_campaign_path(campaign),
+                          class: 'button'
+                          span.icon.is-small
+                            i.fas.fa-edit
+                          span Edit
       .pt3.has-text-centered
         = link_to 'DM a new Campaign', new_campaign_path,
           class: 'button is-primary'
@@ -57,6 +61,11 @@ h1.title.is-1.has-text-centered My Account
                     p
                       strong = campaign.name
                       br = campaign.description
-      .pt3.has-text-centered
-        = link_to 'Join a Campaign', campaigns_path,
-          class: 'button is-primary'
+      .buttons.pt3.has-text-centered.is-centered
+        .field.is-grouped
+          .control
+            = link_to 'Join a Campaign', campaigns_path,
+              class: 'button is-primary'
+          .control
+            = link_to 'DM a New Campaign', new_campaign_path,
+              class: 'button is-primary'

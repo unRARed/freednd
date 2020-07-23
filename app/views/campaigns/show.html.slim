@@ -1,13 +1,49 @@
-h1.title.is-1.has-text-centered = @campaign.name
-.columns
-  .column.is-one-quarter
-    .box
-      = @campaign.description
-  .column.is-three-quarters
-    - @campaign.characters.each_slice(3) do |character_slice|
-      .columns.is-centered
-        - character_slice.each do |character|
-          .column.is-one-third
-            = link_to character_path(character)
-              = render partial: 'characters/card',
-                locals: { character: character }
+.container
+  .columns
+    .column.is-one-quarter
+      .card
+        - if @campaign.decoration.attached?
+          .card-image
+            figure.image
+              = image_tag url_for(@campaign.decoration_thumb),
+                width: 240
+        .card-header
+          .card-header-title = @campaign.name
+        .card-content
+          .is-size-6 = @campaign.description.truncate(600)
+    .column
+      - @campaign.progressions.each_slice(4) do |slice|
+        .columns
+          - slice.each do |progression|
+            .column.is-one-quarter
+              .card
+                = link_to character_path(progression.character)
+                  .card-image style="display: inline-block;"
+                    = render partial: 'characters/card',
+                      locals: { character: progression.character }
+                - if policy(@campaign).edit?
+                  .card-content.is-size-6
+                    ul
+                      li
+                        span.has-text-weight-semibold> Proficiency Bonus:
+                        = format_modifier(progression.proficiency_bonus)
+                      li
+                        span.has-text-weight-semibold> Initiative Mod:
+                        = format_modifier(progression.initiative_mod)
+                      li
+                        span.has-text-weight-semibold> Speed:
+                        = progression.speed
+                      - if progression.spellcasting_modifier
+                        li
+                          span.has-text-weight-semibold> Spell Save DC:
+                          = progression.spell_save_dc
+                      - if progression.spellcasting_modifier
+                        li
+                          span.has-text-weight-semibold>
+                            ' Spell Attack Modifier:
+                          = format_modifier(progression.spell_attack_mod)
+                    hr
+                    ul
+                      li
+                        span.has-text-weight-semibold> Passive Wisdom:
+                        = progression.passive_wisdom
