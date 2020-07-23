@@ -13,17 +13,35 @@ h1.title.is-1.has-text-centered My Account
         = link_to 'Create new Character', new_character_path,
           class: 'button is-primary'
   .column.is-three-quarters
-    .box
-      - if current_user.campaigns.any?
-        .menu
-          p.menu-label Campaigns
-          ul.menu-list
-            - current_user.campaigns.each do |campaign|
-              li
-                = link_to campaign_path(campaign)
-                  p
-                    strong = campaign.name
-                    br = campaign.description
+    - if current_user.campaigns.any?
+      - current_user.campaigns.each_slice(3) do |slice|
+        .columns
+          - slice.each do |campaign|
+            .column
+              .card
+                - if campaign.decoration.attached?
+                  = link_to campaign_path(campaign)
+                    .card-image
+                      figure.image
+                        = image_tag url_for(campaign.decoration_thumb),
+                          width: 240
+                .card-header
+                  .card-header-title = campaign.name
+                .card-content
+                  .pb3
+                    .is-size-6 = campaign.description.truncate(140)
+                  .field.has-addons
+                    .control
+                      = link_to campaign_path(campaign), class: 'button'
+                        span.icon.is-small
+                          i.ra.ra-tower
+                        span DM Campaign
+                    .control
+                      = link_to edit_campaign_path(campaign),
+                        class: 'button'
+                        span.icon.is-small
+                          i.fas.fa-edit
+                        span Edit
       .pt3.has-text-centered
         = link_to 'DM a new Campaign', new_campaign_path,
           class: 'button is-primary'

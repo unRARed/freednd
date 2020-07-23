@@ -23,6 +23,7 @@ class CampaignsController < ApplicationController
   end
 
   def update
+    authorize(@campaign)
     return render :show unless @campaign.update(campaign_params)
     redirect_to account_path,
       notice: 'Campaign was successfully updated.'
@@ -63,6 +64,6 @@ private
 
     def campaign_params
       params.require(:campaign).
-        permit(:name, :description, :is_locked)
+        permit(:name, :description, :decoration, :is_locked)
     end
 end

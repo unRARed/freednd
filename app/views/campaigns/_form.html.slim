@@ -14,6 +14,22 @@
           class: 'textarea',
           rows: 10,
           required: true
+    .media
+      - if @campaign.decoration.attached?
+        .media-left
+          = image_tag url_for(@campaign.decoration_thumb),
+            width: 240
+      .media-content
+        .file.has-name.is-primary.is-fullwidth.is-medium
+          = form.label :decoration, class: 'file-label'
+            = form.file_field :decoration, class: 'file-input'
+            span.file-cta
+              span.file-icon
+                i.fas.fa-upload
+              span.file-label Choose Decoration
+            span.file-name
+              - if @campaign.decoration.attached?
+                = @campaign.decoration.attachment.filename
     .field
       = form.label :is_locked, class: 'checkbox'
         = form.check_box :is_locked

@@ -174,11 +174,20 @@ class Character < ApplicationRecord
     30
   end
 
-  def portrait
+  def avatar_portrait
     avatar.variant(
       auto_orient: true,
       combine_options: {
         resize: '480x720^', gravity: 'center', extent: '480x720'
+      }
+    ).processed
+  end
+
+  def avatar_thumb
+    avatar.variant(
+      auto_orient: true,
+      combine_options: {
+        resize: '480x480^', gravity: 'center', extent: '480x480'
       }
     ).processed
   end

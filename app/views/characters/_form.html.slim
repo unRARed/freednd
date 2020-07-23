@@ -8,18 +8,22 @@
           required: true
         span.icon.is-medium.is-left
           i.fas.fa-dice-d20
-    .file.has-name.is-primary.is-fullwidth.is-medium
-      = form.label :avatar, class: 'file-label'
-        = form.file_field :avatar, class: 'file-input'
-        span.file-cta
-          span.file-icon
-            i.fas.fa-upload
-          span.file-label Choose Avatar
-        span.file-name
-          - if @character.avatar.attached?
-            = @character.avatar.attachment.filename
-    small.has-text-grey-lighter
-      | (Portrait Perspective)
+    .media
+      - if @character.avatar.attached?
+        .media-left
+          = image_tag url_for(@character.avatar_thumb),
+            width: 240
+      .media-content
+        .file.has-name.is-primary.is-fullwidth.is-medium
+          = form.label :avatar, class: 'file-label'
+            = form.file_field :avatar, class: 'file-input'
+            span.file-cta
+              span.file-icon
+                i.fas.fa-upload
+              span.file-label Choose Avatar
+            span.file-name
+              - if @character.avatar.attached?
+                = @character.avatar.attachment.filename
     hr
     .columns
       .column

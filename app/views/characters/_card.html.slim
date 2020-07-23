@@ -2,7 +2,7 @@ div class="char#{' char--progression' if character.progressions.any?}"
   .char__name
     .char__name__text = character.name.truncate(25)
   - if character.avatar.attached?
-    img.char__avatar src="#{url_for(character.portrait)}"
+    img.char__avatar src="#{url_for(character.avatar_portrait)}"
   - else
     img.char__avatar src="#{asset_path('avatar-missing.jpg')}"
   - if character.progressions.any?
