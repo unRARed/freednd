@@ -42,6 +42,7 @@ class ProgressionsController < ApplicationController
       else
         'Progression Item'
       end
+    progression_item.destroy!
     redirect_back(
       fallback_location: progression_path(@progression),
       notice: "#{record_type} was successfully removed."
