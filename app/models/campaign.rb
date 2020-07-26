@@ -19,7 +19,12 @@ class Campaign < ApplicationRecord
   validates :name,
     presence: true
 
+  validates :decoration,
+    content_type: ['image/png', 'image/jpg', 'image/jpeg'],
+    dimension: { width: { max: 3000 }, height: { max: 3000 } }
+
   def decoration_thumb
+    return nil unless decoration.attached?
     decoration.variant(
       auto_orient: true,
       combine_options: {

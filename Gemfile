@@ -55,7 +55,8 @@ group :test do
   gem 'pundit-matchers', '~> 1.6.0'
   gem 'coveralls', require: false
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-matchers', '~> 4'
+  gem 'active_storage_validations'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
