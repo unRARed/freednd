@@ -1,18 +1,4 @@
 class Character < ApplicationRecord
-  belongs_to :user
-
-  has_many :progressions
-  has_many :parties,
-    :through => :progressions
-  has_many :campaigns,
-    :through => :parties
-  has_many :party_members,
-    -> { distinct },
-    :through => :parties,
-    :source => :users
-
-  has_one_attached :avatar
-
   ABILITIES = [
     :strength,
     :dexterity,
@@ -34,6 +20,20 @@ class Character < ApplicationRecord
 
   RP_FIELDS.each { |field| has_rich_text field }
 
+  belongs_to :user
+
+  has_many :progressions
+  has_many :parties,
+    :through => :progressions
+  has_many :campaigns,
+    :through => :parties
+  has_many :party_members,
+    -> { distinct },
+    :through => :parties,
+    :source => :users
+
+  has_one_attached :avatar
+
   validates :alignment,
     :dnd_class,
     :race,
@@ -46,6 +46,10 @@ class Character < ApplicationRecord
       :scope => :user_id,
       :message => 'was already used for another character you have.'
     }
+
+  validates :avatar,
+    content_type: ['image/png', 'image/jpg', 'image/jpeg'],
+    dimension: { width: { max: 3000 }, height: { max: 3000 } }
 
   enum alignment: {
     'Lawful Good': 'Lawful Good',
@@ -175,6 +179,7 @@ class Character < ApplicationRecord
   end
 
   def avatar_portrait
+    return nil unless avatar.attached?
     avatar.variant(
       auto_orient: true,
       combine_options: {
@@ -184,6 +189,7 @@ class Character < ApplicationRecord
   end
 
   def avatar_thumb
+    return nil unless avatar.attached?
     avatar.variant(
       auto_orient: true,
       combine_options: {

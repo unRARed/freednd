@@ -16,6 +16,7 @@ gem 'slim-rails', '~> 3.2.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pundit'
 gem 'mini_magick'
+gem 'active_storage_validations'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -56,7 +57,6 @@ group :test do
   gem 'coveralls', require: false
   gem 'simplecov', require: false
   gem 'shoulda-matchers', '~> 4'
-  gem 'active_storage_validations'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
