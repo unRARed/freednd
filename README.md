@@ -7,7 +7,7 @@ FreeDnD
 So we can DnD better. Inspired by
 [cmmovius/dndr](https://github.com/cmmovius/dndr).
 
-[![FreeDnD.com](https://github.com/unRARed/freednd/raw/freednd.com/github/images/sign-up.png)](https://freednd.com)
+[![FreeDnD.com](https://raw.githubusercontent.com/unRARed/freednd/master/github/images/sign-up.png)](https://freednd.com)
 
 Next Steps
 ---------
