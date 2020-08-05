@@ -49,14 +49,15 @@ RSpec.describe Progression, type: :model do
       end
     end
 
-    describe 'passive_wisdom' do
+    describe 'passive_check' do
       it 'has a base value of 10' do
-        expect(subject.passive_wisdom).to eq 10
+        expect(subject.passive_check('Perception')).to eq 10
       end
 
       it 'adds the wisdom modifier' do
-        subject.wisdom = 12
-        expect(subject.passive_wisdom).to eq 11
+        subject.skills.build name: 'Perception',
+          value: 1
+        expect(subject.passive_check('Perception')).to eq 11
       end
 
       it 'adds the proficiency bonus conditionally' do
@@ -64,7 +65,21 @@ RSpec.describe Progression, type: :model do
           is_proficient: true,
           value: 0
         subject.experience = 6500 # proficiency bonus 3
-        expect(subject.passive_wisdom).to eq 13
+        expect(subject.passive_check('Perception')).to eq 13
+      end
+    end
+  end
+
+  context 'private instance methods' do
+    describe 'calculate_ability_mod' do
+      it 'is based on the ability value' do
+        expect(subject.send('calculate_ability_mod', 26)).to eq 8
+        expect(subject.send('calculate_ability_mod', 15)).to eq 2
+        expect(subject.send('calculate_ability_mod', 10)).to eq 0
+        expect(subject.send('calculate_ability_mod', 6)).to eq -2
+        expect(subject.send('calculate_ability_mod', 5)).to eq -3
+        expect(subject.send('calculate_ability_mod', 4)).to eq -3
+        expect(subject.send('calculate_ability_mod', 1)).to eq -5
       end
     end
   end

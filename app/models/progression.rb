@@ -191,7 +191,7 @@ private
     return 0 unless value || value == 0
     diff = value - 10
     return (diff.abs / 2) unless diff.negative?
-    -(diff.abs / 2)
+    -((diff.abs + 1) / 2)
   end
 
   def initialize_statistics
