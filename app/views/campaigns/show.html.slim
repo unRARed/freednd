@@ -43,7 +43,10 @@
                             ' Spell Attack Modifier:
                           = format_modifier(progression.spell_attack_mod)
                     hr
-                    ul
-                      li
-                        span.has-text-weight-semibold> Passive Wisdom:
-                        = progression.passive_wisdom
+                    - if progression.skills.any?
+                      ul
+                        - progression.skills.order('value DESC').each do |skill|
+                          li
+                            span.has-text-weight-semibold>
+                              ' Passive #{skill.name}:
+                            = progression.passive_check(skill.name)

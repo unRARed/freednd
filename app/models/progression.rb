@@ -176,13 +176,12 @@ class Progression < ApplicationRecord
     6
   end
 
-  # ten plus wisdom mod
-  #   (plus proficiency ONLY if proficient in perception)
-  def passive_wisdom
+  def passive_check(skill_name)
     value = 10
-    value += self.wisdom_mod&.to_i || 0
-    value += self.proficiency_bonus if self.skills.
-      find{|s| s.name == 'Perception'}&.is_proficient?
+    if (skill = self.skills.find{|s| s.name == skill_name})
+      value += skill.value&.to_i
+      value += self.proficiency_bonus&.to_i if skill.is_proficient?
+    end
     value
   end
 
