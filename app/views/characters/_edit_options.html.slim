@@ -1,0 +1,22 @@
+- if policy(character).edit?
+  .dropdown.is-large.has-text-left
+    .dropdown-trigger
+      button(
+        class="button"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+      )
+        span Character
+        span.icon.is-small
+        i.fas.fa-angle-down aria-hidden="true"
+    .dropdown-menu#dropdown-menu role="menu"
+      .dropdown-content
+        = link_to 'Base Configuration',
+          edit_character_path(character),
+          class: 'dropdown-item'
+        hr.dropdown-divider
+        - Character::RP_FIELDS.each do |field|
+            = link_to "#{field.to_s.titleize}",
+              edit_character_content_field_path(\
+                character, field),
+              class: 'dropdown-item'

@@ -13,28 +13,6 @@ html
             = link_to character_path(character)
               = render partial: 'characters/card',
                 locals: { character: character }
-            - if policy(character).edit?
-              .dropdown.is-full-width.is-large.mt3
-                .dropdown-trigger
-                  button(
-                    class="button"
-                    aria-haspopup="true"
-                    aria-controls="dropdown-menu"
-                  )
-                    span Edit Character
-                    span.icon.is-small
-                    i.fas.fa-angle-down aria-hidden="true"
-                .dropdown-menu#dropdown-menu role="menu"
-                  .dropdown-content
-                    = link_to 'Base Configuration',
-                      edit_character_path(character),
-                      class: 'dropdown-item'
-                    hr.dropdown-divider
-                    - Character::RP_FIELDS.each do |field|
-                        = link_to "#{field.to_s.titleize}",
-                          edit_character_content_field_path(\
-                            character, field),
-                          class: 'dropdown-item'
           .column.is-four-fifths
             = yield
     = render partial: 'layouts/footer'

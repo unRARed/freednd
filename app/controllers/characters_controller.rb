@@ -1,7 +1,7 @@
 class CharactersController < ApplicationController
   before_action :set_character,
     only: [:show, :edit, :update, :destroy, :edit_content_field]
-  layout 'character', except: [:index, :new]
+  layout 'character', except: [:index, :new, :show]
 
   # GET /characters
   def index

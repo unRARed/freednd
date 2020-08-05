@@ -1,0 +1,50 @@
+- if policy(progression.character).edit?
+  .dropdown.is-large.has-text-left
+    .dropdown-trigger
+      button(
+        class="button"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+      )
+        span Progression
+        span.icon.is-small
+        i.fas.fa-angle-down aria-hidden="true"
+    .dropdown-menu#dropdown-menu role="menu"
+      .dropdown-content
+        = link_to 'Game State',
+          edit_campaign_progression_status_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        hr.dropdown-divider
+        = link_to 'Abilities',
+          edit_campaign_progression_abilities_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        = link_to 'Saving Throws',
+          edit_campaign_progression_saving_throws_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        = link_to 'Skills',
+          edit_campaign_progression_skills_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        hr.dropdown-divider
+        = link_to 'Equipment',
+          edit_campaign_progression_equipment_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        = link_to 'Features',
+          edit_campaign_progression_features_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        = link_to 'Spells',
+          edit_campaign_progression_spells_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
