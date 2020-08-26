@@ -16,15 +16,14 @@ div class="char#{' char--progression' if character.progressions.any?}"
       br
       small< XP: #{character.experience}
     .char__val--meta
+      small<> = character.race
+      small = character.dnd_class
+      br
       span HP:
       span<> = character.hit_points || 0
       span
         | /
       span< = character.hit_points_max || 0
-      br
-      small Inspiration:
-      small< = format_modifier(\
-        character.progressions&.last&.inspiration || 0)
     .char__val--ac
       small Armor Class
       br
