@@ -351,7 +351,6 @@ DEPENDENCIES
   seed_dump
   selenium-webdriver
   shoulda-matchers (~> 4)
-  simplecov
   slim-rails (~> 3.2.0)
   spring
   spring-watcher-listen (~> 2.0.0)

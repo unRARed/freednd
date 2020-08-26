@@ -55,7 +55,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'pundit-matchers', '~> 1.6.0'
   gem 'coveralls', require: false
-  gem 'simplecov', require: false
   gem 'shoulda-matchers', '~> 4'
 end
 

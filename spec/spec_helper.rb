@@ -13,19 +13,8 @@
 # it.
 require 'active_storage_validations/matchers'
 require 'coveralls'
-require 'simplecov'
 require 'pundit/rspec'
 require 'pundit/matchers'
-
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
-])
-SimpleCov.start 'rails' do
-  add_filter '/bin/'
-  add_filter '/db/'
-  add_filter '/spec/' # for rspec
-end
 Coveralls.wear!('rails')
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
