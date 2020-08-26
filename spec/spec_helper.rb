@@ -14,6 +14,9 @@
 require 'active_storage_validations/matchers'
 require 'coveralls'
 require 'simplecov'
+require 'pundit/rspec'
+require 'pundit/matchers'
+
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter

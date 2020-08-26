@@ -4,7 +4,7 @@ class CharacterPolicy < ApplicationPolicy
   end
 
   def show?
-    edit? || @record.party_members.include?(user)
+    edit? || is_party_member? || is_dm?
   end
 
   def create?
@@ -35,5 +35,15 @@ class CharacterPolicy < ApplicationPolicy
     def resolve
       scope.where(user: @user)
     end
+  end
+
+private
+
+  def is_party_member?
+    @record.party_members.include?(user)
+  end
+
+  def is_dm?
+    @record.campaigns.any?{|c| c.user == user }
   end
 end
