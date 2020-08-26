@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_051820) do
+ActiveRecord::Schema.define(version: 2020_08_26_054253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_07_20_051820) do
     t.bigint "dnd_equipment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "quantity"
     t.index ["dnd_equipment_id"], name: "index_progression_items_on_dnd_equipment_id"
     t.index ["dnd_feature_id"], name: "index_progression_items_on_dnd_feature_id"
     t.index ["dnd_spell_id"], name: "index_progression_items_on_dnd_spell_id"

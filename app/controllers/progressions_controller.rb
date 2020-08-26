@@ -88,7 +88,7 @@ private
         saving_throws_attributes: [ :id, :value, :is_proficient ],
         spells_attributes: [ :id, :dnd_spell_id ],
         features_attributes: [ :id, :dnd_feature_id ],
-        equipment_attributes: [ :id, :dnd_equipment_id ]
+        equipment_attributes: [ :id, :dnd_equipment_id, :quantity ]
       )
   end
 end

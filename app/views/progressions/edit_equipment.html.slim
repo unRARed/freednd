@@ -6,19 +6,36 @@
       = form_for @progression do |form|
         = form.fields_for :equipment do |ff|
           .box
-            .field.has-addons
-              .control.is-expanded
-                .select.is-fullwidth
-                  = ff.select :dnd_equipment_id,
-                    options_for_select(DnD::Equipment.all.\
-                      map{|c| ["#{c.name}", c.id]},\
-                      ff.object.dnd_equipment_id),
-                    { prompt: ' - Add New Equipment - ' }
-            - if ff.object.persisted?
-              = link_to "Remove #{ff.object.dnd_equipment.name}",
-                destroy_progression_item_path(\
-                  @progression.campaign, @progression, ff.object),
-                method: 'delete'
+            .columns
+              .column.is-two-thirds
+                .field
+                  = form.label 'Equipment Summary', class: 'label'
+                  .control.has-icons-left
+                    .select
+                      = ff.select :dnd_equipment_id,
+                        options_for_select(DnD::Equipment.all.\
+                          map{|c| ["#{c.name}", c.id]},\
+                          ff.object.dnd_equipment_id),
+                        { prompt: ' - Add New Equipment - ' }
+                    span.icon.is-small.is-left
+                      i.ra.ra-hammer
+                - if ff.object.persisted?
+                  = link_to "Remove #{ff.object.dnd_equipment.name}",
+                    destroy_progression_item_path(\
+                      @progression.campaign, @progression, ff.object),
+                    method: 'delete'
+              .column
+                .field
+                  = ff.label :quantity, class: 'label'
+                  .control.has-icons-left
+                    .select
+                      = ff.select :quantity,
+                        options_for_select(\
+                          (-10..20).to_a,
+                          selected: (ff.object.quantity || 1)\
+                        )
+                    span.icon.is-small.is-left
+                      i.fas.fa-dice-d20
         .field.pt2
           .control
             = form.submit value: 'Save Equipment List',
