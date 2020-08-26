@@ -11,8 +11,8 @@
         <g transform="matrix(4.16667,0,0,4.16667,0,0)">
             <path d="M22.133,300.549C30.147,302.012 36.225,309.039 36.225,317.475C36.225,326.985 28.505,334.703 18.997,334.703L18.843,334.703C18.915,338.642 18.991,340.792 18.991,340.792L225.669,340.792C225.669,340.792 236.591,30.776 122.33,30.776C92.338,30.776 70.971,52.135 55.786,83.637L0,94.629L0,0.01L230.392,0.01L230.392,345.599L0,345.599L0,305.04L22.133,300.549ZM0,262.117L0,220.552L26.773,215.12C33.452,217.474 38.234,223.849 38.234,231.332C38.234,240.797 30.585,248.489 21.138,248.559C20.935,251.501 20.748,254.407 20.576,257.272C21.291,257.349 21.994,257.47 22.677,257.648L0,262.117ZM0,177.629L0,137.552L39.227,129.593L39.186,129.734C44.91,132.536 48.855,138.419 48.855,145.216C48.855,154.682 41.205,162.374 31.756,162.443L30.077,171.703L0,177.629Z" style="fill:rgb(0,89,170);fill-opacity:0.8;"/>
         </g>
-        <g transform="matrix(4.16667,-0,-0,4.16667,0,0)">
-            <use xlink:href="#_Image1" x="0" y="79.677" width="64.31px" height="230.616px" transform="matrix(0.989385,0,0,0.99834,0,0)"/>
+        <g transform="matrix(4.12244,0,0,4.15975,0,331.437)">
+            <use id="_Image1_" serif:id="_Image1" xlink:href="#_Image1" x="0" y="0" width="65px" height="231px"/>
         </g>
         <g transform="matrix(4.16667,0,0,4.16667,0,0)">
             <path d="M22.677,257.648C30.277,259.427 35.938,266.257 35.938,274.398C35.938,283.78 28.422,291.421 19.089,291.623C19.009,294.608 18.945,297.485 18.893,300.25L18.997,300.25C20.069,300.25 21.117,300.348 22.133,300.549L0,305.04L0,262.117L22.677,257.648ZM30.077,171.703L30.06,171.796C37.115,173.951 42.253,180.518 42.253,188.274C42.253,197.735 34.61,205.425 25.166,205.501C24.809,208.476 24.471,211.441 24.15,214.391L26.773,215.12L0,220.552L0,177.629L30.077,171.703ZM55.786,83.637L53.227,89.129C56.877,92.288 59.189,96.956 59.189,102.159C59.189,111.607 51.567,119.289 42.141,119.385L39.227,129.593L0,137.552L0,94.629L55.786,83.637Z" style="fill:rgb(22,37,137);"/>
@@ -22,57 +22,57 @@
         </g>
         <g>
             <g transform="matrix(4.04366,0,0,4.06537,173.966,434.986)">
-                <use id="_Image1_" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_1" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,84.0573,180.181)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
             <g transform="matrix(4.04366,0,0,4.06537,132.523,613.61)">
-                <use id="_Image1_1" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_2" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,42.6138,358.803)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
             <g transform="matrix(4.04366,0,0,4.06537,103.902,792.368)">
-                <use id="_Image1_2" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_3" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,13.9892,537.559)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
             <g transform="matrix(4.04366,0,0,4.06537,85.9642,973.163)">
-                <use id="_Image1_3" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_4" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,-3.94689,718.357)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
             <g transform="matrix(4.04366,0,0,4.06537,77.9658,1153.04)">
-                <use id="_Image1_4" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_5" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,-11.945,898.234)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
             <g transform="matrix(4.04366,0,0,4.06537,77.9658,1332.02)">
-                <use id="_Image1_5" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
+                <use id="_Image1_6" serif:id="_Image1" xlink:href="#_Image2" x="0" y="0" width="26px" height="19px"/>
             </g>
             <g transform="matrix(1.09245,0,0,1.15269,-11.945,1077.21)">
                 <ellipse cx="128.573" cy="252.808" rx="36.617" ry="22.604" style="fill:white;"/>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,100.584,528.119)">
+            <g transform="matrix(1.33329,0,0,1.33329,142.251,390.619)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">STR</text>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,56.1316,704.778)">
+            <g transform="matrix(1.33329,0,0,1.33329,97.7983,579.778)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">DEX</text>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,26.5086,887.469)">
+            <g transform="matrix(1.33329,0,0,1.33329,64.0086,749.969)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">CON</text>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,24.8056,1066.82)">
+            <g transform="matrix(1.33329,0,0,1.33329,49.8056,937.653)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">INT</text>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,12.9536,1247.25)">
+            <g transform="matrix(1.33329,0,0,1.33329,37.9536,1109.75)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">WIS</text>
             </g>
-            <g transform="matrix(1.33329,0,0,1.33329,6.3546,1424.13)">
+            <g transform="matrix(1.33329,0,0,1.33329,23.0213,1290.8)">
                 <text x="0px" y="0px" style="font-family:'IowanOldStyle-Bold', 'Iowan Old Style', serif;font-weight:700;font-size:20.833px;fill:white;">CHR</text>
             </g>
         </g>
