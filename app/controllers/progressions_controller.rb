@@ -9,6 +9,9 @@ class ProgressionsController < ApplicationController
   def edit_status
   end
 
+  def edit_wallet
+  end
+
   def edit_spells
     @progression.spells.build
   end
@@ -26,6 +29,13 @@ class ProgressionsController < ApplicationController
       update(progression_params)
     redirect_to @progression.character,
       notice: 'Progression was successfully updated.'
+  end
+
+  def update_wallet
+    return render :edit_wallet unless @progression.
+      change_wallet(wallet_params)
+    redirect_to edit_campaign_progression_wallet_path,
+      notice: 'Wallet was successfully updated.'
   end
 
   def destroy_progression_item
@@ -54,6 +64,16 @@ private
   def set_progression
     @progression = Progression.find(params[:id])
     authorize(@progression)
+  end
+
+  def wallet_params
+    params.permit(
+      :platinum,
+      :gold,
+      :electrum,
+      :silver,
+      :copper
+    )
   end
 
   def progression_params

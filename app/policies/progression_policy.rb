@@ -4,6 +4,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_wallet?
+    edit?
+  end
+
   def edit_abilities?
     edit?
   end
@@ -29,6 +33,10 @@ class ProgressionPolicy < ApplicationPolicy
   end
 
   def edit_equipment?
+    edit?
+  end
+
+  def update_wallet?
     edit?
   end
 

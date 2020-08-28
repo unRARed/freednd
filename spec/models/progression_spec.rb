@@ -95,6 +95,31 @@ RSpec.describe Progression, type: :model do
     end
   end
 
+  describe 'change_wallet' do
+    it 'merges hash of denominations with existing copper value' do
+      hash_of_values = {
+        platinum: 1,
+        gold: 1,
+        electrum: 1,
+        silver: 1,
+        copper: 1
+      }
+      subject.character = build :character
+      subject.party = build :party
+
+      subject.change_wallet(hash_of_values)
+      expect(subject.copper_pieces).to eq 1161
+
+      # add 1 more gold
+      subject.change_wallet({gold: 2})
+      expect(subject.copper_pieces).to eq 1261
+
+      # add 3 more electrum
+      subject.change_wallet({electrum: 4})
+      expect(subject.copper_pieces).to eq 1411
+    end
+  end
+
   context 'private instance methods' do
     describe 'calculate_ability_mod' do
       it 'is based on the ability value' do

@@ -185,24 +185,20 @@ class Progression < ApplicationRecord
     value
   end
 
-  def silver_pieces(cp)
-    return 0 unless cp
-    cp / 10
-  end
+  def change_wallet(params)
+    diff = 0
+    diff += params[:platinum] ?
+      (params[:platinum].to_i * 1000) : (wallet[:platinum] * 1000)
+    diff += params[:gold] ?
+      (params[:gold].to_i * 100) : (wallet[:gold] * 100)
+    diff += params[:electrum] ?
+      (params[:electrum].to_i * 50) : (wallet[:electrum] * 50)
+    diff += params[:silver] ?
+      (params[:silver].to_i * 10) : (wallet[:silver] * 10)
+    diff += params[:copper] ?
+      params[:copper].to_i : wallet[:copper]
 
-  def electrum_pieces(cp)
-    return 0 unless cp
-    cp / 50
-  end
-
-  def gold_pieces(cp)
-    return 0 unless cp
-    cp / 100
-  end
-
-  def platinum_pieces(cp)
-    return 0 unless cp
-    cp / 1000
+    self.update! copper_pieces: diff
   end
 
   def wallet

@@ -1,0 +1,20 @@
+.card
+  .card-header
+    .card-header-title Wallet for #{@progression.character.name}
+  .card-content
+    .content
+      - @progression.wallet.each_slice(3) do |slice|
+        .columns
+          - slice.each do |label, value|
+            .column.mb2.is-one-third
+              = form_tag do
+                = label_tag label, nil, class: 'label'
+                .field.has-addons
+                  .control.has-icons-left
+                    = number_field_tag label, value,
+                      class: 'input'
+                    span.icon.is-medium.is-left
+                      i.ra.ra-gold-bar
+                  .control
+                    = submit_tag "Update #{label}",
+                      class: 'button is-success'

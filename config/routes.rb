@@ -7,7 +7,17 @@ Rails.application.routes.draw do
     as: 'edit_character_content_field'
 
   resources :campaigns
+  post 'campaigns/:id/join' => 'campaigns#join',
+    as: 'join_campaign'
+  delete 'campaigns/:campaign_id/' +
+    'progressions/:progression_id/' +
+    'progression_items/:id' => 'progressions#destroy_progression_item',
+    as: 'destroy_progression_item'
+
   resources :progressions, only: [:update]
+  get 'campaigns/:campaign_id/progressions/:id/wallet' =>
+    'progressions#edit_wallet',
+    as: 'edit_campaign_progression_wallet'
   get 'campaigns/:campaign_id/progressions/:id/abilities' =>
     'progressions#edit_abilities',
     as: 'edit_campaign_progression_abilities'
@@ -29,13 +39,9 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/equipment' =>
     'progressions#edit_equipment',
     as: 'edit_campaign_progression_equipment'
-  post 'campaigns/:id/join' => 'campaigns#join',
-    as: 'join_campaign'
-
-  delete 'campaigns/:campaign_id/' +
-    'progressions/:progression_id/' +
-    'progression_items/:id' => 'progressions#destroy_progression_item',
-    as: 'destroy_progression_item'
+  post 'campaigns/:campaign_id/progressions/:id/wallet' =>
+    'progressions#update_wallet',
+    as: 'update_campaign_progression_wallet'
 
   ###################
   ## User Sessions ##

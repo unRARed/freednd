@@ -1,21 +1,22 @@
-div class="char#{' char--progression' if character.progressions.any?}"
+- progression = character.progressions&.last if character.progressions.any?
+div class="char#{' char--progression' if progression}"
   .char__name
     .char__name__text = character.name.truncate(25)
   - if character.avatar.attached?
     img.char__avatar src="#{url_for(character.avatar_portrait)}"
   - else
     img.char__avatar src="#{asset_path('avatar-missing.jpg')}"
-  - if character.progressions.any?
+  - if progression
     - Character::ABILITIES.each do |ability|
       div class="char__ability-val--#{ability[0..2]}"
         = "%02d" % character.send(ability)
       div class="char__ability-val--#{ability[0..2]}-mod"
         = format_modifier(character.send("#{ability}_mod"))
     .char__val--level
-      span Level: #{character.progressions&.last&.level}
+      span Level: #{progression&.level}
       br
       small< XP: #{character.experience}
-    .char__val--meta
+    div class="char__val--meta#{ ' char__val--meta-shifted' if progression.copper_pieces}"
       small<> = character.race
       small = character.dnd_class
       br
@@ -24,6 +25,34 @@ div class="char#{' char--progression' if character.progressions.any?}"
       span
         | /
       span< = character.hit_points_max || 0
+    - if progression.copper_pieces
+      .char__wallet
+        - if platinum = progression.wallet[:platinum]
+          - unless platinum == 0
+            .char__wallet__val--pp
+              = platinum
+              span pp
+        - if gold = progression.wallet[:gold]
+          - unless gold == 0
+            .char__wallet__val--gp
+              = gold
+              span gp
+        - if electrum = progression.wallet[:electrum]
+          - unless electrum == 0
+            .char__wallet__val--ep
+              = electrum
+              span ep
+        - if silver = progression.wallet[:silver]
+          - unless silver == 0
+            .char__wallet__val--sp
+              = silver
+              span sp
+        - if copper = progression.wallet[:copper]
+          - unless copper == 0
+            .char__wallet__val--cp
+              = copper
+              span cp
+        span.char__wallet__label Wallet
     .char__val--ac
       small Armor Class
       br
