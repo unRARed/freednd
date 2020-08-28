@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_054253) do
+ActiveRecord::Schema.define(version: 2020_08_28_001733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 2020_08_26_054253) do
     t.integer "charisma"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "copper_pieces"
     t.index ["character_id"], name: "index_progressions_on_character_id"
     t.index ["party_id"], name: "index_progressions_on_party_id"
   end

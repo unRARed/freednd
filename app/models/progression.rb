@@ -185,6 +185,43 @@ class Progression < ApplicationRecord
     value
   end
 
+  def silver_pieces(cp)
+    return 0 unless cp
+    cp / 10
+  end
+
+  def electrum_pieces(cp)
+    return 0 unless cp
+    cp / 50
+  end
+
+  def gold_pieces(cp)
+    return 0 unless cp
+    cp / 100
+  end
+
+  def platinum_pieces(cp)
+    return 0 unless cp
+    cp / 1000
+  end
+
+  def wallet
+    values = {
+      platinum: 0,
+      gold: 0,
+      electrum: 0,
+      silver: 0,
+      copper: 0
+    }
+    return values unless copper_pieces
+    values[:platinum] = copper_pieces / 1000
+    values[:gold] = (copper_pieces % 1000) / 100
+    values[:electrum] = ((copper_pieces % 1000) % 100) / 50
+    values[:silver] = (((copper_pieces % 1000) % 100) % 50) / 10
+    values[:copper] = (((copper_pieces % 1000) % 100) % 50) % 10
+    values
+  end
+
 private
 
   def calculate_ability_mod(value)

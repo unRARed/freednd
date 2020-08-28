@@ -68,6 +68,31 @@ RSpec.describe Progression, type: :model do
         expect(subject.passive_check('Perception')).to eq 13
       end
     end
+
+    describe 'wallet' do
+      it 'converts copper_pieces to hash of denominations' do
+        subject.update copper_pieces: 98765
+
+        expect(subject.wallet[:platinum]).to eq 98
+        expect(subject.wallet[:gold]).to eq 7
+        expect(subject.wallet[:electrum]).to eq 1
+        expect(subject.wallet[:silver]).to eq 1
+        expect(subject.wallet[:copper]).to eq 5
+      end
+
+      it 'returns 0 for a demoninations not exceeded' do
+        subject.update copper_pieces: 1
+
+        expect(subject.wallet[:platinum]).to eq 0
+        expect(subject.wallet[:gold]).to eq 0
+        expect(subject.wallet[:electrum]).to eq 0
+        expect(subject.wallet[:silver]).to eq 0
+      end
+
+      it 'handles nil value' do
+        expect(subject.wallet[:copper]).to eq 0
+      end
+    end
   end
 
   context 'private instance methods' do

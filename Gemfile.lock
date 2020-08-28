@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: a01aba79715dda8ede1bdb7d1c5611094939fc1d
+  revision: e7c5d030966a7e8dad3e0a67c61920c4f2437c15
   branch: master
   specs:
     rspec-core (3.10.0.pre)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: df28c7ba03999a032e4927b5028a63cdf444c331
+  revision: e63ff4765e1cd2798b02ddddad259f1104ef87a5
   branch: master
   specs:
     rspec-expectations (3.10.0.pre)
@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 023dbbaa71cc223cf338c9d32fa9db2ebe227972
+  revision: 0a52e0a86b126b4bab94d277b2ad99a7492dc37d
   branch: master
   specs:
     rspec-mocks (3.10.0.pre)
@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: 6fcce4cb3a8d91c309a0eb66b25ae682e1ff8818
+  revision: 01704c50c146f720db914724c25681781ecefb23
   branch: master
   specs:
     rspec-rails (4.1.0.pre)
@@ -40,7 +40,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: bba249a0a5e13c64c12b6ed7a02de39aa568ebaa
+  revision: 6447b0c2c9d1cd3e1504784fb85675ca9ae7b7c3
   branch: master
   specs:
     rspec-support (3.10.0.pre)
@@ -84,7 +84,7 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_storage_validations (0.8.9)
+    active_storage_validations (0.9.0)
       rails (>= 5.2.0)
     activejob (6.0.3.2)
       activesupport (= 6.0.3.2)
@@ -109,7 +109,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.15)
     bindex (0.8.1)
-    bootsnap (1.4.7)
+    bootsnap (1.4.8)
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
@@ -129,18 +129,16 @@ GEM
       bcrypt (>= 3.1.1)
       email_validator (~> 2.0)
       railties (>= 5.0)
-    concurrent-ruby (1.1.6)
-    coveralls (0.7.1)
-      multi_json (~> 1.3)
-      rest-client
-      simplecov (>= 0.7)
-      term-ansicolor
-      thor
+    concurrent-ruby (1.1.7)
+    coveralls (0.8.23)
+      json (>= 1.8, < 3)
+      simplecov (~> 0.16.1)
+      term-ansicolor (~> 1.3)
+      thor (>= 0.19.4, < 2.0)
+      tins (~> 1.6)
     crass (1.0.6)
     diff-lcs (1.4.4)
     docile (1.3.2)
-    domain_name (0.5.20190701)
-      unf (>= 0.0.5, < 1.0.0)
     email_validator (2.0.1)
       activemodel
     erubi (1.9.0)
@@ -152,9 +150,6 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    http-accept (1.7.0)
-    http-cookie (1.0.3)
-      domain_name (~> 0.5)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.11.0)
@@ -162,6 +157,7 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    json (2.3.1)
     launchy (2.5.0)
       addressable (~> 2.7)
     letter_opener (1.7.0)
@@ -170,7 +166,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.6.0)
+    loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -178,17 +174,12 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (1.0.0)
-    mime-types (3.3.1)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0512)
     mimemagic (0.3.5)
     mini_magick (4.10.1)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.1)
     msgpack (1.3.3)
-    multi_json (1.15.0)
-    netrc (0.11.0)
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -236,11 +227,6 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (1.7.1)
-    rest-client (2.1.0)
-      http-accept (>= 1.7.0, < 2.0)
-      http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 4.0)
-      netrc (~> 0.8)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
@@ -259,12 +245,13 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    shoulda-matchers (4.3.0)
+    shoulda-matchers (4.4.1)
       activesupport (>= 4.2.0)
-    simplecov (0.18.5)
+    simplecov (0.16.1)
       docile (~> 1.1)
-      simplecov-html (~> 0.11)
-    simplecov-html (0.12.2)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -272,7 +259,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    spring (2.1.0)
+    spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -297,9 +284,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.7.7)
     web-console (4.0.4)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -309,7 +293,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webpacker (4.2.2)
+    webpacker (4.3.0)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
