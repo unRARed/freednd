@@ -17,5 +17,6 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'DnD'
+  inflect.acronym 'NPC'
   inflect.irregular 'equipments', 'equipment'
 end

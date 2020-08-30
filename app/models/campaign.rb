@@ -1,6 +1,7 @@
 class Campaign < ApplicationRecord
   belongs_to :user
 
+  has_many :npcs
   has_one :party
   has_many :progressions,
     :through => :party

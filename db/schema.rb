@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_28_001733) do
+ActiveRecord::Schema.define(version: 2020_08_30_034359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,17 @@ ActiveRecord::Schema.define(version: 2020_08_28_001733) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "npcs", force: :cascade do |t|
+    t.bigint "campaign_id"
+    t.string "name", null: false
+    t.string "location", null: false
+    t.boolean "in_party", default: false, null: false
+    t.boolean "is_male", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_id"], name: "index_npcs_on_campaign_id"
+  end
+
   create_table "parties", force: :cascade do |t|
     t.bigint "campaign_id"
     t.datetime "created_at", precision: 6, null: false
@@ -227,6 +238,7 @@ ActiveRecord::Schema.define(version: 2020_08_28_001733) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "campaigns", "users"
   add_foreign_key "characters", "users"
+  add_foreign_key "npcs", "campaigns"
   add_foreign_key "parties", "campaigns"
   add_foreign_key "progression_items", "dnd_equipment", column: "dnd_equipment_id"
   add_foreign_key "progression_items", "dnd_features"
