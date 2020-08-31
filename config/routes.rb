@@ -6,13 +6,16 @@ Rails.application.routes.draw do
   get 'characters/:id/rp/:field' => 'characters#edit_content_field',
     as: 'edit_character_content_field'
 
-  resources :campaigns
+  resources :campaigns do
+    resources :npcs
+  end
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
   delete 'campaigns/:campaign_id/' +
     'progressions/:progression_id/' +
     'progression_items/:id' => 'progressions#destroy_progression_item',
     as: 'destroy_progression_item'
+
 
   resources :progressions, only: [:update]
   get 'campaigns/:campaign_id/progressions/:id/wallet' =>

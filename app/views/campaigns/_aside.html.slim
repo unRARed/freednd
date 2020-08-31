@@ -1,0 +1,59 @@
+.card
+  - if campaign.decoration.attached?
+    .card-image
+      figure.image
+        = image_tag url_for(campaign.decoration_thumb),
+          width: 240
+  .card-header
+    .card-header-title
+      - if current_page? campaign_path(campaign)
+        = campaign.name
+      - else
+        = link_to campaign.name, campaign_path(campaign)
+  .card-content
+    .is-size-6 = campaign.description.truncate(600)
+    p.mt3
+      = link_to 'Add NPC',
+        new_campaign_npc_path(campaign),
+        class: 'button'
+- if policy(campaign).edit?
+  - if campaign.npcs.any?
+    h3.is-size-4.mt4.mb2 Established NPCs
+    table.table.is-narrow.is-striped.is-bordered.is-fullwidth(
+      style="font-size: 60%"
+    )
+      thead
+        tr
+          th Avatar
+          th Details
+      tbody
+        - campaign.npcs.each do |npc|
+          tr class="#{'has-background-success-light' if npc.in_party?}"
+            td.has-text-centered
+              - if npc.avatar.attached?
+                = link_to edit_campaign_npc_path(campaign, npc)
+                  img src="#{url_for(npc.avatar_thumb)}"
+              - else
+                p No avatar set.
+              small
+                = link_to campaign_npc_path(campaign, npc),
+                  method: 'delete',
+                  data: { confirm: 'Are you sure you want to remove this NPC?' }
+                  span.has-text-danger.is-small &times; Delete this NPC
+            td
+              .is-size-6.pb0
+                = link_to edit_campaign_npc_path(campaign, npc)
+                  span<> = npc.name
+                  span &nbsp;
+                  .fas.fa-edit
+              span #{npc.gender}
+              - if npc.race.present?
+                strong< = npc.race
+              - if npc.location.present?
+                span
+                  | , #{npc.location}
+              - if npc.profile.present?
+                .mt3 == npc.profile
+              - if npc.in_party?
+                .mt3
+                  h4.is-size-6.has-text-success-dark NPC is in the Party

@@ -1,0 +1,71 @@
+.content
+  = form_for [parent, record] do |form|
+    .columns
+      .column
+        .field
+          = form.label :name, class: 'label'
+          .control.has-icons-left
+            = form.text_field :name,
+              class: 'input is-medium',
+              required: true
+            span.icon.is-medium.is-left
+              i.fas.fa-dice-d20
+      .column.is-one-third
+        .field
+          = form.label :is_male, 'Gender', class: 'label'
+          .control.has-icons-left
+            .select.is-medium
+              = form.select :is_male,
+                options_for_select([ ['Male', '1'], ['Female', '0'] ])
+            span.icon.is-small.is-left
+              i.ra.ra-player
+    .columns
+      .column
+        .field
+          = form.label :location, class: 'label'
+          .control.has-icons-left
+            = form.text_field :location,
+              class: 'input is-medium',
+              required: true
+            span.icon.is-medium.is-left
+              i.ra.ra-bridge
+      .column
+        .field
+          = form.label :race, class: 'label'
+          .control.has-icons-left
+            .select.is-medium
+              = form.select :race,
+                options_for_select(\
+                  Character.races,
+                  selected: record.race\
+                ),
+                { prompt: ' - Choose Race - ' }
+            span.icon.is-small.is-left
+              i.fas.fa-dragon
+    .media
+      - if record.avatar.attached?
+        .media-left
+          = image_tag url_for(record.avatar_thumb),
+            width: 240
+      .media-content
+        .file.has-name.is-primary.is-fullwidth.is-medium
+          = form.label :avatar, class: 'file-label'
+            = form.file_field :avatar, class: 'file-input'
+            span.file-cta
+              span.file-icon
+                i.fas.fa-upload
+              span.file-label Choose Avatar
+            span.file-name
+              - if record.avatar.attached?
+                = record.avatar.attachment.filename
+    .field
+      = form.label :profile, class: 'label'
+      .control.has-icons-left
+        = form.rich_text_area :profile
+    .field
+      = form.label :in_party, class: 'checkbox'
+        = form.check_box :in_party
+        span.mh3.is-size-6 Is NPC in the Player’s Party?
+    .field.pt2
+      .control
+        = form.submit class: 'button is-success is-medium'

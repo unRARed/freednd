@@ -3,6 +3,10 @@
     .card-header-title Saving Throws for #{@progression.character.name}
   .card-content
     .content
+      .message.is-success
+        .message-body
+          p Don't add your actual proficiency bonus to these values. Only
+            indicate if you ARE proficient OR NOT.
       = form_for @progression do |form|
         - @progression.saving_throws.each_slice(3) do |slice|
           .columns
@@ -17,7 +21,8 @@
                     span.icon.is-medium.is-left
                       i.fas.fa-dice-d20
                 .field
-                  = ff.label :is_proficient, class: 'checkbox'
+                  = ff.label :is_proficient, class: 'checkbox',
+                    class: 'has-text-success-dark'
                     = ff.check_box :is_proficient
                     span.mh3.is-size-6 Proficient?
         .field.pt2

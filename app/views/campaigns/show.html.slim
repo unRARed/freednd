@@ -1,21 +1,13 @@
 .container
   .columns
     .column.is-one-quarter
-      .card
-        - if @campaign.decoration.attached?
-          .card-image
-            figure.image
-              = image_tag url_for(@campaign.decoration_thumb),
-                width: 240
-        .card-header
-          .card-header-title = @campaign.name
-        .card-content
-          .is-size-6 = @campaign.description.truncate(600)
+      = render partial: 'aside',
+        locals: { campaign: @campaign }
     .column
-      - @campaign.progressions.each_slice(4) do |slice|
+      - @campaign.progressions.each_slice(5) do |slice|
         .columns
           - slice.each do |progression|
-            .column.is-one-quarter
+            .column.is-one-fifth
               .card
                 = link_to character_path(progression.character)
                   .card-image style="display: inline-block;"
@@ -25,7 +17,7 @@
                   .card-content.is-size-6
                     ul
                       li
-                        span.has-text-weight-semibold> Proficiency Bonus:
+                        span.has-text-weight-semibold> Prof. Bonus:
                         = format_modifier(progression.proficiency_bonus)
                       li
                         span.has-text-weight-semibold> Initiative Mod:
@@ -45,8 +37,12 @@
                     hr
                     - if progression.skills.any?
                       ul
+                        h3.is-size-6.mb0 Passive Skills (13+)
                         - progression.skills.order('value DESC').each do |skill|
-                          li
-                            span.has-text-weight-semibold>
-                              ' Passive #{skill.name}:
-                            = progression.passive_check(skill.name)
+                          - if (value = progression.passive_check(skill.name)) && value > 12
+                            li
+                              span>
+                                = skill.name
+                              span>
+                                | :
+                              = value

@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 2020_08_30_034359) do
     t.bigint "campaign_id"
     t.string "name", null: false
     t.string "location", null: false
+    t.string "race"
     t.boolean "in_party", default: false, null: false
     t.boolean "is_male", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -240,7 +241,7 @@ ActiveRecord::Schema.define(version: 2020_08_30_034359) do
   add_foreign_key "characters", "users"
   add_foreign_key "npcs", "campaigns"
   add_foreign_key "parties", "campaigns"
-  add_foreign_key "progression_items", "dnd_equipment", column: "dnd_equipment_id"
+  add_foreign_key "progression_items", "dnd_equipment"
   add_foreign_key "progression_items", "dnd_features"
   add_foreign_key "progression_items", "dnd_spells"
   add_foreign_key "progression_items", "progressions"

@@ -1,0 +1,13 @@
+.container
+  .columns
+    .column.is-one-third
+      .card
+        = render partial: 'campaigns/aside',
+          locals: { campaign: @npc.campaign }
+    .column
+      .card
+        .card-header
+          .card-header-title New NPC
+        .card-content
+          = render partial: 'form',
+            locals: { parent: @npc.campaign, record: @npc }
