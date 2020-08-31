@@ -12,10 +12,17 @@
         = link_to campaign.name, campaign_path(campaign)
   .card-content
     .is-size-6 = campaign.description.truncate(600)
-    p.mt3
-      = link_to 'Add NPC',
-        new_campaign_npc_path(campaign),
-        class: 'button'
+    - if policy(campaign).edit?
+      p.mt3
+        = link_to 'Add NPC',
+          new_campaign_npc_path(campaign),
+          class: 'button is-small is-primary'
+        span &nbsp;
+        = link_to 'Open Encounter Generator',
+          'https://kobold.club/fight/#/encounter-builder',
+          class: 'button is-small',
+          target: '_blank'
+
 - if policy(campaign).edit?
   - if campaign.npcs.any?
     h3.is-size-4.mt4.mb2 Established NPCs
