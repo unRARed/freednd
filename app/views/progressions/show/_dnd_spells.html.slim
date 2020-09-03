@@ -1,0 +1,35 @@
+p
+  .tag.is-info.is-light.is-large
+    span> Spells
+    - if policy(progression.character).edit?
+      span<
+        = link_to edit_campaign_progression_spells_path(\
+            progression.campaign, progression\
+          )
+          i.fas.fa-edit.pl2
+.box.is-size-5
+  - progression.dnd_spells.each_with_index do |spell, index|
+    .card.mb2
+      header.card-header
+        .card-header-title
+          span = spell.formatted_name
+        a(
+          data-action='collapse'
+          href="#dnd_spell#{spell.id}"
+          class='card-header-icon is-hidden-fullscreen'
+          aria-label='more options'
+        )
+          span.icon
+            i.fas.fa-angle-down aria-hidden='true'
+      .is-collapsible id="dnd_spell#{spell.id}"
+        .card-content
+          span
+            small Level: #{spell.level}
+            span<>
+              | |
+            small Range: #{spell.range}
+            span<>
+              | |
+            small Duration: #{spell.duration}
+          hr
+          p = sanitize spell.description

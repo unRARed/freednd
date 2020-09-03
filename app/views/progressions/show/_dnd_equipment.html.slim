@@ -1,0 +1,42 @@
+p
+  .tag.is-info.is-light.is-large
+    span Equipment
+    - if policy(progression.character).edit?
+      = link_to edit_campaign_progression_equipment_path(\
+          progression.campaign, progression\
+        )
+        i.fas.fa-edit.pl2
+.box.is-size-5
+  ul
+    - progression.equipment.each_with_index do |item, index|
+      .card.mb2
+        header.card-header
+          -
+          .card-header-title
+            span #{item.dnd_equipment.name} (#{item.dnd_equipment.dnd_equipment_category&.name})
+            - if item.quantity && item.quantity != 1
+              span> &nbsp;
+              span.tag.is-info.is-light Quantity: #{item.quantity}
+          a(
+            data-action='collapse'
+            href="#dnd_equipment#{item.dnd_equipment.id}"
+            class='card-header-icon is-hidden-fullscreen'
+            aria-label='more options'
+          )
+            span.icon
+              i.fas.fa-angle-down aria-hidden='true'
+        .is-collapsible id="dnd_equipment#{item.dnd_equipment.id}"
+          .card-content
+            - if item.dnd_equipment.armor_category.present?
+              p
+                span.has-text-weight-semibold>
+                  ' Armor Category:
+                span = item.dnd_equipment.armor_category
+            - if item.dnd_equipment.weapon_category.present?
+              p
+                span.has-text-weight-semibold>
+                  ' Weapon Category:
+                span = item.dnd_equipment.weapon_category
+            - if item.dnd_equipment.description.present?
+              hr
+              p = sanitize item.dnd_equipment.description

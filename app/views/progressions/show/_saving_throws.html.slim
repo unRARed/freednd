@@ -1,0 +1,18 @@
+p
+  .tag.is-info.is-light.is-large
+    span Saving Throws
+    - if policy(progression.character).edit?
+      = link_to edit_campaign_progression_saving_throws_path(\
+          progression.campaign, progression\
+        )
+        i.fas.fa-edit.pl2
+.box
+  small.is-size-6.has-text-success-dark Remember to add your proficiency bonus to the green values here when rolling.
+  ul
+    - progression.saving_throws.each do |saving_throw|
+      li
+        span(class="is-size-6 #{'has-text-success-dark \
+          has-text-weight-semibold' \
+            if saving_throw.is_proficient?}"
+        ) #{saving_throw.name}:
+        span.is-size-6 &nbsp; #{saving_throw.value}
