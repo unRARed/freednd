@@ -30,13 +30,33 @@ p
             - if item.dnd_equipment.armor_category.present?
               p
                 span.has-text-weight-semibold>
-                  ' Armor Category:
+                  ' Category:
                 span = item.dnd_equipment.armor_category
             - if item.dnd_equipment.weapon_category.present?
               p
                 span.has-text-weight-semibold>
-                  ' Weapon Category:
+                  ' Category:
                 span = item.dnd_equipment.weapon_category
+            p
+              - if item.dnd_equipment.weapon_damage_die.present?
+                span.has-text-weight-semibold>
+                  ' Damage:
+                strong.tag = item.dnd_equipment.weapon_damage_die
+                - if item.dnd_equipment.damage_type.present?
+                  small.has-text-grey
+                    | (#{item.dnd_equipment.damage_type.name})
+                - if item.dnd_equipment.weapon_range_normal.present?
+                  br
+                  span.has-text-weight-semibold>
+                    ' Close Range:
+                  small.has-text-grey
+                    = item.dnd_equipment.weapon_range_normal.to_s + 'ft'
+                - if item.dnd_equipment.weapon_range_long.present?
+                  br
+                  span.has-text-weight-semibold>
+                    ' Long Range:
+                  small.has-text-grey
+                    = item.dnd_equipment.weapon_range_long.to_s + 'ft'
             - if item.dnd_equipment.description.present?
               hr
               p = sanitize item.dnd_equipment.description
