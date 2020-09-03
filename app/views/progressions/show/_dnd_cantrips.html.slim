@@ -32,4 +32,5 @@ p
               | |
             small Duration: #{spell.duration}
           hr
-          p = sanitize spell.description
+          .message
+            .message-body.is-size-6 = sanitize spell.description
