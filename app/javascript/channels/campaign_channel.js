@@ -22,6 +22,7 @@ $(document).on('turbolinks:load', function() {
           $diceRolls.find('.notification').last().remove();
         }
         const $diceRollResult = $(data['dice_roll']);
+        $diceRollResult.dismissible();
         $diceRolls.prepend($diceRollResult);
         setTimeout(function () {
           $diceRollResult.fadeOut('normal', function () { $(this).remove(); });
