@@ -13,50 +13,48 @@ p
         header.card-header
           -
           .card-header-title
-            span #{item.dnd_equipment.name} (#{item.dnd_equipment.dnd_equipment_category&.name})
+            span = item.dnd_equipment.name
             - if item.quantity && item.quantity != 1
               span> &nbsp;
               span.tag.is-info.is-light Quantity: #{item.quantity}
-          a(
-            data-action='collapse'
-            href="#dnd_equipment#{item.dnd_equipment.id}"
-            class='card-header-icon is-hidden-fullscreen'
-            aria-label='more options'
-          )
-            span.icon
-              i.fas.fa-angle-down aria-hidden='true'
-        .is-collapsible id="dnd_equipment#{item.dnd_equipment.id}"
-          .card-content
             - if item.dnd_equipment.armor_category.present?
               p
-                span.has-text-weight-semibold>
-                  ' Category:
-                span = item.dnd_equipment.armor_category
+                | &nbsp;(#{item.dnd_equipment.armor_category} Armor)
             - if item.dnd_equipment.weapon_category.present?
               p
-                span.has-text-weight-semibold>
-                  ' Category:
-                span = item.dnd_equipment.weapon_category
+                | &nbsp;(#{item.dnd_equipment.weapon_category})
             p
               - if item.dnd_equipment.weapon_damage_die.present?
-                span.has-text-weight-semibold>
-                  ' Damage:
                 strong.tag = item.dnd_equipment.weapon_damage_die
                 - if item.dnd_equipment.damage_type.present?
                   small.has-text-grey
                     | (#{item.dnd_equipment.damage_type.name})
-                - if item.dnd_equipment.weapon_range_normal.present?
-                  br
-                  span.has-text-weight-semibold>
-                    ' Close Range:
-                  small.has-text-grey
-                    = item.dnd_equipment.weapon_range_normal.to_s + 'ft'
-                - if item.dnd_equipment.weapon_range_long.present?
-                  br
-                  span.has-text-weight-semibold>
-                    ' Long Range:
-                  small.has-text-grey
-                    = item.dnd_equipment.weapon_range_long.to_s + 'ft'
-            - if item.dnd_equipment.description.present?
-              hr
-              p = sanitize item.dnd_equipment.description
+          - unless item.dnd_equipment.simple?
+            a(
+              data-action='#{'collapse'}'
+              href="#dnd_equipment#{item.dnd_equipment.id}"
+              class='card-header-icon is-hidden-fullscreen'
+              aria-label='more options'
+            )
+              span.icon
+                i.fas.fa-angle-down aria-hidden='true'
+        - unless item.dnd_equipment.simple?
+          .is-collapsible id="dnd_equipment#{item.dnd_equipment.id}"
+            .card-content
+              - if item.dnd_equipment.weapon?
+                ul
+                  - if item.dnd_equipment.weapon_range_normal.present?
+                    li
+                      span.has-text-weight-semibold>
+                        ' Close Range:
+                      small.has-text-grey
+                        = item.dnd_equipment.weapon_range_normal.to_s + 'ft'
+                  - if item.dnd_equipment.weapon_range_long.present?
+                    li
+                      span.has-text-weight-semibold>
+                        ' Long Range:
+                      small.has-text-grey
+                        = item.dnd_equipment.weapon_range_long.to_s + 'ft'
+              - if item.dnd_equipment.description.present?
+                .message
+                  .message-body = sanitize item.dnd_equipment.description

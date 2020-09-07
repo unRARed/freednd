@@ -27,14 +27,35 @@ class Progression < ApplicationRecord
   # assocated static content...
   # equipment, languages, spells, etc.
   has_many :progression_items
+  has_many :dnd_equipment, lambda {
+      joins(:dnd_equipment_category).
+      order(Arel.sql("dnd_entities.name = 'Armor' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Weapon' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Tools' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Adventuring Gear' DESC")).
+      order(Arel.sql(
+        "dnd_entities.name = 'Mounts and Vehicles' DESC NULLS LAST
+      "))
+    },
+    :through => :progression_items,
+    class_name: 'DnD::Equipment'
   has_many :features,
     -> { where.not(dnd_feature_id: nil) },
     class_name: 'ProgressionItem'
   has_many :spells,
     -> { where.not(dnd_spell_id: nil) },
     class_name: 'ProgressionItem'
-  has_many :equipment,
-    -> { where.not(dnd_equipment_id: nil) },
+  has_many :equipment, lambda {
+      where.not(dnd_equipment_id: nil).
+      joins(:dnd_equipment => :dnd_equipment_category).
+      order(Arel.sql("dnd_entities.name = 'Armor' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Weapon' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Tools' DESC")).
+      order(Arel.sql("dnd_entities.name = 'Adventuring Gear' DESC")).
+      order(Arel.sql(
+        "dnd_entities.name = 'Mounts and Vehicles' DESC NULLS LAST
+      "))
+    },
     class_name: 'ProgressionItem'
 
   has_many :dnd_cantrips, lambda {
@@ -52,10 +73,6 @@ class Progression < ApplicationRecord
   has_many :dnd_features,
     -> { order(:level => :desc) },
     :through => :progression_items
-  has_many :dnd_equipment,
-    -> { order(:type => :asc) },
-    :through => :progression_items,
-    class_name: 'DnD::Equipment'
   has_many :dnd_armor,
     -> { order(:type => :asc) },
     :through => :progression_items,
