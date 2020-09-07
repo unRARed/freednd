@@ -17,6 +17,8 @@ class Campaign < ApplicationRecord
 
   has_one_attached :decoration
 
+  has_rich_text :notes
+
   scope :is_open,
     -> { where(is_locked: false) }
 

@@ -66,6 +66,12 @@ private
 
     def campaign_params
       params.require(:campaign).
-        permit(:name, :description, :decoration, :is_locked)
+        permit(
+          :name,
+          :description,
+          :decoration,
+          :notes,
+          :is_locked
+        )
     end
 end

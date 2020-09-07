@@ -237,6 +237,14 @@ class Progression < ApplicationRecord
     values
   end
 
+  def passive_strengths
+    self.skills.select{|s| passive_check(s.name) > 12 }
+  end
+
+  def passive_flaws
+    self.skills.select{|s| passive_check(s.name) < 10 }
+  end
+
 private
 
   def calculate_ability_mod(value)

@@ -9,7 +9,7 @@ class UsersController < Clearance::UsersController
   def account
     authorize(User)
     return redirect_to root_path unless current_user
-    @campaigns = current_user.campaigns +
-      current_user.character_campaigns
+    @campaigns = (current_user.campaigns +
+      current_user.character_campaigns).uniq
   end
 end
