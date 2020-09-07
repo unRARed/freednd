@@ -20,4 +20,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'NPC'
   inflect.acronym 'NPCs'
   inflect.uncountable %w( equipment )
+  inflect.irregular 'equipments', 'equipment'
 end
