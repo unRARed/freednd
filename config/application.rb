@@ -22,7 +22,5 @@ module FreeDnD
     config.generators do |g|
       g.template_engine = :slim
     end
-
-    config.active_job.queue_adapter = :sucker_punch
   end
 end

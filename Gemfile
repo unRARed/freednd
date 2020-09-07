@@ -18,7 +18,6 @@ gem 'pundit'
 gem 'mini_magick'
 gem 'active_storage_validations'
 gem 'games_dice'
-gem 'sucker_punch', '~> 2.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
