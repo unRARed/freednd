@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root 'landing_pages#index'
   get 'license' => 'landing_pages#license'
 
@@ -45,6 +47,9 @@ Rails.application.routes.draw do
   post 'campaigns/:campaign_id/progressions/:id/wallet' =>
     'progressions#update_wallet',
     as: 'update_campaign_progression_wallet'
+  post 'campaigns/:campaign_id/progressions/:id/roll_dice' =>
+    'progressions#roll_dice',
+    as: 'campaign_progression_dice_roll'
 
   ###################
   ## User Sessions ##

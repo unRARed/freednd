@@ -59,6 +59,16 @@ class ProgressionsController < ApplicationController
     )
   end
 
+  def roll_dice
+    dice_roll = DiceRoll.create! query: params[:query],
+      progression: @progression,
+      campaign: @progression.campaign
+    redirect_back(
+      fallback_location: progression_path(@progression),
+      notice: "You rolled #{dice_roll.query} and got #{dice_roll.result}."
+    )
+  end
+
 private
 
   def set_progression

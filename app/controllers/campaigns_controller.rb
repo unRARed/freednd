@@ -1,6 +1,8 @@
 class CampaignsController < ApplicationController
+  SupportedDice = [4, 6, 8, 10, 12, 20]
+
   before_action :set_campaign,
-    only: [:show, :edit, :update, :destroy, :join]
+    only: [:show, :edit, :update, :destroy, :join, :roll_dice]
 
   # GET /campaigns
   def index

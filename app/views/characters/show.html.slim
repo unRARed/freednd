@@ -50,6 +50,22 @@
         .column
           .columns
             .column.is-one-third
+              = form_with(\
+                url: campaign_progression_dice_roll_path(progression.campaign, progression),
+                html: { id: 'new-dice-roll' }\
+              ) do |form|
+                .tag.is-light.is-large Roll a Die
+                .box.mb4
+                  .field.has-addons
+                    .control.is-expanded
+                      .select.is-fullwidth
+                        = form.select :query,
+                          options_for_select(DiceRoll::SupportedDice.\
+                            map{|sides| ["d#{sides}", "1d#{sides}"]},\
+                            '1d20')
+                    .control
+                      = form.submit value: 'Roll',
+                        class: 'button is-success'
               = render partial: 'progressions/show/skills',
                 locals: { progression: progression }
               = render partial: 'progressions/show/saving_throws',

@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pundit'
 gem 'mini_magick'
 gem 'active_storage_validations'
+gem 'games_dice'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

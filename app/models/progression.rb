@@ -18,6 +18,8 @@ class Progression < ApplicationRecord
     :through => :campaign,
     :source => :user
 
+  has_many :dice_rolls, :dependent => :destroy
+
   # statistics
   has_many :skills
   has_many :saving_throws

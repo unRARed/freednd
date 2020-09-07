@@ -1,8 +1,8 @@
 class Campaign < ApplicationRecord
   belongs_to :user
 
-  has_many :npcs
   has_one :party
+
   has_many :progressions,
     :through => :party
   has_many :characters,
@@ -11,6 +11,9 @@ class Campaign < ApplicationRecord
   has_many :users,
     -> { distinct },
     :through => :characters
+
+  has_many :npcs
+  has_many :dice_rolls, :dependent => :destroy
 
   has_one_attached :decoration
 

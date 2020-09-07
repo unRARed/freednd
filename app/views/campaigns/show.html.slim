@@ -1,9 +1,10 @@
-.container
+#campaign.container data-id="#{@campaign.id}"
   .columns
     .column.is-one-quarter
       = render partial: 'aside',
         locals: { campaign: @campaign }
     .column
+      #dice-rolls
       - @campaign.progressions.each_slice(5) do |slice|
         .columns
           - slice.each do |progression|

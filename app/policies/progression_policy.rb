@@ -44,6 +44,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def roll_dice?
+    edit?
+  end
+
   def edit?
     user.present? && @record.user == user
   end

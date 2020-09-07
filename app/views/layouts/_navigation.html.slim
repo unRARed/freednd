@@ -30,6 +30,7 @@
     .navbar-end
       .navbar-item
         - if signed_in?
+          .tag #{current_user.email}
           = link_to "Sign out", sign_out_path, method: :delete
         - else
           = link_to "Sign in", sign_in_path
