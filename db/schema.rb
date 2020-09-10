@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_06_175259) do
+ActiveRecord::Schema.define(version: 2020_09_10_053500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_09_06_175259) do
     t.integer "dnd_weapon_damage_type_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "contents", default: [], array: true
   end
 
   create_table "dnd_features", force: :cascade do |t|
@@ -254,7 +255,7 @@ ActiveRecord::Schema.define(version: 2020_09_06_175259) do
   add_foreign_key "dice_rolls", "progressions"
   add_foreign_key "npcs", "campaigns"
   add_foreign_key "parties", "campaigns"
-  add_foreign_key "progression_items", "dnd_equipment"
+  add_foreign_key "progression_items", "dnd_equipment", column: "dnd_equipment_id"
   add_foreign_key "progression_items", "dnd_features"
   add_foreign_key "progression_items", "dnd_spells"
   add_foreign_key "progression_items", "progressions"

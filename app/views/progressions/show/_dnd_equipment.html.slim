@@ -58,3 +58,11 @@ p
               - if item.dnd_equipment.description.present?
                 .message
                   .message-body = sanitize item.dnd_equipment.description
+              - if item.dnd_equipment.contained_equipment.any?
+                - item.dnd_equipment.contained_equipment.all.each\
+                  do |nested_equipment|
+                  table.table.is-striped.is-narrow.is-size-6.is-fullwidth
+                    tbody
+                      tr
+                        td width="30%" = nested_equipment.name
+                        td = nested_equipment.description || 'N/A'

@@ -14,6 +14,7 @@
                     .select
                       = ff.select :dnd_equipment_id,
                         options_for_select(DnD::Equipment.all.\
+                          order(:name => :asc).\
                           map{|c| ["#{c.name}", c.id]},\
                           ff.object.dnd_equipment_id),
                         { prompt: ' - Add New Equipment - ' }

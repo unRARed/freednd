@@ -21,191 +21,24 @@ def query_api(api, endpoint)
   JSON.parse(api_response&.body)
 end
 
+#################
+## API Parsing ##
+#################
+
+# To limit consumption of external APIs,
+# use seed_dump to persist the data:
+#   rake db:seed:dump MODELS="Model1, Model2" \
+#     FILE=db/seeds/parsed/SOURCE_table.rb
 def seed_file(path)
   puts "Seeding #{path}"
   load(path)
 end
 
-#################
-## API Parsing ##
-#################
-seed_files = []
-
-if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_entities.rb")
-  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_entities.rb"
-else
-  [
-    ['Condition', 'conditions'],
-    ['School', 'magic-schools'],
-    ['EquipmentCategory', 'equipment-categories'],
-    ['DamageType', 'damage-types'],
-    ['WeaponProperty', 'weapon-properties'],
-    ['Ability', 'ability-scores'],
-    ['Skill', 'skills']
-  ].each do |arr|
-    data = query_api(:dnd5eapi, "/api/#{arr[1]}")
-    data['results'].each do |hash|
-      meta = query_api(:dnd5eapi, hash['url'])
-      puts "Creating DnD::#{arr[0]}: #{meta['name']}"
-      "DnD::#{arr[0]}".constantize.create!({
-        'name' => meta['name'],
-        'slug' => meta['index'],
-        'description' => meta['desc'].class == Array ?
-          meta['desc'].map(&:inspect).join(', ') :
-          meta['desc'],
-        'parent_entity_id' => meta['ability_score'] ?
-          DnD::Ability.find_by(name: meta['ability_score']['name']).id :
-          nil
-      })
-      # prevent hammering
-      sleep 0.2
-    end
-  end
-end
-
-
-if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_proficiencies.rb")
-  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_proficiencies.rb"
-else
-  data = query_api(:dnd5eapi, '/api/proficiencies')
-  data['results'].each do |hash|
-    meta = query_api(:dnd5eapi, hash['url'])
-    puts "Creating DnD::Proficiency: #{meta['name']}"
-    DnD::Proficiency.create!({
-      'name' => meta['name'],
-      'slug' => meta['index'],
-      'category' => meta['type']
-    })
-    # prevent hammering
-    sleep 0.2
-  end
-end
-
-if File.exist?("#{Rails.root}/db/seeds/parsed/open5e_com_spells.rb")
-  seed_file "#{Rails.root}/db/seeds/parsed/open5e_com_spells.rb"
-else
-  while true
-    ('1'...'9999').to_a.each do |page|
-      data = query_api(:open5e, "/spells/?format=json&page=#{page}")
-      break unless data['results']
-
-      data['results'].each do |meta|
-        puts "Creating DnD::Spell: #{meta['name']}"
-        DnD::Spell.create! meta.
-          slice(*DnD::Spell.new.attributes.keys).
-          merge(
-            'slug' => meta['slug'],
-            'school' => meta['school']['name'],
-            'description' => meta['desc'],
-            'dnd_classes' => meta['dnd_class'],
-            'archetypes' => meta['archetype'],
-            'level' => meta['level_int'],
-            'level_conditions' => meta['higher_level'],
-            'requires_concentration' => (meta['concentration'] == 'yes'),
-            'components' => meta['components'],
-            'is_ritual' => (meta['ritual'] == 'yes')
-          )
-        sleep 0.2
-      end
-    end
-    break
-  end
-end
-
-if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_features.rb")
-  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_features.rb"
-else
-  data = query_api(:dnd5eapi, '/api/features')
-  data['results'].each do |hash|
-    meta = query_api(:dnd5eapi, hash['url'])
-    puts "Creating DnD::Feature: #{meta['name']}"
-    DnD::Feature.create!({
-      'name' => meta['name'],
-      'slug' => meta['index'],
-      'level' => meta['level'],
-      'description' => meta['desc'].class == Array ?
-        meta['desc'].map(&:inspect).join(', ') :
-        meta['desc'],
-      'dnd_class_name' => meta['class']['url'].split('/').last
-    })
-    # prevent hammering
-    sleep 0.2
-  end
-end
-
-if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_equipment.rb")
-  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_equipment.rb"
-else
-  data = query_api(:dnd5eapi, '/api/equipment')
-  data['results'].each do |hash|
-    meta = query_api(:dnd5eapi, hash['url'])
-    puts "Creating DnD::Equipment: #{meta['name']}"
-    if meta['armor_category']
-      DnD::Armor.create!({
-        'name' => meta['name'],
-        'slug' => meta['index'],
-        'weight' => meta['weight'],
-        'cost_unit' => meta.dig('cost', 'unit'),
-        'cost_quantity' => meta.dig('cost', 'quantity'),
-        'description' => meta['desc'].class == Array ?
-          meta['desc'].map(&:inspect).join(', ') :
-          meta['desc'],
-        'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta.dig('equipment_category', 'name')).id,
-        'armor_category' => meta['armor_category'],
-        'armor' => meta.dig('armor_class', 'base'),
-        'armor_awards_dex_bonus' => meta.dig('armor_class', 'dex_bonus'),
-        'armor_has_stealth_disadvantage' =>
-          meta.dig('armor_class', 'stealth_advantage'),
-        'armor_strength_minimum' => meta['str_minimum'],
-        'armor_bonus_maximum' => meta.dig('armor_class', 'max_bonus')
-      })
-    elsif meta['weapon_category']
-      weapon = DnD::Weapon.new({
-        'name' => meta['name'],
-        'slug' => meta['index'],
-        'weight' => meta['weight'],
-        'cost_unit' => meta.dig('cost', 'unit'),
-        'cost_quantity' => meta.dig('cost', 'quantity'),
-        'description' => meta['desc'].class == Array ?
-          meta['desc'].map(&:inspect).join(', ') :
-          meta['desc'],
-        'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta.dig('equipment_category', 'name')).id,
-        'weapon_category' => meta['weapon_category'],
-        'weapon_damage_die' => meta.dig('damage', 'damage_dice'),
-        'weapon_damage_bonus' => meta.dig('damage', 'damage_bonus'),
-        'weapon_range_normal' => meta.dig('range', 'normal'),
-        'weapon_range_long' => meta.dig('range', 'long')
-      })
-      # some "weapons" don't have damage
-      #   example: https://www.dnd5eapi.co/api/equipment/net
-      if meta.dig('damage', 'damage_type', 'url')
-        weapon['dnd_weapon_damage_type_id'] =
-          DnD::DamageType.find_by(
-            slug: meta.dig('damage', 'damage_type', 'url'
-          ).split('/').last
-        ).id
-      end
-      weapon.save!
-    else
-      DnD::Equipment.create!({
-        'name' => meta['name'],
-        'slug' => meta['index'],
-        'weight' => meta['weight'],
-        'cost_unit' => meta.dig('cost', 'unit'),
-        'cost_quantity' => meta.dig('cost', 'quantity'),
-        'description' => meta['desc'].class == Array ?
-          meta['desc'].map(&:inspect).join(', ') :
-          meta['desc'],
-        'dnd_equipment_category_id' => DnD::EquipmentCategory.
-          find_by(name: meta['equipment_category']['name']).id
-      })
-    end
-    # prevent hammering
-    sleep 0.2
-  end
-end
+seed_file('./db/seeds/_entities.rb')
+seed_file('./db/seeds/_proficiencies.rb')
+seed_file('./db/seeds/_spells.rb')
+seed_file('./db/seeds/_features.rb')
+seed_file('./db/seeds/_equipment.rb')
 
 unless Rails.env.production?
   puts "Creating Dummy Data"
