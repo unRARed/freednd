@@ -31,8 +31,8 @@ end
 #################
 seed_files = []
 
-if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb")
-  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_entities.rb"
+if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_entities.rb")
+  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_entities.rb"
 else
   [
     ['Condition', 'conditions'],
@@ -64,8 +64,8 @@ else
 end
 
 
-if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_proficiencies.rb")
-  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_proficiencies.rb"
+if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_proficiencies.rb")
+  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_proficiencies.rb"
 else
   data = query_api(:dnd5eapi, '/api/proficiencies')
   data['results'].each do |hash|
@@ -81,8 +81,8 @@ else
   end
 end
 
-if File.exist?("#{Rails.root}/db/seeds/open5e_com_spells.rb")
-  seed_file "#{Rails.root}/db/seeds/open5e_com_spells.rb"
+if File.exist?("#{Rails.root}/db/seeds/parsed/open5e_com_spells.rb")
+  seed_file "#{Rails.root}/db/seeds/parsed/open5e_com_spells.rb"
 else
   while true
     ('1'...'9999').to_a.each do |page|
@@ -112,8 +112,8 @@ else
   end
 end
 
-if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_features.rb")
-  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_features.rb"
+if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_features.rb")
+  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_features.rb"
 else
   data = query_api(:dnd5eapi, '/api/features')
   data['results'].each do |hash|
@@ -133,8 +133,8 @@ else
   end
 end
 
-if File.exist?("#{Rails.root}/db/seeds/dnd5eapi_co_equipment.rb")
-  seed_file "#{Rails.root}/db/seeds/dnd5eapi_co_equipment.rb"
+if File.exist?("#{Rails.root}/db/seeds/parsed/dnd5eapi_co_equipment.rb")
+  seed_file "#{Rails.root}/db/seeds/parsed/dnd5eapi_co_equipment.rb"
 else
   data = query_api(:dnd5eapi, '/api/equipment')
   data['results'].each do |hash|

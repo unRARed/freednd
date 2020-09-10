@@ -41,5 +41,5 @@ coverage
 .DS_Store
 
 # Ignore seeds created from external services
-/db/seeds/dnd5eapi_co*
-/db/seeds/open5e_com*
+/db/seeds/parsed/dnd5eapi_co*
+/db/seeds/parsed/open5e_com*
