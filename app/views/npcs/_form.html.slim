@@ -63,6 +63,11 @@
       .control.has-icons-left
         = form.rich_text_area :profile
     .field
+      = form.label :notes, 'Dungeon Master Notes (private)',
+        class: 'label'
+      .control.has-icons-left
+        = form.rich_text_area :notes
+    .field
       = form.label :in_party, class: 'checkbox'
         = form.check_box :in_party
         span.mh3.is-size-6 Is NPC in the Player’s Party?

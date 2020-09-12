@@ -45,7 +45,8 @@ private
         :is_male,
         :race,
         :avatar,
-        :profile
+        :profile,
+        :notes
       )
     end
 end

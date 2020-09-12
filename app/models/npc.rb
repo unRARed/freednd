@@ -7,6 +7,7 @@ class NPC < ApplicationRecord
   has_one_attached :avatar
 
   has_rich_text :profile
+  has_rich_text :notes
 
   def gender
     return 'Male' if is_male?

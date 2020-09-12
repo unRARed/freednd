@@ -23,44 +23,45 @@
           class: 'button is-small',
           target: '_blank'
 
-- if policy(campaign).edit?
-  - if campaign.npcs.any?
-    h3.is-size-4.mt4.mb2 Established NPCs
-    table.table.is-narrow.is-striped.is-bordered.is-fullwidth(
-      style="font-size: 60%"
-    )
-      thead
-        tr
-          th Avatar
-          th Details
-      tbody
-        - campaign.npcs.each do |npc|
-          tr class="#{'has-background-success-light' if npc.in_party?}"
-            td.has-text-centered
-              - if npc.avatar.attached?
-                = link_to edit_campaign_npc_path(campaign, npc)
-                  img src="#{url_for(npc.avatar_thumb)}"
-              - else
-                p No avatar set.
+- if campaign.npcs.any?
+  h3.is-size-4.mt4.mb2 Established NPCs
+  table.table.is-narrow.is-striped.is-bordered.is-fullwidth(
+    style="font-size: 60%"
+  )
+    thead
+    tbody
+      - campaign.npcs.each do |npc|
+        tr class="#{'has-background-success-light' if npc.in_party?}"
+          td.has-text-centered
+            - if npc.avatar.attached?
+              = link_to edit_campaign_npc_path(campaign, npc)
+                img src="#{url_for(npc.avatar_thumb)}"
+            - if policy(campaign).edit?
               small
                 = link_to campaign_npc_path(campaign, npc),
                   method: 'delete',
                   data: { confirm: 'Are you sure you want to remove this NPC?' }
                   span.has-text-danger.is-small &times; Delete this NPC
-            td
-              .is-size-6.pb0
-                = link_to edit_campaign_npc_path(campaign, npc)
-                  span<> = npc.name
-                  span &nbsp;
-                  .fas.fa-edit
-              span #{npc.gender}
-              - if npc.race.present?
-                strong< = npc.race
-              - if npc.location.present?
-                span
-                  | , #{npc.location}
-              - if npc.profile.present?
-                .mt3 == npc.profile
-              - if npc.in_party?
-                .mt3
-                  h4.is-size-6.has-text-success-dark NPC is in the Party
+          td
+            .is-size-6.pb0
+              = link_to edit_campaign_npc_path(campaign, npc)
+                span<> = npc.name
+                span &nbsp;
+                .fas.fa-edit
+            span #{npc.gender}
+            - if npc.race.present?
+              strong< = npc.race
+            - if npc.location.present?
+              span
+                | , #{npc.location}
+            - if npc.profile.present?
+              .mt3 == npc.profile
+            - if npc.in_party?
+              .mt3
+                h4.is-size-6.has-text-success-dark NPC is in the Party
+            - if policy(campaign).edit?
+              - if npc.notes.present?
+                .message.is-small.is-info.mt2
+                  .message-body
+                    .tag.is-info.is-small.mb2 DM Notes
+                    == npc.notes
