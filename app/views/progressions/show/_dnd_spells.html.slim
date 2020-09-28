@@ -23,14 +23,20 @@ p
             i.fas.fa-angle-down aria-hidden='true'
       .is-collapsible id="dnd_spell#{spell.id}"
         .card-content
-          span
-            small Level: #{spell.level}
-            span<>
-              | |
-            small Range: #{spell.range}
-            span<>
-              | |
-            small Duration: #{spell.duration}
-          hr
+          table.table.is-fullwidth.is-narrow
+            thead
+              th Level
+              th Range
+              th Duration
+              th Casting Time
+            tbody
+              td = spell.level
+              td = spell.range
+              td = spell.duration
+              td = spell.casting_time
           .message
-            .message-body.is-size-6 = sanitize spell.description
+            .message-body.is-size-6
+              - if spell.requires_concentration?
+                p
+                  strong Concentration Required
+              = sanitize spell.description
