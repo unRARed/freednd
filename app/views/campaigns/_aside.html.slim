@@ -33,21 +33,26 @@
       - campaign.npcs.each do |npc|
         tr class="#{'has-background-success-light' if npc.in_party?}"
           td.has-text-centered
-            - if npc.avatar.attached?
-              = link_to edit_campaign_npc_path(campaign, npc)
-                img src="#{url_for(npc.avatar_thumb)}"
             - if policy(campaign).edit?
+              - if npc.avatar.attached?
+                = link_to edit_campaign_npc_path(campaign, npc)
+                  img src="#{url_for(npc.avatar_thumb)}"
               small
                 = link_to campaign_npc_path(campaign, npc),
                   method: 'delete',
                   data: { confirm: 'Are you sure you want to remove this NPC?' }
                   span.has-text-danger.is-small &times; Delete this NPC
+            - elsif npc.avatar.attached?
+              img src="#{url_for(npc.avatar_thumb)}"
           td
             .is-size-6.pb0
-              = link_to edit_campaign_npc_path(campaign, npc)
-                span<> = npc.name
-                span &nbsp;
-                .fas.fa-edit
+              - if policy(campaign).edit?
+                = link_to edit_campaign_npc_path(campaign, npc)
+                  span<> = npc.name
+                  span &nbsp;
+                  .fas.fa-edit
+              - else
+                strong<> = npc.name
             span #{npc.gender}
             - if npc.race.present?
               strong< = npc.race
