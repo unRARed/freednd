@@ -41,39 +41,43 @@ seed_file('./db/seeds/_features.rb')
 seed_file('./db/seeds/_equipment.rb')
 
 unless Rails.env.production?
-  puts "Creating Dummy Data"
-  users = []
-  (1..3).to_a.map do |n|
-    users << User.create!(email: "user#{n}@freednd.com", password: 'pw')
-  end
-  puts "Created #{users.count} Users"
-
-  campaign = Campaign.create! user: users.first,
-    name: 'Some Awesome Campaign',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing
-      elit. Duis commodo dapibus luctus. In gravida velit lorem,
-      vitae consectetur augue sodales et. Cras fermentum lacus
-      accumsan finibus tempor. Suspendisse blandit fringilla erat,
-      eget aliquam leo imperdiet vitae.'
-  puts 'Created Campaign'
-
   shared_attributes = {
     dnd_class: 'Bard',
     race: 'Human',
     background: 'Outlander',
     alignment: 'Lawful Good'
   }
+  users = []
 
-  party = Party.create! campaign: campaign
-  puts "Created Party"
-
-  chars = []
-  users.map do |user|
-    chars << Character.create!({
-      user: user,
-      name: "Char#{user.id}" }.merge(shared_attributes)
-    )
-    chars.map{|char| char.progressions.create party: party }
+  puts "Creating Dummy Data"
+  (1..3).to_a.map do |n|
+    users << User.create!(email: "user#{n}@freednd.com", password: 'pw')
   end
-  puts "Created #{chars.count} Characters in Party"
+  users.each do |dm|
+    campaign = Campaign.create! user: dm,
+      name: "DM’d by #{dm.email}",
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Duis commodo dapibus luctus. In gravida velit lorem,
+        vitae consectetur augue sodales et. Cras fermentum lacus
+        accumsan finibus tempor. Suspendisse blandit fringilla erat,
+        eget aliquam leo imperdiet vitae.'
+    puts "Created Campaign for #{dm.email}"
+
+    party = Party.create! campaign: campaign
+    puts "Created Party"
+
+    chars = []
+    users.each do |user|
+      next if user == dm
+      chars << Character.create!(
+        {
+          user: user,
+          name: "#{user.email} #{SecureRandom.base36(6)}"
+        }.merge(shared_attributes)
+      )
+      chars.map{|char| char.progressions.create party: party }
+    end
+    puts "Created #{chars.count} Characters in Party"
+  end
+  puts "Created #{users.count} Users"
 end
