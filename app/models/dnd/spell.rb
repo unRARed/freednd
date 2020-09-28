@@ -1,5 +1,6 @@
 class DnD::Spell < ApplicationRecord
   scope :by_level, -> { order(:level => :asc) }
+  scope :by_name, -> { order(:name => :asc) }
 
   def formatted_name
     base_name = self.name
