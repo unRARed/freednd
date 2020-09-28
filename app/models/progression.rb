@@ -21,7 +21,8 @@ class Progression < ApplicationRecord
   has_many :dice_rolls, :dependent => :destroy
 
   # statistics
-  has_many :skills
+  has_many :skills,
+    -> { order(:name => :asc) }
   has_many :saving_throws
 
   # assocated static content...
