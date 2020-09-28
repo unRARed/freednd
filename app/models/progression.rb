@@ -80,6 +80,8 @@ class Progression < ApplicationRecord
     :class_name => 'DnD::Armor',
     :source => :dnd_equipment
 
+  has_rich_text :inventory
+
   validates :character_id,
     :uniqueness => {
       :scope => :party_id,

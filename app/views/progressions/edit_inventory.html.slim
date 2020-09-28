@@ -1,0 +1,13 @@
+.card
+  .card-header
+    .card-header-title Inventory for #{@progression.character.name}
+  .card-content
+    .content
+      = form_for @progression do |form|
+        .field
+          .control.has-icons-left
+            = form.rich_text_area :inventory
+        .field.pt2
+          .control
+            = form.submit value: 'Save Progression',
+              class: 'button is-success is-medium'

@@ -76,6 +76,9 @@
               - if progression.dnd_equipment.any?
                 = render partial: 'progressions/show/dnd_equipment',
                   locals: { progression: progression }
+              - if progression.inventory.present?
+                = render partial: 'progressions/show/inventory',
+                  locals: { progression: progression }
               - if progression.dnd_features.any?
                 = render partial: 'progressions/show/dnd_features',
                   locals: { progression: progression }

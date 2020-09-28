@@ -33,11 +33,6 @@
           ),
           class: 'dropdown-item'
         hr.dropdown-divider
-        = link_to 'Wallet',
-          edit_campaign_progression_wallet_path(\
-            progression.campaign, progression\
-          ),
-          class: 'dropdown-item'
         = link_to 'Equipment',
           edit_campaign_progression_equipment_path(\
             progression.campaign, progression\
@@ -50,6 +45,17 @@
           class: 'dropdown-item'
         = link_to 'Spells',
           edit_campaign_progression_spells_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        hr.dropdown-divider
+        = link_to 'Inventory',
+          edit_campaign_progression_inventory_path(\
+            progression.campaign, progression\
+          ),
+          class: 'dropdown-item'
+        = link_to 'Wallet',
+          edit_campaign_progression_wallet_path(\
             progression.campaign, progression\
           ),
           class: 'dropdown-item'

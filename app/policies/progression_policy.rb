@@ -4,6 +4,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_inventory?
+    edit?
+  end
+
   def edit_wallet?
     edit?
   end

@@ -1,0 +1,10 @@
+p
+  .tag.is-info.is-light.is-large
+    span Inventory
+    - if policy(progression.character).edit?
+      = link_to edit_campaign_progression_inventory_path(\
+          progression.campaign, progression\
+        )
+        i.fas.fa-edit.pl2
+.box.is-size-5
+  = raw progression.inventory

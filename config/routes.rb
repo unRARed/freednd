@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
 
   resources :progressions, only: [:update]
+  get 'campaigns/:campaign_id/progressions/:id/inventory' =>
+    'progressions#edit_inventory',
+    as: 'edit_campaign_progression_inventory'
   get 'campaigns/:campaign_id/progressions/:id/wallet' =>
     'progressions#edit_wallet',
     as: 'edit_campaign_progression_wallet'
