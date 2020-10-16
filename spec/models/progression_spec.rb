@@ -20,6 +20,37 @@ RSpec.describe Progression, type: :model do
   describe 'class methods' do; end
 
   context 'instance methods' do
+    describe 'spellcasting_modifier' do
+      before(:each) { subject.character = build(:character) }
+
+      it 'is intelligence for Wizards, Rogues and Fighters' do
+        ['Wizard', 'Rogue', 'Fighter'].each do |dnd_class|
+          subject.character.dnd_class = dnd_class
+          expect(subject.spellcasting_modifier).to eq :intelligence_mod
+        end
+      end
+
+      # ‘Ki save DC’ is Monk version of a spellcasting DC
+      it 'is wisdom for Clerics, Druids, Rangers and Monks' do
+        ['Cleric', 'Druid', 'Ranger', 'Monk'].each do |dnd_class|
+          subject.character.dnd_class = dnd_class
+          expect(subject.spellcasting_modifier).to eq :wisdom_mod
+        end
+      end
+
+      it 'is intelligence for Bards, Paladins, Sorcerers and Warlocks' do
+        ['Bard', 'Paladin', 'Sorcerer', 'Warlock'].each do |dnd_class|
+          subject.character.dnd_class = dnd_class
+          expect(subject.spellcasting_modifier).to eq :charisma_mod
+        end
+      end
+
+      it 'is nil unless explicitly defined' do
+        subject.character.dnd_class = 'Barbarian'
+        expect(subject.spellcasting_modifier).to eq nil
+      end
+    end
+
     describe 'level' do
       it 'is overridden by the explicit_level value' do
         subject.explicit_level = 1

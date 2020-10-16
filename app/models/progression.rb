@@ -121,9 +121,9 @@ class Progression < ApplicationRecord
 
   def spellcasting_modifier
     case self.character.dnd_class
-    when 'Wizard'
+    when *['Wizard', 'Rogue', 'Fighter']
       :intelligence_mod
-    when *['Cleric', 'Druid', 'Ranger']
+    when *['Cleric', 'Druid', 'Ranger', 'Monk']
       :wisdom_mod
     when *['Bard', 'Paladin', 'Sorcerer', 'Warlock']
       :charisma_mod
@@ -133,13 +133,14 @@ class Progression < ApplicationRecord
   end
 
   def spell_save_dc
-    return nil unless spellcasting_modifier
+    return proficiency_bonus + 8 unless spellcasting_modifier
     self.send(spellcasting_modifier) + proficiency_bonus + 8
     # TODO - factor in any special modifiers
   end
 
-  def spell_attack_mod
-    self.proficiency_bonus + self.send(spellcasting_modifier)
+  def spell_attack_bonus
+    return proficiency_bonus unless spellcasting_modifier
+    self.send(spellcasting_modifier) + proficiency_bonus
   end
 
   def initiative_mod
