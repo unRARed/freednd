@@ -10,9 +10,11 @@
               .control.is-expanded
                 .select.is-fullwidth
                   = ff.select :dnd_feature_id,
-                    options_for_select(DnD::Feature.all.\
-                      map{|c| ["#{c.name} (#{c.dnd_class_name})", c.id]},\
-                      ff.object.dnd_feature_id),
+                    options_for_select(DnD::Feature.\
+                      by_dnd_class(@progression.character.dnd_class).\
+                      by_level.\
+                      map{|c| ["#{c.dnd_class_name.titlecase}: #{c.name}",
+                        c.id]}, ff.object.dnd_feature_id),
                     { prompt: ' - Add a New Feature - ' }
             - if ff.object.persisted?
               = link_to "Remove #{ff.object.dnd_feature.name}",
