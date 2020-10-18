@@ -18,6 +18,8 @@ class ProgressionSheet < Prawn::Document
     append_character_content
     append_abilities
     append_ability_mods
+    append_equipment
+    append_features
     append_avatar
   end
 
@@ -123,6 +125,28 @@ class ProgressionSheet < Prawn::Document
       # CHARISMA MOD
       bounding_box([202, from_top(348)], width: 45, height: 13) do
         text format_modifier(@progression.charisma_mod)
+      end
+    end
+  end
+
+  def append_equipment
+    float do
+      font_size 9
+      bounding_box([396, from_top(100)], width: 140, height: 210) do
+        @progression.equipment.each do |item|
+          text item.dnd_equipment.name
+        end
+      end
+    end
+  end
+
+  def append_features
+    float do
+      font_size 6
+      bounding_box([14, from_top(465)], width: 360, height: 88) do
+        @progression.dnd_features.each do |feature|
+          text "#{feature.name}: #{feature.description}"
+        end
       end
     end
   end
