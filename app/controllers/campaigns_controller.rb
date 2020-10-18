@@ -1,4 +1,6 @@
 class CampaignsController < ApplicationController
+  include CharactersHelper
+
   SupportedDice = [4, 6, 8, 10, 12, 20]
 
   before_action :set_campaign,

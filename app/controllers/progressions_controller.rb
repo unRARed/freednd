@@ -1,13 +1,18 @@
 require 'progression_sheet'
 
 class ProgressionsController < ApplicationController
+  include CharactersHelper
+
   before_action :set_progression,
     except: [:destroy_progression_item]
   layout 'character'
 
   def show_for_print
-    request.format = :pdf
     respond_to do |format|
+      format.html do
+        redirect_to character_path(@progression.character),
+          flash: { danger: 'Wrong format requested.' }
+      end
       format.pdf do
         pdf = ProgressionSheet.new(@progression)
         send_data pdf.render,

@@ -13,10 +13,9 @@
       .dropdown-content
         = link_to 'Print Sheet',
           print_campaign_progression_path(\
-            progression.campaign, progression\
+            progression.campaign, progression, format: 'pdf'\
           ),
           class: 'dropdown-item',
-          format: 'pdf',
           data: { turbolinks: false }
         hr.dropdown-divider
         = link_to 'Game State',
