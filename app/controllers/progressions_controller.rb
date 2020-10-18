@@ -1,7 +1,23 @@
+require 'progression_sheet'
+
 class ProgressionsController < ApplicationController
   before_action :set_progression,
     except: [:destroy_progression_item]
   layout 'character'
+
+  def show_for_print
+    request.format = :pdf
+    respond_to do |format|
+      format.pdf do
+        pdf = ProgressionSheet.new(@progression)
+        send_data pdf.render,
+          filename: "#{@progression.character.name.\
+            downcase.parameterize.strip}-#{Time.now.to_i}.pdf",
+          type: 'application/pdf',
+          disposition: 'inline'
+      end
+    end
+  end
 
   def edit_abilities
   end
