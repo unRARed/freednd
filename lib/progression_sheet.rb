@@ -20,6 +20,7 @@ class ProgressionSheet < Prawn::Document
     append_ability_mods
     append_equipment
     append_features
+    append_spellcasting
     append_avatar
   end
 
@@ -146,6 +147,32 @@ class ProgressionSheet < Prawn::Document
       bounding_box([14, from_top(465)], width: 360, height: 88) do
         @progression.dnd_features.each do |feature|
           text "#{feature.name}: #{feature.description}"
+        end
+      end
+    end
+  end
+
+  def append_spellcasting
+    float do
+      font_size 13
+      # Spell Save DC
+      bounding_box([422, from_top(342)], width: 45, height: 13) do
+        text @progression.spell_save_dc.to_s
+      end
+      # Spell Attack Bonus
+      bounding_box([496, from_top(342)], width: 45, height: 13) do
+        text format_modifier(@progression.spell_attack_bonus)
+      end
+      font_size 9
+      bounding_box([396, from_top(390)], width: 140, height: 206) do
+        @progression.dnd_spells.each do |spell|
+          text spell.formatted_name
+        end
+        if @progression.dnd_spells.any? && @progression.dnd_cantrips.any?
+          text "----------------------------------"
+        end
+        @progression.dnd_cantrips.each do |spell|
+          text spell.name
         end
       end
     end
