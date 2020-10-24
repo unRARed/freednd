@@ -38,9 +38,6 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/skills' =>
     'progressions#edit_skills',
     as: 'edit_campaign_progression_skills'
-  get 'campaigns/:campaign_id/progressions/:id/saving_throws' =>
-    'progressions#edit_saving_throws',
-    as: 'edit_campaign_progression_saving_throws'
   get 'campaigns/:campaign_id/progressions/:id/spells' =>
     'progressions#edit_spells',
     as: 'edit_campaign_progression_spells'

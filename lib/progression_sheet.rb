@@ -147,7 +147,7 @@ class ProgressionSheet < Prawn::Document
         )
       end
       # CONSTITUTION MOD
-      bounding_box([72, from_top(356)], width: 45, height: 13) do
+      bounding_box([73, from_top(356)], width: 45, height: 13) do
         text format_modifier(
           @progression.saving_throw_bonus(:constitution)
         )
