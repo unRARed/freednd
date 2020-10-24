@@ -23,7 +23,6 @@ class Progression < ApplicationRecord
   # statistics
   has_many :skills,
     -> { order(:name => :asc) }
-  has_many :saving_throws
 
   # assocated static content...
   # equipment, languages, spells, etc.
@@ -91,7 +90,6 @@ class Progression < ApplicationRecord
   after_validation :initialize_statistics
 
   accepts_nested_attributes_for :skills, :allow_destroy => true
-  accepts_nested_attributes_for :saving_throws, :allow_destroy => true
   accepts_nested_attributes_for :progression_items, :allow_destroy => true
   accepts_nested_attributes_for :spells, :allow_destroy => true
   accepts_nested_attributes_for :features, :allow_destroy => true
@@ -110,6 +108,19 @@ class Progression < ApplicationRecord
     define_method(:"#{ability}_mod") do
       calculate_ability_mod(self.send(ability))
     end
+  end
+
+  def saving_throw_bonus(ability)
+    mod = self.send("#{ability}_mod")
+    return mod unless is_saving_throw_proficient?(ability)
+    mod + proficiency_bonus
+  end
+
+  def is_saving_throw_proficient?(ability)
+    return false unless self.character&.dnd_class
+    Character::SAVING_THROW_PROFICIENCIES[
+      self.character.dnd_class.downcase.to_sym
+    ].include?(ability)
   end
 
   def armor_class
@@ -259,11 +270,6 @@ private
   end
 
   def initialize_statistics
-    if self.saving_throws.empty?
-      SavingThrow.names.each do |_key, val|
-        self.saving_throws.build name: val, value: 0
-      end
-    end
     if self.skills.empty?
       Skill.names.each do |_key, val|
         self.skills.build name: val, value: 0

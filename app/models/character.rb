@@ -78,6 +78,21 @@ class Character < ApplicationRecord
     'Warlock': 'Warlock'
   }
 
+ SAVING_THROW_PROFICIENCIES = {
+    barbarian: [:strength, :constitution],
+    bard: [:dexterity, :charisma],
+    cleric: [:wisdom, :charisma],
+    druid: [:intelligence, :wisdom],
+    fighter: [:strength, :constitution],
+    monk: [:strength, :dexterity],
+    paladin: [:wisdom, :charisma],
+    ranger: [:strength, :dexterity],
+    rogue: [:dexterity, :intelligence],
+    sorcerer: [:constitution, :charisma],
+    warlock: [:wisdom, :charisma],
+    wizard: [:intelligence, :wisdom]
+  }
+
   enum race: {
     'Dragonborn': 'Dragonborn',
     'Dwarf': 'Dwarf',

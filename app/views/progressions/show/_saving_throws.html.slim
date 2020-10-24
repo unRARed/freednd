@@ -7,12 +7,16 @@ p
         )
         i.fas.fa-edit.pl2
 .box
-  small.is-size-6.has-text-success-dark Remember to add your proficiency bonus to the green values here when rolling.
   ul
-    - progression.saving_throws.each do |saving_throw|
+    - Progression::ABILITIES.each do |ability|
       li
         span(class="is-size-6 #{'has-text-success-dark \
           has-text-weight-semibold' \
-            if saving_throw.is_proficient?}"
-        ) #{saving_throw.name}:
-        span.is-size-6 &nbsp; #{saving_throw.value}
+            if progression.is_saving_throw_proficient?(ability)}"
+        ) #{ability.to_s.titleize}:
+        span.is-size-6
+          | &nbsp;
+          = format_modifier(progression.saving_throw_bonus(ability))
+  p.has-text-centered
+    small.is-size-6.has-text-grey Your proficiency bonus is
+      already considered in the above values.
