@@ -18,6 +18,7 @@ class ProgressionSheet < Prawn::Document
     append_character_content
     append_abilities
     append_ability_mods
+    append_saving_throws
     append_equipment
     append_features
     append_spellcasting
@@ -126,6 +127,48 @@ class ProgressionSheet < Prawn::Document
       # CHARISMA MOD
       bounding_box([202, from_top(348)], width: 45, height: 13) do
         text format_modifier(@progression.charisma_mod)
+      end
+    end
+  end
+
+  def append_saving_throws
+    float do
+      font_size 10
+      # STRENGTH MOD
+      bounding_box([156, from_top(142)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:strength)
+        )
+      end
+      # DEXTERITY MOD
+      bounding_box([156, from_top(274)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:dexterity)
+        )
+      end
+      # CONSTITUTION MOD
+      bounding_box([72, from_top(356)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:constitution)
+        )
+      end
+      # INTELLIGENCE MOD
+      bounding_box([356, from_top(182)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:intelligence)
+        )
+      end
+      # WISDOM MOD
+      bounding_box([356, from_top(302)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:wisdom)
+        )
+      end
+      # CHARISMA MOD
+      bounding_box([356, from_top(426)], width: 45, height: 13) do
+        text format_modifier(
+          @progression.saving_throw_bonus(:charisma)
+        )
       end
     end
   end
