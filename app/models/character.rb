@@ -18,6 +18,18 @@ class Character < ApplicationRecord
     :other_traits
   ]
 
+  SKILLS = {
+    strength: [ 'Athletics' ],
+    dexterity: [ 'Acrobatics', 'Sleight of Hand', 'Stealth' ],
+    intelligence: [
+      'Arcana', 'History', 'Investigation', 'Nature', 'Religion'
+    ],
+    wisdom: [
+      'Animal Handling', 'Insight', 'Medicine', 'Perception', 'Survival'
+    ],
+    charisma: [ 'Deception', 'Intimidation', 'Performance', 'Persuasion' ]
+  }
+
   RP_FIELDS.each { |field| has_rich_text field }
 
   belongs_to :user
