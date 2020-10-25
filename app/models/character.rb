@@ -18,6 +18,18 @@ class Character < ApplicationRecord
     :other_traits
   ]
 
+  SKILLS = {
+    strength: [ 'Athletics' ],
+    dexterity: [ 'Acrobatics', 'Sleight of Hand', 'Stealth' ],
+    intelligence: [
+      'Arcana', 'History', 'Investigation', 'Nature', 'Religion'
+    ],
+    wisdom: [
+      'Animal Handling', 'Insight', 'Medicine', 'Perception', 'Survival'
+    ],
+    charisma: [ 'Deception', 'Intimidation', 'Performance', 'Persuasion' ]
+  }
+
   RP_FIELDS.each { |field| has_rich_text field }
 
   belongs_to :user
@@ -76,6 +88,21 @@ class Character < ApplicationRecord
     'Sorcerer': 'Sorcerer',
     'Rogue': 'Rogue',
     'Warlock': 'Warlock'
+  }
+
+ SAVING_THROW_PROFICIENCIES = {
+    barbarian: [:strength, :constitution],
+    bard: [:dexterity, :charisma],
+    cleric: [:wisdom, :charisma],
+    druid: [:intelligence, :wisdom],
+    fighter: [:strength, :constitution],
+    monk: [:strength, :dexterity],
+    paladin: [:wisdom, :charisma],
+    ranger: [:strength, :dexterity],
+    rogue: [:dexterity, :intelligence],
+    sorcerer: [:constitution, :charisma],
+    warlock: [:wisdom, :charisma],
+    wizard: [:intelligence, :wisdom]
   }
 
   enum race: {

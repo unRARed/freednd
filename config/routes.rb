@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
 
   resources :progressions, only: [:update]
+  get 'campaigns/:campaign_id/progressions/:id/show_for_print' =>
+    'progressions#show_for_print',
+    as: 'print_campaign_progression'
   get 'campaigns/:campaign_id/progressions/:id/inventory' =>
     'progressions#edit_inventory',
     as: 'edit_campaign_progression_inventory'
@@ -35,9 +38,6 @@ Rails.application.routes.draw do
   get 'campaigns/:campaign_id/progressions/:id/skills' =>
     'progressions#edit_skills',
     as: 'edit_campaign_progression_skills'
-  get 'campaigns/:campaign_id/progressions/:id/saving_throws' =>
-    'progressions#edit_saving_throws',
-    as: 'edit_campaign_progression_saving_throws'
   get 'campaigns/:campaign_id/progressions/:id/spells' =>
     'progressions#edit_spells',
     as: 'edit_campaign_progression_spells'

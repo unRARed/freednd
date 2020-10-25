@@ -6,13 +6,25 @@ p
           progression.campaign, progression\
         )
         i.fas.fa-edit.pl2
-.box
-  small.is-size-6.has-text-success-dark Remember to add your proficiency bonus to the green values here when rolling.
-  ul
-    - progression.skills.each do |skill|
-      li
-        span(class="is-size-6 #{'has-text-success-dark \
-          has-text-weight-semibold' \
-            if skill.is_proficient?}"
-        ) #{skill.name}:
-        span.is-size-6 &nbsp; #{skill.value}
+.panel
+  .panel-block
+    small.is-size-6.has-text-success-dark
+      span Remember to add your proficiency bonus
+      strong<>
+        | (#{format_modifier(progression.proficiency_bonus)})
+      span to the green values here when rolling as well as
+        any other special bonuses awarded by your specific class
+        or features.
+  - Character::SKILLS.each do |ability, skills|
+    .panel-block
+      ul
+        li
+          h4.title.is-size-5.mb3 = ability.to_s.titleize
+        - progression.skills.each do |skill|
+          - next unless skills.include? skill.name
+          li
+            span(class="is-size-6 #{'has-text-success-dark \
+              has-text-weight-semibold' \
+                if skill.is_proficient?}"
+            ) #{skill.name}:
+            span.is-size-6 &nbsp; #{skill.value}

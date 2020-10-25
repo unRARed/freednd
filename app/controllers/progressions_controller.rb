@@ -1,7 +1,28 @@
+require 'progression_sheet'
+
 class ProgressionsController < ApplicationController
+  include CharactersHelper
+
   before_action :set_progression,
     except: [:destroy_progression_item]
   layout 'character'
+
+  def show_for_print
+    respond_to do |format|
+      format.html do
+        redirect_to character_path(@progression.character),
+          flash: { danger: 'Wrong format requested.' }
+      end
+      format.pdf do
+        pdf = ProgressionSheet.new(@progression)
+        send_data pdf.render,
+          filename: "#{@progression.character.name.\
+            downcase.parameterize.strip}-#{Time.now.to_i}.pdf",
+          type: 'application/pdf',
+          disposition: 'inline'
+      end
+    end
+  end
 
   def edit_abilities
   end
@@ -117,7 +138,6 @@ private
         #rich text
         :inventory,
         skills_attributes: [ :id, :value, :is_proficient ],
-        saving_throws_attributes: [ :id, :value, :is_proficient ],
         spells_attributes: [ :id, :dnd_spell_id ],
         features_attributes: [ :id, :dnd_feature_id ],
         equipment_attributes: [ :id, :dnd_equipment_id, :quantity ]

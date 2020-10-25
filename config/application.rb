@@ -19,6 +19,8 @@ module FreeDnD
     config.autoload_paths +=
       Dir[Rails.root.join('app', 'models', 'dnd', '{**/*}')]
 
+    config.autoload_paths += %W(#{config.root}/lib)
+
     config.generators do |g|
       g.template_engine = :slim
     end

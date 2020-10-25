@@ -11,6 +11,13 @@
         i.fas.fa-angle-down aria-hidden="true"
     .dropdown-menu#dropdown-menu role="menu"
       .dropdown-content
+        = link_to 'Print Sheet',
+          print_campaign_progression_path(\
+            progression.campaign, progression, format: 'pdf'\
+          ),
+          class: 'dropdown-item',
+          data: { turbolinks: false }
+        hr.dropdown-divider
         = link_to 'Game State',
           edit_campaign_progression_status_path(\
             progression.campaign, progression\
@@ -19,11 +26,6 @@
         hr.dropdown-divider
         = link_to 'Abilities',
           edit_campaign_progression_abilities_path(\
-            progression.campaign, progression\
-          ),
-          class: 'dropdown-item'
-        = link_to 'Saving Throws',
-          edit_campaign_progression_saving_throws_path(\
             progression.campaign, progression\
           ),
           class: 'dropdown-item'

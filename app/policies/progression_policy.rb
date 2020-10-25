@@ -4,6 +4,10 @@ class ProgressionPolicy < ApplicationPolicy
     edit?
   end
 
+  def show_for_print?
+    edit?
+  end
+
   def edit_inventory?
     edit?
   end
