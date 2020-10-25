@@ -19,7 +19,9 @@ class ProgressionSheet < Prawn::Document
     append_abilities
     append_ability_mods
     append_saving_throws
+    append_skills
     append_equipment
+    append_wallet
     append_features
     append_spellcasting
     append_avatar
@@ -45,20 +47,20 @@ class ProgressionSheet < Prawn::Document
       bounding_box([196, from_top(18)], width: 170, height: 13) do
         text @progression.character.race
       end
-      # SPEED
-      bounding_box([396, from_top(18)], width: 50, height: 13) do
-        text @progression.character.speed.to_s
+      # LEVEL
+      bounding_box([396, from_top(18)], width: 45, height: 13) do
+        text @progression.level.to_s
       end
 
       #############
       ## 2nd Row ##
       #############
-      # LEVEL
-      bounding_box([15, from_top(55)], width: 45, height: 13) do
-        text @progression.level.to_s
+      # SPEED
+      bounding_box([126, from_top(55)], width: 50, height: 13) do
+        text @progression.character.speed.to_s
       end
       # Hitpoints MAX
-      bounding_box([130, from_top(55)], width: 40, height: 13) do
+      bounding_box([66, from_top(55)], width: 40, height: 13) do
         text @progression.hit_points_max.to_s
       end
       # Class
@@ -165,7 +167,7 @@ class ProgressionSheet < Prawn::Document
         )
       end
       # CHARISMA MOD
-      bounding_box([356, from_top(426)], width: 45, height: 13) do
+      bounding_box([356, from_top(431)], width: 45, height: 13) do
         text format_modifier(
           @progression.saving_throw_bonus(:charisma)
         )
@@ -173,10 +175,68 @@ class ProgressionSheet < Prawn::Document
     end
   end
 
+  def append_skills
+    float do
+      # STRENGTH
+      bounding_box([63, from_top(101)], width: 106, height: 30) do
+        Character::SKILLS[:strength].each do |skill_target|
+          @progression.skills.each do |skill|
+            next unless skill_target == skill.name
+            text "#{skill.name}: #{format_modifier(skill.value)}"
+          end
+        end
+      end
+    end
+    float do
+      # DEXTERITY
+      bounding_box([65, from_top(181)], width: 106, height: 72) do
+        Character::SKILLS[:dexterity].each do |skill_target|
+          @progression.skills.each do |skill|
+            next unless skill_target == skill.name
+            text "#{skill.name}: #{format_modifier(skill.value)}"
+          end
+        end
+      end
+    end
+    float do
+      # INTELLIGENCE
+      bounding_box([248, from_top(101)], width: 124, height: 70) do
+        Character::SKILLS[:intelligence].each do |skill_target|
+          @progression.skills.each do |skill|
+            next unless skill_target == skill.name
+            text "#{skill.name}: #{format_modifier(skill.value)}"
+          end
+        end
+      end
+    end
+    float do
+      # WISDOM
+      bounding_box([249, from_top(221)], width: 124, height: 70) do
+        Character::SKILLS[:wisdom].each do |skill_target|
+          @progression.skills.each do |skill|
+            next unless skill_target == skill.name
+            text "#{skill.name}: #{format_modifier(skill.value)}"
+          end
+        end
+      end
+    end
+    float do
+      # CHARISMA
+      bounding_box([248, from_top(343)], width: 124, height: 70) do
+        Character::SKILLS[:charisma].each do |skill_target|
+          @progression.skills.each do |skill|
+            next unless skill_target == skill.name
+            text "#{skill.name}: #{format_modifier(skill.value)}"
+          end
+        end
+      end
+    end
+  end
+
   def append_equipment
     float do
       font_size 9
-      bounding_box([396, from_top(100)], width: 140, height: 210) do
+      bounding_box([402, from_top(100)], width: 140, height: 210) do
         @progression.equipment.each do |item|
           text item.dnd_equipment.name
         end
@@ -184,10 +244,31 @@ class ProgressionSheet < Prawn::Document
     end
   end
 
+  def append_wallet
+    float do
+      font_size 7
+      bounding_box([45, from_top(402)], width: 30, height: 13) do
+        text @progression.wallet[:copper].to_s
+      end
+      bounding_box([72, from_top(402)], width: 30, height: 13) do
+        text @progression.wallet[:silver].to_s
+      end
+      bounding_box([19, from_top(426)], width: 30, height: 13) do
+        text @progression.wallet[:electrum].to_s
+      end
+      bounding_box([45, from_top(426)], width: 30, height: 13) do
+        text @progression.wallet[:gold].to_s
+      end
+      bounding_box([72, from_top(426)], width: 30, height: 13) do
+        text @progression.wallet[:platinum].to_s
+      end
+    end
+  end
+
   def append_features
     float do
-      font_size 6
-      bounding_box([14, from_top(465)], width: 360, height: 88) do
+      font_size 7
+      bounding_box([14, from_top(470)], width: 360, height: 230) do
         @progression.dnd_features.each do |feature|
           text "#{feature.name}: #{feature.description}"
         end
@@ -207,12 +288,13 @@ class ProgressionSheet < Prawn::Document
         text format_modifier(@progression.spell_attack_bonus)
       end
       font_size 9
-      bounding_box([396, from_top(390)], width: 140, height: 206) do
+      bounding_box([400, from_top(390)], width: 130, height: 316) do
         @progression.dnd_spells.each do |spell|
           text spell.formatted_name
         end
         if @progression.dnd_spells.any? && @progression.dnd_cantrips.any?
-          text "----------------------------------"
+          text "\n"
+          text "CANTRIPS:"
         end
         @progression.dnd_cantrips.each do |spell|
           text spell.name
@@ -222,7 +304,8 @@ class ProgressionSheet < Prawn::Document
   end
 
   def append_avatar
-    return unless avatar = @progression.character.avatar
+    avatar = @progression.character.avatar
+    return unless avatar.attached?
     float do
       bounding_box([100, from_top(300)], width: 80, height: 130) do
         ###########data = StringIO.new(portrait.blob.download)
@@ -252,6 +335,7 @@ private
   end
 
   def pad(value)
+    return '' unless value
     "%02d" % value
   end
 
