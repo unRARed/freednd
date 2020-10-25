@@ -20,9 +20,10 @@ class ProgressionSheet < Prawn::Document
     append_ability_mods
     append_saving_throws
     append_skills
-    append_equipment
-    append_wallet
     append_features
+    append_wallet
+    append_equipment
+    append_inventory
     append_spellcasting
     append_avatar
   end
@@ -78,27 +79,27 @@ class ProgressionSheet < Prawn::Document
     float do
       # STRENGTH
       bounding_box([34, from_top(121)], width: 45, height: 13) do
-        text pad(@progression.strength), color: 'ffffff'
+        text pad_int(@progression.strength), color: 'ffffff'
       end
       # DEXTERITY
       bounding_box([35, from_top(201)], width: 45, height: 13) do
-        text pad(@progression.dexterity), color: 'ffffff'
+        text pad_int(@progression.dexterity), color: 'ffffff'
       end
       # CONSTITUTION
       bounding_box([41, from_top(322)], width: 45, height: 13) do
-        text pad(@progression.constitution), color: 'ffffff'
+        text pad_int(@progression.constitution), color: 'ffffff'
       end
       # INTELLIGENCE
       bounding_box([218, from_top(121)], width: 45, height: 13) do
-        text pad(@progression.intelligence), color: 'ffffff'
+        text pad_int(@progression.intelligence), color: 'ffffff'
       end
       # WISDOM
       bounding_box([219, from_top(241)], width: 45, height: 13) do
-        text pad(@progression.wisdom), color: 'ffffff'
+        text pad_int(@progression.wisdom), color: 'ffffff'
       end
       # CHARISMA
       bounding_box([218, from_top(363)], width: 45, height: 13) do
-        text pad(@progression.charisma), color: 'ffffff'
+        text pad_int(@progression.charisma), color: 'ffffff'
       end
     end
   end
@@ -235,11 +236,23 @@ class ProgressionSheet < Prawn::Document
 
   def append_equipment
     float do
-      font_size 9
-      bounding_box([402, from_top(100)], width: 140, height: 210) do
+      font_size 8
+      bounding_box([16, from_top(474)], width: 156, height: 230) do
         @progression.equipment.each do |item|
-          text item.dnd_equipment.name
+          text "#{item.quantity.to_s + 'x ' if item.quantity} #{item.
+          dnd_equipment.name}"
         end
+      end
+    end
+  end
+
+  def append_inventory
+    float do
+      font_size 6
+      bounding_box([197, from_top(474)], width: 176, height: 230) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.inventory.to_s
+        ), :overflow => :shrink_to_fit
       end
     end
   end
@@ -267,10 +280,10 @@ class ProgressionSheet < Prawn::Document
 
   def append_features
     float do
-      font_size 7
-      bounding_box([14, from_top(470)], width: 360, height: 230) do
+      font_size 8
+      bounding_box([396, from_top(100)], width: 138, height: 210) do
         @progression.dnd_features.each do |feature|
-          text "#{feature.name}: #{feature.description}"
+          text feature.name
         end
       end
     end
@@ -307,7 +320,7 @@ class ProgressionSheet < Prawn::Document
     avatar = @progression.character.avatar
     return unless avatar.attached?
     float do
-      bounding_box([100, from_top(300)], width: 80, height: 130) do
+      bounding_box([100, from_top(316)], width: 80, height: 130) do
         ###########data = StringIO.new(portrait.blob.download)
         # Can't figure out how to get the Variant (avatar_portrait)
         # from ActiveStorage. This might be a new feature coming
@@ -316,9 +329,9 @@ class ProgressionSheet < Prawn::Document
         # So we duplicate the processing here:
         variant = MiniMagick::Image.open helpers.url_for(avatar)
         variant.combine_options do |img|
-          img.resize '480x480^'
+          img.resize '480x720^'
           img.gravity 'center'
-          img.extent '480x480'
+          img.extent '480x720'
           img.colorspace 'Gray'
         end
         image variant.path, width: 80
@@ -334,7 +347,7 @@ private
     bounds.height - value
   end
 
-  def pad(value)
+  def pad_int(value)
     return '' unless value
     "%02d" % value
   end
