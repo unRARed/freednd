@@ -9,12 +9,17 @@ class ProgressionSheet < Prawn::Document
       :margin => 30
     )
     @progression = progression
-    append_background
     font "Times-Roman"
     font_size 13
     #text bounds.width.to_s (540)
     #text bounds.height.to_s (720)
 
+    compile_front_page
+    compile_back_page
+  end
+
+  def compile_front_page
+    append_background("#{Rails.root}/app/assets/images/character-sheet.png")
     append_character_content
     append_abilities
     append_ability_mods
@@ -28,10 +33,103 @@ class ProgressionSheet < Prawn::Document
     append_avatar
   end
 
-  def append_background
+  def compile_back_page
+    start_new_page
+    append_background(
+      "#{Rails.root}/app/assets/images/character-sheet-back.png"
+    )
+    append_appearance
+    append_backstory
+    append_personality
+    append_ideals
+    append_bonds
+    append_flaws
+    append_other_traits
+  end
+
+private
+
+  def append_background(path)
     float do
-      image "#{Rails.root}/app/assets/images/character-sheet.png",
+      image path,
         width: bounds.width
+    end
+  end
+
+  def append_appearance
+    float do
+      font_size 9
+      bounding_box([17, from_top(27)], width: 520, height: 38) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.appearance.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_backstory
+    float do
+      font_size 9
+      bounding_box([17, from_top(95)], width: 520, height: 110) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.backstory.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_personality
+    float do
+      font_size 9
+      bounding_box([17, from_top(236)], width: 246, height: 146) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.personality.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_ideals
+    float do
+      font_size 9
+      bounding_box([292, from_top(236)], width: 246, height: 146) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.ideals.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_bonds
+    float do
+      font_size 9
+      bounding_box([17, from_top(410)], width: 246, height: 146) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.bonds.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_flaws
+    float do
+      font_size 9
+      bounding_box([292, from_top(410)], width: 246, height: 146) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.flaws.to_s
+        ), :overflow => :shrink_to_fit
+      end
+    end
+  end
+
+  def append_other_traits
+    float do
+      font_size 9
+      bounding_box([17, from_top(588)], width: 520, height: 120) do
+        text_box ActionController::Base.helpers.strip_tags(
+          @progression.character.other_traits.to_s
+        ), :overflow => :shrink_to_fit
+      end
     end
   end
 
@@ -338,8 +436,6 @@ class ProgressionSheet < Prawn::Document
       end
     end
   end
-
-private
 
   # bounding_box from BOTTOM-LEFT,
   # so make it easier to reason about
