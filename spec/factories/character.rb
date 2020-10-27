@@ -8,4 +8,12 @@ FactoryBot.define do
 
     user
   end
+
+  trait :bard do
+    dnd_class { 'Bard' }
+  end
+
+  trait :fighter do
+    dnd_class { 'Fighter' }
+  end
 end

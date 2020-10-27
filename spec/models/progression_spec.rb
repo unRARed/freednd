@@ -20,6 +20,43 @@ RSpec.describe Progression, type: :model do
   describe 'class methods' do; end
 
   context 'instance methods' do
+    describe 'is_saving_throw_proficient?' do
+      it 'when Bard class, is true for :dexterity and :charisma' do
+        subject.character = build(:character, :bard)
+        expect(subject.is_saving_throw_proficient?(:dexterity)).
+          to be true
+        expect(subject.is_saving_throw_proficient?(:charisma)).
+          to be true
+      end
+
+      it 'when Fighter class, is true for :strength and :constitution' do
+        subject.character = build(:character, :fighter)
+        expect(subject.is_saving_throw_proficient?(:strength)).
+          to be true
+        expect(subject.is_saving_throw_proficient?(:constitution)).
+          to be true
+      end
+    end
+
+    describe 'saving_throw_bonus' do
+      before(:each) { subject.character = build(:character, :bard) }
+
+      it 'is based on the given ability modifier' do
+        expect(subject.saving_throw_bonus(:strength)).
+          to eq subject.strength_mod
+        expect(subject.saving_throw_bonus(:constitution)).
+          to eq subject.constitution_mod
+      end
+
+      it 'when is_saving_throw_proficient? it adds proficiency bonus' do
+        expect(subject.saving_throw_bonus(:dexterity)).
+          to eq subject.dexterity_mod + subject.proficiency_bonus
+        expect(subject.saving_throw_bonus(:charisma)).
+          to eq subject.charisma_mod + subject.proficiency_bonus
+      end
+
+    end
+
     describe 'spellcasting_modifier' do
       before(:each) { subject.character = build(:character) }
 
