@@ -5,7 +5,7 @@ class ProgressionPolicy < ApplicationPolicy
   end
 
   def show_for_print?
-    edit?
+    edit? || is_dm?
   end
 
   def edit_inventory?
@@ -58,5 +58,11 @@ class ProgressionPolicy < ApplicationPolicy
 
   def edit?
     user.present? && @record.user == user
+  end
+
+private
+
+  def is_dm?
+    @record.campaign.user == user
   end
 end

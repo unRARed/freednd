@@ -1,22 +1,22 @@
-- if policy(progression.character).edit?
-  .dropdown.is-large.has-text-left
-    .dropdown-trigger
-      button(
-        class="button"
-        aria-haspopup="true"
-        aria-controls="dropdown-menu"
-      )
-        span Progression
-        span.icon.is-small
-        i.fas.fa-angle-down aria-hidden="true"
-    .dropdown-menu#dropdown-menu role="menu"
-      .dropdown-content
-        = link_to 'Print Sheet',
-          print_campaign_progression_path(\
-            progression.campaign, progression, format: 'pdf'\
-          ),
-          class: 'dropdown-item',
-          data: { turbolinks: false }
+.dropdown.is-large.has-text-left
+  .dropdown-trigger
+    button(
+      class="button"
+      aria-haspopup="true"
+      aria-controls="dropdown-menu"
+    )
+      span Progression
+      span.icon.is-small
+      i.fas.fa-angle-down aria-hidden="true"
+  .dropdown-menu#dropdown-menu role="menu"
+    .dropdown-content
+      = link_to 'Print Sheet',
+        print_campaign_progression_path(\
+          progression.campaign, progression, format: 'pdf'\
+        ),
+        class: 'dropdown-item',
+        data: { turbolinks: false }
+      - if policy(progression.character).edit?
         hr.dropdown-divider
         = link_to 'Game State',
           edit_campaign_progression_status_path(\

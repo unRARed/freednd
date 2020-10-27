@@ -3,13 +3,12 @@
     .container.mb3
       .columns
         .column.is-one-quarter
-          - if policy(progression.character).edit?
-            .has-text-centered.pb2
-              = render partial: 'characters/edit_options',
-                locals: { character: progression.character }
-              span &nbsp;
-              = render partial: 'progressions/edit_options',
-                locals: { progression: progression }
+          .has-text-centered.pb2
+            = render partial: 'characters/edit_options',
+              locals: { character: progression.character }
+            span &nbsp;
+            = render partial: 'progressions/edit_options',
+              locals: { progression: progression }
           = render partial: 'characters/card',
             locals: { character: @character }
           article.panel.is-success.is-size-5

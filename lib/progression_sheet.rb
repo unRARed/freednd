@@ -140,7 +140,8 @@ private
       #############
       # NAME
       bounding_box([15, from_top(18)], width: 150, height: 13) do
-        text @progression.character.name.truncate(24)
+        text_box @progression.character.name,
+          :overflow => :shrink_to_fit
       end
       # RACE
       bounding_box([196, from_top(18)], width: 170, height: 13) do
