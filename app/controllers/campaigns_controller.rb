@@ -29,7 +29,7 @@ class CampaignsController < ApplicationController
   def update
     authorize(@campaign)
     return render :show unless @campaign.update(campaign_params)
-    redirect_to account_path,
+    redirect_to campaign_path(@campaign),
       notice: 'Campaign was successfully updated.'
   end
 
