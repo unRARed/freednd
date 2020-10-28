@@ -27,4 +27,4 @@ p
               has-text-weight-semibold' \
                 if skill.is_proficient?}"
             ) #{skill.name}:
-            span.is-size-6 &nbsp; #{skill.value}
+            span.is-size-6 &nbsp; #{format_modifier(skill.value)}
