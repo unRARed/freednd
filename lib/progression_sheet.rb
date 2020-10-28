@@ -169,7 +169,11 @@ private
       end
       # Prof Bonus
       bounding_box([396, from_top(55)], width: 50, height: 13) do
-        text @progression.proficiency_bonus.to_s
+        text format_modifier(@progression.proficiency_bonus).to_s
+      end
+      # Armor Class
+      bounding_box([476, from_top(55)], width: 50, height: 13) do
+        text @progression.armor_class.to_s
       end
     end
   end
