@@ -9,6 +9,10 @@ class CampaignsController < ApplicationController
   # GET /campaigns
   def index
     @campaigns = policy_scope(Campaign.is_open)
+    return redirect_to(
+      sign_in_path,
+      flash: { danger: 'You need to be signed in to do that.' }
+    ) unless signed_in?
   end
 
   # GET /campaigns/new
