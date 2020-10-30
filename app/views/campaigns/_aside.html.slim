@@ -14,9 +14,9 @@
     .is-size-6
       = campaign.description.truncate(600)
       p.mt2
-        strong Game #{'Master'.pluralize(@campaign.game_masters.count)}
+        strong Game #{'Master'.pluralize(campaign.game_masters.count)}
       ul
-      - @campaign.game_masters.each do |gm|
+      - campaign.game_masters.each do |gm|
         li = gm.user.email
     - if policy(campaign).edit?
       p.mt3
