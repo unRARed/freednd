@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_053500) do
+ActiveRecord::Schema.define(version: 2020_10_30_072232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,15 @@ ActiveRecord::Schema.define(version: 2020_09_10_053500) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "game_masters", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_id"], name: "index_game_masters_on_campaign_id"
+    t.index ["user_id"], name: "index_game_masters_on_user_id"
+  end
+
   create_table "languages", force: :cascade do |t|
     t.string "name"
     t.string "variety"
@@ -253,6 +262,8 @@ ActiveRecord::Schema.define(version: 2020_09_10_053500) do
   add_foreign_key "characters", "users"
   add_foreign_key "dice_rolls", "campaigns"
   add_foreign_key "dice_rolls", "progressions"
+  add_foreign_key "game_masters", "campaigns"
+  add_foreign_key "game_masters", "users"
   add_foreign_key "npcs", "campaigns"
   add_foreign_key "parties", "campaigns"
   add_foreign_key "progression_items", "dnd_equipment", column: "dnd_equipment_id"

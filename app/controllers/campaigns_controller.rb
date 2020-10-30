@@ -3,8 +3,7 @@ class CampaignsController < ApplicationController
 
   SupportedDice = [4, 6, 8, 10, 12, 20]
 
-  before_action :set_campaign,
-    only: [:show, :edit, :update, :destroy, :join, :roll_dice]
+  before_action :set_campaign, except: [:index, :new, :create]
 
   # GET /campaigns
   def index
@@ -24,10 +23,16 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
     authorize(@campaign)
-    @campaign.user = current_user
-    return render :new unless @campaign.save
-    redirect_to account_path,
-      notice: 'Campaign was successfully created.'
+    begin
+      @campaign.transaction do
+        @campaign.update! user: current_user
+        GameMaster.create! campaign: @campaign, user: current_user
+      end
+      redirect_to account_path,
+        notice: 'Campaign was successfully created.'
+    rescue ActiveRecord::RecordInvalid => e
+      return render :new
+    end
   end
 
   def update
@@ -61,6 +66,17 @@ class CampaignsController < ApplicationController
     party.progressions.create! character: character
     redirect_to @campaign,
       notice: "#{character.name} successfully joined #{@campaign.name}."
+  end
+
+  def add_game_master
+    authorize(@campaign)
+    if user = User.find_by(email: params[:email])
+      GameMaster.create campaign: @campaign, user: user
+    end
+    return redirect_to(
+      campaign_path(@campaign),
+      info: 'If a user exists with that email, they can now GM.'
+    )
   end
 
 private

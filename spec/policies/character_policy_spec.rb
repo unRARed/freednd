@@ -36,6 +36,7 @@ RSpec.describe CharacterPolicy do
       # dm creates campaign
       @user = create :user
       campaign = create :campaign, user: @user
+      game_master = create :game_master, user: @user, campaign: campaign
       party = create :party, campaign: campaign
 
       # that another player joins

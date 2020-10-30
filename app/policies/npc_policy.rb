@@ -1,27 +1,28 @@
 class NPCPolicy < ApplicationPolicy
   def create?
-    is_dm?
+    is_game_master?
   end
 
   def new?
-    is_dm?
+    is_game_master?
   end
 
   def update?
-    is_dm?
+    is_game_master?
   end
 
   def edit?
-    is_dm?
+    is_game_master?
   end
 
   def destroy?
-    is_dm?
+    is_game_master?
   end
 
 private
 
-  def is_dm?
-    user.present? && @record.campaign.user == user
+  def is_game_master?
+    user.present? && @record.campaign.game_masters.
+      any?{|gm| gm.user == user}
   end
 end

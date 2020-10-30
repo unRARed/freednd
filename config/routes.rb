@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   end
   post 'campaigns/:id/join' => 'campaigns#join',
     as: 'join_campaign'
+  post 'campaigns/:id/add_game_master' => 'campaigns#add_game_master',
+    as: 'add_game_master'
   delete 'campaigns/:campaign_id/' +
     'progressions/:progression_id/' +
     'progression_items/:id' => 'progressions#destroy_progression_item',

@@ -4,7 +4,7 @@ class CharacterPolicy < ApplicationPolicy
   end
 
   def show?
-    edit? || is_party_member? || is_dm?
+    edit? || is_party_member? || is_game_master?
   end
 
   def create?
@@ -43,7 +43,8 @@ private
     @record.party_members.include?(user)
   end
 
-  def is_dm?
-    @record.campaigns.any?{|c| c.user == user }
+  # TODO: test this
+  def is_game_master?
+    @record.campaigns.any?{|c| c.game_masters.any?{|gm| gm.user == user} }
   end
 end

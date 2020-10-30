@@ -5,3 +5,26 @@
         .card-header-title Edit Campaign
       .card-content
         = render partial: 'form', locals: { record: @campaign }
+    .card.mt4
+      .card-header
+        .card-header-title Add a Game Master
+      .card-content
+        .content
+          p Enter an email address here to share your GM
+            responsibilities with another user.
+          = form_tag add_game_master_path do |form|
+            .field
+              = label_tag :email, nil, class: 'label'
+              p.control.has-icons-left.has-icons-right
+                = text_field_tag :email, nil,
+                  placeholder: 'Email',
+                  class: 'input is-large',
+                  required: true
+                span.icon.is-small.is-left
+                  i.fas.fa-envelope
+                span.icon.is-small.is-right
+                  i.fas.fa-check
+            .field.pt2
+              .control
+                = submit_tag 'Add Game Master',
+                  class: 'button is-success is-medium'

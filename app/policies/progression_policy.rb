@@ -5,7 +5,7 @@ class ProgressionPolicy < ApplicationPolicy
   end
 
   def show_for_print?
-    edit? || is_dm?
+    edit? || is_game_master?
   end
 
   def edit_inventory?
@@ -62,7 +62,8 @@ class ProgressionPolicy < ApplicationPolicy
 
 private
 
-  def is_dm?
-    @record.campaign.user == user
+  def is_game_master?
+    user.present? && @record.campaign.game_masters.
+      any?{|gm| gm.user == user}
   end
 end

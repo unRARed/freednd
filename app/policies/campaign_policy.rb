@@ -4,7 +4,7 @@ class CampaignPolicy < ApplicationPolicy
   end
 
   def show?
-    edit? || @record.users.include?(user)
+    is_party_member?
   end
 
   def create?
@@ -21,7 +21,7 @@ class CampaignPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.present? && @record.user == user
+    is_game_master?
   end
 
   def destroy?
@@ -30,6 +30,21 @@ class CampaignPolicy < ApplicationPolicy
 
   def join?
     create?
+  end
+
+  def add_game_master?
+    # TODO: limit to game masters after dm is refactored to always be
+    create?
+  end
+
+private
+
+  def is_party_member?
+    edit? || @record.users.include?(user)
+  end
+
+  def is_game_master?
+    user.present? && @record.game_masters.any?{|gm| gm.user == user}
   end
 
   class Scope < Scope

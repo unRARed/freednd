@@ -10,7 +10,8 @@ h1.title.is-1.has-text-centered My Account
               li
                 = link_to character.name, character_path(character)
       .pt3.has-text-centered
-        = link_to 'Create new Character', new_character_path,
+        = link_to 'Create new Character',
+          new_character_path,
           class: "button#{' is-primary' unless current_user.characters.any?}"
     p.has-text-centered.pt3
       = link_to 'DM a New Campaign', new_campaign_path,

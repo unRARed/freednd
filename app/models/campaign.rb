@@ -3,6 +3,7 @@ class Campaign < ApplicationRecord
 
   has_one :party
 
+  has_many :game_masters
   has_many :progressions,
     :through => :party
   has_many :characters,
