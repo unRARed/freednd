@@ -58,6 +58,8 @@ group :test do
   gem 'pundit-matchers', '~> 1.6.0'
   gem 'coveralls', require: false
   gem 'shoulda-matchers', '~> 4'
+  gem 'webmock'
+  gem 'pdf-inspector', require: "pdf/inspector"
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
