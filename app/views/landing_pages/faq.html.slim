@@ -1,0 +1,101 @@
+.container
+  h2.title.has-text-centered FreeDnD FAQ
+
+  .card
+    .card-header
+      .card-header-title What is FreeDnD?
+    .card-content
+      p
+        span> FreeDnD.com (the website) provides the
+        = link_to 'FreeDnD Codebase (Ruby on Rails)',
+          'https://github.com/unrared/freednd',
+          target: '_blank'
+        span<> as a free service for DnD Players and
+          Dungeon/Game Masters.
+
+  .card.mt3
+    .card-header
+      .card-header-title What does FreeDnD do for me in
+        its current state?
+    .card-content
+      .content
+        h6 As a Player you can:
+        ul
+          li Create a Character
+          li Join a Campaign
+          li
+            span Maintain a Characters Progression
+              through a Campaign
+            ul
+              li Track Abilities, Skills, HP and other attributes
+              li Select Equipment, Spells and Features
+              li Track miscellaneous items (Inventory)
+              li Handle various currencies
+                (pp, gp, ep, sp and cp)
+                with “auto-rounding” wallet
+          li Printable PDF version of current Progression state
+            (for the pencil/paper crowd)
+          li Broadcast a dice roll (to your campaign)
+        h6 As a Dungeon/Game Master you can:
+        ul
+          li
+            span Create a Campaign
+            ul
+              li Lock it down for joining
+              li Invite other users to co-GM (if desired)
+          li Create/Manage NPCs in the Campaign
+          li Keep notes/journal of game info as Campaign
+            progresses
+          li
+            span See useful player stats for the PCs such as:
+            ul
+              li Speed, AC, HP, etc.
+              li Spell Save DC / Attack Bonus
+              li Particulary Strong/Weak Passive Skills
+
+  .card.mt3
+    .card-header
+      .card-header-title Why does it seem like there are
+        items missing (spells, features, etc.)?
+    .card-content
+      span> Because some content really is missing.
+        Unfortunately, not all DnD Fifth Edition content
+        exists in the
+      = link_to 'Systems Reference Document',
+        'https://dnd.wizards.com/articles/features/' +\
+        'systems-reference-document-srd',
+        target: '_blank'
+      span> . Most of the content here is sourced via the
+      = link_to 'D&D 5e API',
+        'https://www.dnd5eapi.co/',
+        target: '_blank'
+      span> , which itself is sourced from the
+      = link_to '5e Database Repo on Github',
+        'https://github.com/bagelbits/5e-database',
+        target: '_blank'
+      span . They have chosen to keep that database SRD-only
+        which was communicated as such:
+      .content.mt2
+        blockquote
+          span> We're going to keep the SRD as our only basis.
+            We even removed the PHB/DMG pages that were
+            previously mentioned because they're not SRD data,
+            so we're definitely and consciously away from that
+            kind of integration.
+          = link_to 'See response to our reported issue',
+            'https://github.com/bagelbits/5e-database/issues/298',
+            target: '_blank'
+
+  .card.mt3
+    .card-header
+      .card-header-title Something is missing and/or I want to
+        report a bug. How do I do this?
+    .card-content
+      span> Report any bugs or missing content that you come
+        across as an issue
+      = link_to 'on Github from here',
+        'https://github.com/unRARed/freednd',
+        target: '_blank'
+      span . For content that is missing, if the content is not
+        in the SRD, please mention its source so we can verify
+        and defer to it accurately in our description.

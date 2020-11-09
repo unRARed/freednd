@@ -23,6 +23,8 @@
             'https://dnd.wizards.com/articles/features/basicrules',
             class: 'navbar-item',
             target: '_blank'
+          = link_to 'FreeDnD FAQ', faq_path,
+            class: 'navbar-item'
     .navbar-end
       .navbar-item
         - if signed_in?

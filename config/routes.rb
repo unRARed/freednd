@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'landing_pages#index'
   get 'license' => 'landing_pages#license'
+  get 'faq' => 'landing_pages#faq'
 
   resources :characters
   get 'characters/:id/rp/:field' => 'characters#edit_content_field',
